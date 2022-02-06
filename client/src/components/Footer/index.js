@@ -58,7 +58,7 @@ class Footer extends Component {
           <div className="c-app-footer__actions">
             <span className="c-app-footer__about">
               <a
-                href="https://medium.com/@pratik.shetty/videowiki-a-free-multi-media-encyclopedia-that-anyone-can-edit-94d7f021ca38"
+                href="https://mdwiki.org/wiki/Main_Page"
                 className="c-app-footer__link"
                 target="_blank"
               >
@@ -72,8 +72,8 @@ class Footer extends Component {
             >
               <span>
                 Email -{'\u00A0'}
-                <a className="c-app-footer__link" href="mailto:pratik.shetty@tlrfindia.com">
-                  pratik.shetty@tlrfindia.com
+                <a className="c-app-footer__link" href="mailto:wikiprojectmed@gmail.com">
+                  wikiprojectmed@gmail.com
                 </a>
               </span>
             </Popup>
