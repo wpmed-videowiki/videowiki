@@ -3,6 +3,8 @@ services:
   redis-server:
     image: 'redis'
     restart: "always"
+    ports:
+      - "6379:6379"
   rabbitmq-server:
     image: 'rabbitmq'
     restart: "always"
