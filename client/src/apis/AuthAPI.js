@@ -91,6 +91,15 @@ function updatePassword ({ email, password }) {
     .then(({ text }) => ({ updatePasswordStatus: text }))
 }
 
+function generateYoutubeAuthLink({ password }) {
+
+  const url = `/api/auth/youtube/authenticate/generate`;
+
+  const data = {password}
+  return httpPost(url, data)
+    .then(({ body }) => ({ youtubeAuthLink: body.url }))
+}
+
 export default {
   signup,
   login,
@@ -99,4 +108,5 @@ export default {
   resetPassword,
   verifyResetToken,
   updatePassword,
+  generateYoutubeAuthLink
 }

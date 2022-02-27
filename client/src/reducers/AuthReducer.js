@@ -1,6 +1,6 @@
 import { mergeImmutable } from '../utils'
 import actions from '../actions/AuthActionCreators'
-import websockets from '../websockets';
+import websockets from '../websockets'
 
 const initialState = {
   signupState: null,
@@ -17,6 +17,8 @@ const initialState = {
   verifyResetTokenError: null,
   updatePasswordState: 'loading',
   updatePasswordStatus: null,
+  youtubeAuthLink: '',
+  youtubeChannelInfo: null
 }
 
 const handlers = {
@@ -28,56 +30,58 @@ const handlers = {
 
   [actions.VALIDATE_SESSION_RECEIVE]: (state, action) => {
     const update = {
-      session: action.session || {},
+      session: action.session || {}
     }
     if (action.session && action.session.token) {
-      update['token'] = action.session.token;
-      websockets.emitEvent(websockets.websocketsEvents.AUTHENTICATE, { token: action.session.token });
+      update['token'] = action.session.token
+      websockets.emitEvent(websockets.websocketsEvents.AUTHENTICATE, {
+        token: action.session.token
+      })
     } else {
-      update['token'] = null;
+      update['token'] = null
     }
     if (!action.session || !action.session.user) {
-      update.session.user = null;
+      update.session.user = null
     }
     if (!action.session || !action.session.token) {
-      update.session.token = null;
+      update.session.token = null
     }
-    return mergeImmutable(state, update);
+    return mergeImmutable(state, update)
   },
-  [actions.VALIDATE_SESSION_FAILED]: (state) =>
+  [actions.VALIDATE_SESSION_FAILED]: state =>
     mergeImmutable(state, {
       session: null,
-      token: '',
+      token: ''
     }),
 
   // ===========
-  [actions.SIGNUP_REQUEST]: (state) =>
+  [actions.SIGNUP_REQUEST]: state =>
     mergeImmutable(state, {
       signupState: 'loading',
       signupStatus: null,
-      signupError: null,
+      signupError: null
     }),
 
   [actions.SIGNUP_RECEIVE]: (state, action) =>
     mergeImmutable(state, {
       signupState: 'done',
       signupStatus: action.signupStatus,
-      signupError: null,
+      signupError: null
     }),
 
   [actions.SIGNUP_FAILED]: (state, action) =>
     mergeImmutable(state, {
       signupState: 'failed',
       signupStatus: null,
-      signupError: action.reason,
+      signupError: action.reason
     }),
 
   // ===========
-  [actions.LOGIN_REQUEST]: (state) =>
+  [actions.LOGIN_REQUEST]: state =>
     mergeImmutable(state, {
       loginState: 'loading',
       loginStatus: null,
-      loginError: null,
+      loginError: null
     }),
 
   [actions.LOGIN_RECEIVE]: (state, action) =>
@@ -85,111 +89,118 @@ const handlers = {
       loginState: 'done',
       loginStatus: action.loginStatus,
       loginError: null,
-      session: action.session,
+      session: action.session
     }),
 
   [actions.LOGIN_FAILED]: (state, action) =>
     mergeImmutable(state, {
       loginState: 'failed',
       loginStatus: null,
-      loginError: action.reason,
+      loginError: action.reason
     }),
 
   // ======== LOGOUT
-  [actions.LOGOUT_REQUEST]: (state) =>
+  [actions.LOGOUT_REQUEST]: state =>
     mergeImmutable(state, {
-      logoutState: 'loading',
+      logoutState: 'loading'
     }),
 
-  [actions.LOGOUT_RECEIVE]: (state) =>
+  [actions.LOGOUT_RECEIVE]: state =>
     mergeImmutable(state, {
       logoutState: 'done',
-      session: null,
+      session: null
     }),
 
-  [actions.LOGOUT_FAILED]: (state) =>
+  [actions.LOGOUT_FAILED]: state =>
     mergeImmutable(state, {
-      logoutState: 'failed',
+      logoutState: 'failed'
     }),
 
   // ======
-  [actions.RESET_PASSWORD_REQUEST]: (state) =>
+  [actions.RESET_PASSWORD_REQUEST]: state =>
     mergeImmutable(state, {
-      resetState: 'loading',
+      resetState: 'loading'
     }),
 
-  [actions.RESET_PASSWORD_RECEIVE]: (state) =>
+  [actions.RESET_PASSWORD_RECEIVE]: state =>
     mergeImmutable(state, {
-      resetState: 'done',
+      resetState: 'done'
     }),
 
-  [actions.RESET_PASSWORD_FAILED]: (state) =>
+  [actions.RESET_PASSWORD_FAILED]: state =>
     mergeImmutable(state, {
-      resetState: 'failed',
+      resetState: 'failed'
     }),
 
   // ===== RESET
-  [actions.RESET_SIGNUP_ERROR]: (state) =>
+  [actions.RESET_SIGNUP_ERROR]: state =>
     mergeImmutable(state, {
-      signupError: null,
+      signupError: null
     }),
 
-  [actions.RESET_LOGIN_ERROR]: (state) =>
+  [actions.RESET_LOGIN_ERROR]: state =>
     mergeImmutable(state, {
-      loginError: null,
+      loginError: null
     }),
 
-  [actions.RESET_PASSWORD_STATUS]: (state) =>
+  [actions.RESET_PASSWORD_STATUS]: state =>
     mergeImmutable(state, {
-      updatePasswordStatus: null,
+      updatePasswordStatus: null
     }),
 
   // ===== Verify reset token
-  [actions.VERIFY_RESET_TOKEN_REQUEST]: (state) =>
+  [actions.VERIFY_RESET_TOKEN_REQUEST]: state =>
     mergeImmutable(state, {
-      verifyResetTokenState: 'loading',
+      verifyResetTokenState: 'loading'
     }),
 
-  [actions.VERIFY_RESET_TOKEN_RECEIVE]: (state) =>
+  [actions.VERIFY_RESET_TOKEN_RECEIVE]: state =>
     mergeImmutable(state, {
-      verifyResetTokenState: 'done',
+      verifyResetTokenState: 'done'
     }),
 
   [actions.VERIFY_RESET_TOKEN_FAILED]: (state, action) =>
     mergeImmutable(state, {
       verifyResetTokenState: 'failed',
-      verifyResetTokenError: action.reason,
+      verifyResetTokenError: action.reason
     }),
 
   // ===== Update password
-  [actions.UPDATE_PASSWORD_REQUEST]: (state) =>
+  [actions.UPDATE_PASSWORD_REQUEST]: state =>
     mergeImmutable(state, {
-      updatePasswordState: 'loading',
+      updatePasswordState: 'loading'
     }),
 
   [actions.UPDATE_PASSWORD_RECEIVE]: (state, action) =>
     mergeImmutable(state, {
       updatePasswordState: 'done',
-      updatePasswordStatus: action.updatePasswordStatus,
+      updatePasswordStatus: action.updatePasswordStatus
     }),
 
-  [actions.UPDATE_PASSWORD_FAILED]: (state) =>
+  [actions.UPDATE_PASSWORD_FAILED]: state =>
     mergeImmutable(state, {
-      updatePasswordState: 'failed',
+      updatePasswordState: 'failed'
     }),
   [actions.SET_TOKEN]: (state, action) =>
     mergeImmutable(state, {
-      token: action.token,
+      token: action.token
     }),
   [actions.SET_USER]: (state, action) =>
     mergeImmutable(state, {
       session: {
         user: action.user,
-        token: action.user && state.token ? state.token : '',
-      },
+        token: action.user && state.token ? state.token : ''
+      }
     }),
+  [actions.GENERATE_YOUTUBE_AUTH_LINK_RECEIVE]: (state, action) =>
+    mergeImmutable(state, {
+      youtubeAuthLink: action.youtubeAuthLink
+    }),
+  [actions.SET_YOUTUBE_CHANNEL_INFO]: (state, action) =>
+    mergeImmutable(state, {
+      youtubeChannelInfo: action.youtubeChannelInfo
+    })
 }
 
-export default (reducer) =>
-  (state = initialState, action) =>
-    reducer(handlers, state, action)
+export default reducer => (state = initialState, action) =>
+  reducer(handlers, state, action)

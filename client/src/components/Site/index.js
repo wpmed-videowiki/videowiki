@@ -35,7 +35,7 @@ const SiteNotFound = () => import(/* webpackChunkName: "js/SiteNotFound"  */'../
 const VideoConvertProgress = () => import(/* webpackChunkName: "js/VideoConvertProgress" */ '../../pages/VideoConvertProgress');
 const VideosHistory = () => import(/* webpackChunkName: "js/VideosHistory" */'../../pages/VideosHistory');
 const ExportHumanVoice = () => import(/* webpackChunkName: "js/ExportHumanVoice" */ '../../pages/ExportHumanVoice');
-
+export const GenerateYoutubeAuthLink = () => import(/* webpackChunkName: "js/GenerateYoutubeAuthLink" */ '../../pages/AuthYoutube/GenerateYoutubeAuthLink');
 class Site extends Component {
   componentWillMount () {
     this.props.dispatch(actions.validateSession());
@@ -94,6 +94,7 @@ class Site extends Component {
         <div className="c-app__main">
           <Switch>
             <Route path="/" exact component={() => <Redirect to={`/${this.props.language}`} />} />
+            <LazyRoute path="/:lang/auth/youtube*" loader={GenerateYoutubeAuthLink}/>
             <LazyRoute exact path="/:lang" title="VideoWiki" loader={Home}/>
             <LazyRoute path="/:lang/logout" loader={Logout}/>
             <LazyRoute path="/:lang/reset/:email/:token" title="Reset Password" loader={ResetVerify} />
@@ -112,7 +113,7 @@ class Site extends Component {
             {/* static pages */}
             <Route path="/:lang/privacy" loader={Privacy}/>
             <Route path="/:lang/terms" loader={TermsAndConditions}/>
-
+        
             <LazyRoute title="VideoWiki: 404 Not found" loader={SiteNotFound}/>
           </Switch>
         </div>

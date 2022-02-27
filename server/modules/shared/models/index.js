@@ -4,6 +4,7 @@ import Video from './Video';
 import UploadFormTemplate from './UploadFormTemplate';
 import Humanvoice from './HumanVoice';
 import SocketConnection from './SocketConnection';
+import GlobalSettings from './GlobalSettings';
 
 export {
   User,
@@ -12,4 +13,5 @@ export {
   UploadFormTemplate,
   Humanvoice,
   SocketConnection,
+  GlobalSettings
 };

@@ -11,6 +11,9 @@ export const mount = (passport) => function(router) {
 
   router.get('/wikiCommons', passport.authenticate('wikiCommons'));
 
+  router.post('/youtube/authenticate/generate', controller.generateYoutubeAuthLink);
+  router.get('/youtube/authenticate/connect', controller.connectYoutubeChannel);
+
   return router;
 }
 
