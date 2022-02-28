@@ -76,7 +76,6 @@ const usersController = {
           }
           getChannel(token)
             .then(channelData => {
-              // PLYHwpd5J2fpI2AkKJS_BHDg83vzzhsWhi
               res.end(PopupTools.popupResponse({ channelData }))
             })
             .catch(err => {

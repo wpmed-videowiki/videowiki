@@ -96,7 +96,7 @@ export function uploadYoutubeVideo ({ playlistId, title, videoPath, token }) {
   const auth = new OAuth2(clientId, clientSecret, CALLBACK_URL)
   auth.credentials = token
   const service = google.youtube('v3')
-
+  let videoId = '';
   return service.videos
     .insert({
       auth,
@@ -115,34 +115,30 @@ export function uploadYoutubeVideo ({ playlistId, title, videoPath, token }) {
     })
     .then(({ data }) => {
       console.log('uploaded video', { data })
-      return new Promise((resolve) => {
-        // Arbitrary wait for youtube
+      videoId = data.id;
+      return new Promise((resolve, reject) => {
         setTimeout(() => {
-          service.playlistItems
-            .insert({
-              auth,
-              part: 'snippet',
-              requestBody: {
-                snippet: {
-                  playlistId,
-                  resourceId: {
-                    videoId: data.id,
-                    kind: 'youtube#video'
-                  }
+          service.playlistItems.insert({
+            auth,
+            part: 'snippet',
+            requestBody: {
+              snippet: {
+                playlistId,
+                resourceId: {
+                  videoId: data.id,
+                  kind: 'youtube#video'
                 }
               }
-            })
-            .then(resolve)
-            .catch(err => {
-              console.log(err)
-              return resolve()
-            })
-        }, 5000)
+            }
+          })
+          .then(resolve)
+          .catch(resolve)
+        }, 20 * 1000)
       })
     })
     .then(res => {
       console.dir({ res }, { depth: null })
 
-      return Promise.resolve()
+      return Promise.resolve(videoId)
     })
 }

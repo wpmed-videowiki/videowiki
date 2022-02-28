@@ -44,6 +44,8 @@ const VideoSchema = new Schema({
   derivatives: [DerivativeSchema],
   uploadRetryCount: { type: Number, default: 0 },
 
+  youtubeVideoId: String,
+
   created_at: { type: Date, default: Date.now, index: true },
   updated_at: { type: Date, default: Date.now },
 })
