@@ -22,7 +22,7 @@ const TOKEN_PATH = TOKEN_DIR + 'youtube-nodejs-quickstart.json'
 
 // Load client secrets from a local file.
 const credentials = JSON.parse(
-  fs.readFileSync('client_secret_videowiki.json', { encoding: 'utf-8' })
+  fs.readFileSync(process.env.OAUTH_CLIENT_CREDENTIALS, { encoding: 'utf-8' })
 )
 const clientSecret = credentials.web.client_secret
 const clientId = credentials.web.client_id
@@ -96,7 +96,7 @@ export function uploadYoutubeVideo ({ playlistId, title, videoPath, token }) {
   const auth = new OAuth2(clientId, clientSecret, CALLBACK_URL)
   auth.credentials = token
   const service = google.youtube('v3')
-  let videoId = '';
+  let videoId = ''
   return service.videos
     .insert({
       auth,
@@ -115,24 +115,25 @@ export function uploadYoutubeVideo ({ playlistId, title, videoPath, token }) {
     })
     .then(({ data }) => {
       console.log('uploaded video', { data })
-      videoId = data.id;
+      videoId = data.id
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          service.playlistItems.insert({
-            auth,
-            part: 'snippet',
-            requestBody: {
-              snippet: {
-                playlistId,
-                resourceId: {
-                  videoId: data.id,
-                  kind: 'youtube#video'
+          service.playlistItems
+            .insert({
+              auth,
+              part: 'snippet',
+              requestBody: {
+                snippet: {
+                  playlistId,
+                  resourceId: {
+                    videoId: data.id,
+                    kind: 'youtube#video'
+                  }
                 }
               }
-            }
-          })
-          .then(resolve)
-          .catch(resolve)
+            })
+            .then(resolve)
+            .catch(resolve)
         }, 20 * 1000)
       })
     })
