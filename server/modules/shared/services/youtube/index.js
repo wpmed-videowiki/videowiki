@@ -13,7 +13,7 @@ const SCOPES = [
 ]
 
 const CALLBACK_URL =
-  'http://localhost:4000/api/auth/youtube/authenticate/connect'
+  process.env.OAUTH_CALLBACK_URL || 'http://localhost:4000/api/auth/youtube/authenticate/connect'
 
 const TOKEN_DIR =
   (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) +
