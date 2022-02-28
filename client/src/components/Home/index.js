@@ -7,27 +7,27 @@ const links = [
   {
     icon: 'book',
     text: 'Script-writing',
-    link: 'https://en.wikipedia.org/wiki/Wikipedia:VideoWiki/Script-Writing',
+    link: 'https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Script-Writing',
   },
   {
     icon: 'microphone',
     text: 'Voice-over',
-    link: 'https://en.wikipedia.org/wiki/Wikipedia:VideoWiki/Voice-Over',
+    link: 'https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Voice-Over',
   },
   {
     icon: 'file video outline',
     text: 'Video Editing',
-    link: 'https://en.wikipedia.org/wiki/Wikipedia:VideoWiki/Video_Editing',
+    link: 'https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Video_Editing',
   },
   {
     icon: 'star',
     text: <p>Full Stack <br />Content Creator</p>,
-    link: 'https://en.wikipedia.org/wiki/Wikipedia:VideoWiki/Full_Stack_Content_Creator',
+    link: 'https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Full_Stack_Content_Creator',
   },
   {
     icon: 'translate',
     text: 'Translator',
-    link: 'https://en.wikipedia.org/wiki/Wikipedia:VideoWiki/Translators',
+    link: 'https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Translators',
   },
 ];
 
