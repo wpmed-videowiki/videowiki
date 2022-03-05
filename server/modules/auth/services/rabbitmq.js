@@ -52,7 +52,7 @@ function initRabbitMQ () {
 
         ch.consume(RABBITMQ_YT_TOKEN_QUEUE, msg => {
           console.log('RECEIVED YOUTUBE TOKEN', msg.content.toString())
-          utils.saveCrossWikiYoutubeToken(msg.content.toString())
+          utils.saveCrossWikiYoutubeToken(JSON.parse(msg.content.toString()))
           ch.ack(msg)
         })
       })

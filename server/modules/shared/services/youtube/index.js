@@ -13,7 +13,8 @@ const SCOPES = [
 ]
 
 const CALLBACK_URL =
-  process.env.OAUTH_CALLBACK_URL || 'http://localhost:4000/api/auth/youtube/authenticate/connect'
+  process.env.OAUTH_CALLBACK_URL ||
+  'http://localhost:4000/api/auth/youtube/authenticate/connect'
 
 const TOKEN_DIR =
   (process.env.HOME || process.env.HOMEPATH || process.env.USERPROFILE) +
@@ -32,7 +33,8 @@ const oauth2Client = new OAuth2(clientId, clientSecret, CALLBACK_URL)
 export function getNewTokenUrl () {
   const authUrl = oauth2Client.generateAuthUrl({
     access_type: 'offline',
-    scope: SCOPES
+    scope: SCOPES,
+    prompt: 'consent'
   })
   console.log('Authorize this app by visiting this url: ', authUrl)
   return authUrl
@@ -44,6 +46,23 @@ export function getTokenFromCode (code) {
       .getToken(code)
       .then(res => resolve(res.tokens))
       .catch(reject)
+  })
+}
+
+export function refreshToken (token) {
+  return new Promise((resolve, reject) => {
+    const auth = new OAuth2(clientId, clientSecret, CALLBACK_URL)
+
+    auth.credentials = token
+
+    auth.refreshToken(token.refresh_token).then(refresh => {
+      const newToken = {
+        ...token,
+        ...refresh.tokens
+      }
+      return resolve(newToken)
+    })
+    .catch(reject)
   })
 }
 

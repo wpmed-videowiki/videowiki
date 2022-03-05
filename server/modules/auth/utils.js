@@ -1,4 +1,6 @@
 import { GlobalSettings, User } from '../shared/models';
+import { refreshToken } from '../shared/services/youtube'
+
 const jwt = require('jsonwebtoken');
 const amqp = require('amqplib/callback_api');
 const RABBITMQ_AUTH_EXCHANGE = 'RABBITMQ_AUTH_EXCHANGE';
@@ -59,6 +61,20 @@ function saveCrossWikiYoutubeToken(token) {
    )
 }
 
+function refreshYoutubeToken() {
+  return new Promise((resolve, reject) => {
+    GlobalSettings.findOne({ key: 'youtube_token'}, (err, record) => {
+      if (err) return reject(err);
+      if (!record) return reject(new Error('No token set yet'))
+      refreshToken(JSON.parse(record.value))
+      .then((newToken) => {
+        saveCrossWikiYoutubeToken(newToken);
+        return resolve(newToken);
+      }).catch(reject)
+    })
+  })
+}
+
 function initRabbitMQ() {
   amqp.connect(process.env.RABBITMQ_SERVER, (err, conn) => {
     if (err) {
@@ -92,5 +108,6 @@ export default {
   signRequest,
   initRabbitMQ,
   signupCrossWikiUser,
-  saveCrossWikiYoutubeToken
+  saveCrossWikiYoutubeToken,
+  refreshYoutubeToken
 }
