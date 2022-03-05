@@ -17,7 +17,6 @@ var job = new CronJob({
     })
   },
   timeZone: 'Asia/Kolkata',
-  runOnInit: true,
 });
 
 // runBot(NumberOfArticlesPerUpdate)
