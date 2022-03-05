@@ -39,7 +39,6 @@ function initRabbitMQ () {
       })
 
       ch.assertExchange(RABBITMQ_YT_TOKEN_EXCHANGE, 'fanout', { durable: true })
-      ch.bindQueue(RABBITMQ_YT_TOKEN_QUEUE, RABBITMQ_YT_TOKEN_EXCHANGE, '')
 
       ch.assertQueue(RABBITMQ_YT_TOKEN_QUEUE, { durable: true }, err => {
         if (err) {
@@ -49,6 +48,7 @@ function initRabbitMQ () {
             err
           )
         }
+        ch.bindQueue(RABBITMQ_YT_TOKEN_QUEUE, RABBITMQ_YT_TOKEN_EXCHANGE, '')
 
         ch.consume(RABBITMQ_YT_TOKEN_QUEUE, msg => {
           console.log('RECEIVED YOUTUBE TOKEN', msg.content.toString())
