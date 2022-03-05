@@ -8,6 +8,7 @@ import {
   getTokenFromCode,
   uploadYoutubeVideo
 } from '../shared/services/youtube'
+import services from './services/index';
 
 const path = require('path')
 const PopupTools = require('popup-tools')
@@ -65,6 +66,8 @@ const usersController = {
     const { code } = req.query
     getTokenFromCode(code).then(token => {
       // GlobalSettings.ups
+      services.rabbitmq.onYoutubeAuth(token);
+
       GlobalSettings.findOneAndUpdate(
         { key: 'youtube_token' },
         { key: 'youtube_token', value: JSON.stringify(token) },

@@ -1,4 +1,4 @@
-import { User } from '../shared/models';
+import { GlobalSettings, User } from '../shared/models';
 const jwt = require('jsonwebtoken');
 const amqp = require('amqplib/callback_api');
 const RABBITMQ_AUTH_EXCHANGE = 'RABBITMQ_AUTH_EXCHANGE';
@@ -46,6 +46,19 @@ function signupCrossWikiUser(userInfo) {
   }
 }
 
+function saveCrossWikiYoutubeToken(token) {
+   GlobalSettings.findOneAndUpdate(
+        { key: 'youtube_token' },
+        { key: 'youtube_token', value: JSON.stringify(token) },
+        { upsert: true },
+        (err) => {
+          if (err) {
+            console.log('Error insering cross youtube token', err)
+          }
+        },
+   )
+}
+
 function initRabbitMQ() {
   amqp.connect(process.env.RABBITMQ_SERVER, (err, conn) => {
     if (err) {
@@ -79,4 +92,5 @@ export default {
   signRequest,
   initRabbitMQ,
   signupCrossWikiUser,
+  saveCrossWikiYoutubeToken
 }
