@@ -60,6 +60,13 @@ export function notifySlideAudioChange (content) {
   )
 }
 
+export function uploadConvertedToYoutube (videoId) {
+  converterChannel.sendToQueue(
+    UPDLOAD_CONVERTED_TO_YOUTUBE_QUEUE,
+    Buffer.from(JSON.stringify({ videoId }))
+  )
+}
+
 export default {
   convertArticle,
   notifyHumanvoiceExport
@@ -152,20 +159,29 @@ function onUploadConvertedToYoutube (msg) {
                     token,
                     title: `${video.article.title} - ${video.article.lang ||
                       video.article.langCode}`
-                  }).then(res => {
-                    youtubePlaylistId = res.data.id
-                    Article.findByIdAndUpdate(
-                      video.article._id,
-                      { youtubePlaylistId },
-                      err => {
-                        return resolve(youtubePlaylistId)
-                      }
-                    )
                   })
+                    .then(res => {
+                      youtubePlaylistId = res.data.id
+                      Article.findByIdAndUpdate(
+                        video.article._id,
+                        { youtubePlaylistId },
+                        err => {
+                          if (err) return reject(err)
+                          return resolve(youtubePlaylistId)
+                        }
+                      )
+                    })
+                    .catch(reject)
                 }
               })
                 .then(() => {
-                  console.log("Uploading video")
+                  VideoModel.findByIdAndUpdate(
+                    videoId,
+                    { youtubeUploadStatus: 'pending' },
+                    _ => {}
+                  )
+
+                  console.log('Uploading video')
                   return uploadYoutubeVideo({
                     token,
                     playlistId: youtubePlaylistId,
@@ -178,7 +194,7 @@ function onUploadConvertedToYoutube (msg) {
                   return new Promise((resolve, reject) => {
                     VideoModel.findByIdAndUpdate(
                       video._id,
-                      { youtubeVideoId },
+                      { youtubeVideoId, youtubeUploadStatus: 'uploaded' },
                       err => {
                         if (err) return reject(err)
                         return resolve()
@@ -193,13 +209,23 @@ function onUploadConvertedToYoutube (msg) {
                   converterChannel.ack(msg)
                 })
                 .catch(err => {
-                  console.log('1,', err)
+                  console.log('Failed to uplaod to youtube', err)
+                  VideoModel.findByIdAndUpdate(
+                    videoId,
+                    {
+                      youtubeUploadStatus: 'failed',
+                      youtubeUploadLastRetryAt: new Date(),
+                      youtubeUploadRetries:
+                        (video.youtubeUploadRetries || 0) + 1
+                    },
+                    _ => {}
+                  )
                   converterChannel.ack(msg)
                 })
             })
         })
         .catch(err => {
-          console.log('2',err)
+          console.log('2', err)
           converterChannel.ack(msg)
         })
     })
@@ -207,7 +233,7 @@ function onUploadConvertedToYoutube (msg) {
 
 setTimeout(() => {
   // converterChannel.sendToQueue(UPDLOAD_CONVERTED_TO_YOUTUBE_QUEUE,Buffer.from(JSON.stringify({ videoId: '621bd89acec3d120ddca1678' })))
-}, 5000);
+}, 5000)
 
 function onUploadConvertedToCommons (msg) {
   const { videoId } = JSON.parse(msg.content.toString())

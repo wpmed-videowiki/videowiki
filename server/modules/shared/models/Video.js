@@ -45,6 +45,9 @@ const VideoSchema = new Schema({
   uploadRetryCount: { type: Number, default: 0 },
 
   youtubeVideoId: String,
+  youtubeUploadStatus: { type: String, enum: ['pending', 'failed', 'uploaded'] },
+  youtubeUploadRetries: { type: Number, default: 0 },
+  youtubeUploadLastRetryAt: { type: Date, default: Date.now },
 
   created_at: { type: Date, default: Date.now, index: true },
   updated_at: { type: Date, default: Date.now },
