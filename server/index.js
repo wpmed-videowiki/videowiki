@@ -43,7 +43,6 @@ const socketConnection = websockets.createSocketConnection(server);
 socketConnection.on('connection', (socket) => {
   console.log('client connected', socket.id);
   setTimeout(() => {
-    console.log('sending heartbeat to ', socket.id);
     socket.emit(websocketsEvents.HEARTBEAT, { hello: 'world' });
   }, 5000);
   registerSocketHandlers.registerHandlers(socket, require('./modules/auth/websocketsHandlers').handlers)

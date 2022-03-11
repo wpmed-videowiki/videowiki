@@ -2,11 +2,9 @@ const jwt = require('jsonwebtoken')
 import uuidV4 from 'uuid/v4'
 import { GlobalSettings, User } from '../shared/models'
 import {
-  createPlaylist,
   getChannel,
   getNewTokenUrl,
   getTokenFromCode,
-  uploadYoutubeVideo
 } from '../shared/services/youtube'
 import services from './services/index';
 

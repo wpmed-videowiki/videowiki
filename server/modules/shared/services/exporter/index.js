@@ -185,8 +185,9 @@ function onUploadConvertedToYoutube (msg) {
                   return uploadYoutubeVideo({
                     token,
                     playlistId: youtubePlaylistId,
-                    title: `${video.article.title} - ${video.article.lang ||
+                    title: `${video.article.title.replace('Video:', '')} - ${video.article.lang ||
                       video.article.langCode} - Version ${video.version}`,
+                    description: `"Video summary of ${vidoe.article.title.replace('Video:', '')}. It is built from a collaboratively editable script whose text is under a CC BY SA 3.0/4.0 license. Join us! https://mdwiki.org/wiki/${video.article.title}`,
                     videoPath: filePath
                   })
                 })

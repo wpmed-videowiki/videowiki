@@ -111,7 +111,7 @@ export function createPlaylist ({ token, title }) {
   })
 }
 
-export function uploadYoutubeVideo ({ playlistId, title, videoPath, token }) {
+export function uploadYoutubeVideo ({ playlistId, title, description, videoPath, token }) {
   const auth = new OAuth2(clientId, clientSecret, CALLBACK_URL)
   auth.credentials = token
   const service = google.youtube('v3')
@@ -122,7 +122,8 @@ export function uploadYoutubeVideo ({ playlistId, title, videoPath, token }) {
       part: 'snippet,status',
       requestBody: {
         snippet: {
-          title
+          title,
+          description
         },
         status: {
           privacyStatus: 'public'
