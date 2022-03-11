@@ -70,11 +70,11 @@ class AddHumanVoiceModal extends React.Component {
         </ModalContent>
         <ModalActions>
           {this.props.skippable ? (
-            <Button onClick={() => this.props.onSkip()} >Use machine voice</Button>
+            <Button color="primary" onClick={() => this.props.onSkip()} >Use machine voice</Button>
           ) : (
             <Button onClick={this.props.onClose}>Cancel</Button>
           )}
-          <Button color="primary" onClick={() => this.props.onSubmit(this.state.language)} >Use your own voice</Button>
+          <Button onClick={() => this.props.onSubmit(this.state.language)} >Use your own voice</Button>
         </ModalActions>
       </Modal>
     )
