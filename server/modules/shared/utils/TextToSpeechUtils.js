@@ -210,7 +210,12 @@ const generateGoogleAudio = ({ text, langCode }, cb) => {
     } else {
       return cb('Something went wrong synthetizing speech');
     }
-  });
+  })
+  .catch(err => {
+    console.log('Generate Googele audio error', err);
+    return cb('Something went wrong synthetizing speech');
+  })
+  ;
 };
 
 const writeAudioStreamToS3 = (audioStream, filename, cb) => {
