@@ -24,30 +24,8 @@ class EditorReferences extends React.Component {
 
   getDecriptionUrl () {
     const { currentSlide, currentSubmediaIndex } = this.props
-    const thumbnailPath = currentSlide && currentSlide.media && currentSlide && currentSlide.media[currentSubmediaIndex] ? currentSlide.media[currentSubmediaIndex].url : null
-
-    if (!thumbnailPath) return null
-
-    // Check if it's a thumbnail image or not (can be a video/gif)
-    if (thumbnailPath.indexOf('thumb') > -1 ) {
-      const re = /(upload\.wikimedia\.org).*(commons\/thumb\/.*\/.*\/)/
-      const match = thumbnailPath.match(re)
-      if (match && match.length === 3) {
-        const pathParts = match[2].split('/')
-        // Remove trailing / character
-        pathParts.pop()
-        return `https://commons.wikimedia.org/wiki/File:${pathParts[pathParts.length - 1]}`
-      }
-    } else {
-      const re = /(upload\.wikimedia\.org).*(commons\/.*\/.*)/
-      const match = thumbnailPath.match(re)
-      if (match && match.length === 3) {
-        const pathParts = match[2].split('/')
-        return `https://commons.wikimedia.org/wiki/File:${pathParts[pathParts.length - 1]}`
-      }
-    }
-
-    return null
+    const descriptionUrl = currentSlide && currentSlide.media && currentSlide && currentSlide.media[currentSubmediaIndex] ? currentSlide.media[currentSubmediaIndex].descriptionurl : null
+    return descriptionUrl;
   }
 
   getAudioUrl () {
