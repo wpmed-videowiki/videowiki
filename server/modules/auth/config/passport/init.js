@@ -1,6 +1,7 @@
 // const login = require('./login')
 // const signup = require('./signup')
 const wiki = require('./wiki')
+const nccommons = require('./nccommons')
 // const User = require('../../models/User')
 
 export default {
@@ -17,6 +18,7 @@ export default {
     // login(passport)
     // signup(passport)
     wiki(passport)
+    nccommons(passport)
     return passport;
   },
 }

@@ -39,12 +39,29 @@ function signRequest(req, res, next) {
 
 function signupCrossWikiUser(userInfo) {
   if (userInfo) {
-    const { mediawikiId, username, mediawikiToken, mediawikiTokenSecret } = userInfo;
-    User.findOneAndUpdate({ mediawikiId }, { $set: { mediawikiId, username, mediawikiToken, mediawikiTokenSecret } }, { upsert: true, new: true }, (err, user) => {
-      if (err) {
-        return console.log('error creating cross authentication user ', err);
-      }
-    })
+    const {
+      username,
+      mediawikiId,
+      mediawikiToken,
+      mediawikiTokenSecret,
+      nccommonsId,
+      nccommonsToken,
+      nccommonsTokenSecret,
+    } = userInfo;
+
+    if (mediawikiId) {
+      User.findOneAndUpdate({ mediawikiId }, { $set: { mediawikiId, username, mediawikiToken, mediawikiTokenSecret } }, { upsert: true, new: true }, (err, user) => {
+        if (err) {
+          return console.log('error creating cross authentication user ', err);
+        }
+      })
+    } else if (nccommonsId) {
+      User.findOneAndUpdate({ nccommonsId }, { $set: { nccommonsId, username, nccommonsToken, nccommonsTokenSecret } }, { upsert: true, new: true }, (err, user) => {
+        if (err) {
+          return console.log('error creating cross authentication user ', err);
+        }
+      })
+    }
   }
 }
 

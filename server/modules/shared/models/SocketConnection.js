@@ -4,6 +4,7 @@ const Schema = mongoose.Schema
 
 const SocketConnectionSchema = new Schema({
   mediawikiId: { type: String },
+  nccommonsId: { type: String },
   anonymousId: { type: String },
   socketId: { type: String, required: true },
 

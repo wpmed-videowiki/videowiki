@@ -35,6 +35,25 @@ const usersController = {
           }
         )
       })
+    } else if (req.user && req.user.nccommonsId) {
+      User.findOne({ nccommonsId: req.user.nccommonsId }, (err, user) => {
+        if (err || !user || !user.nccommonsId) {
+          console.log('jwt error fetching user data token request ', err)
+          return res.send(401, 'Unauthorized!')
+        }
+        jwt.sign(
+          user.toObject(),
+          process.env.APP_SECRET,
+          { expiresIn: MONTH_TIME },
+          (err, token) => {
+            if (err) {
+              console.log('jwt error while refreshing token request ', err)
+              return res.send(401, 'Unauthorized!')
+            }
+            return res.json({ user, token })
+          }
+        )
+      })
     } else {
       const anonymId = req.headers['x-vw-anonymous-id'] || uuidV4()
       return res.json({ anonymousId: anonymId })

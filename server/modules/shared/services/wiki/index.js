@@ -170,7 +170,6 @@ export const getArticleMedia = function (title, wikiSource, callback) {
           if (!section.media) {
             section.media = []
           }
-          console.dir({ sections }, { depth: null })
           section.rawMedia.forEach(rawMedia => {
             rawMedia = rawMedia.replace(/\s/g, '_')
             if (titleThumbnailMap[rawMedia]) {
