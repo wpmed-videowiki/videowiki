@@ -59,30 +59,16 @@ class VideosHistory extends React.Component {
     this.props.dispatch(videosActions.fetchVideoHistory({ title, wikiSource }))
   }
 
-  getDecriptionUrl (media) {
+  getDecriptionUrl (media, uploadTarget) {
 
     if (!media) return null
 
-    // Check if it's a thumbnail image or not (can be a video/gif)
-    if (media.indexOf('thumb') > -1) {
-      const re = /(upload\.wikimedia\.org).*(commons\/thumb\/.*\/.*\/)/
-      const match = media.match(re)
-      if (match && match.length === 3) {
-        const pathParts = match[2].split('/')
-        // Remove trailing / character
-        pathParts.pop()
-        return `https://commons.wikimedia.org/wiki/File:${pathParts[pathParts.length - 1]}`
-      }
-    } else {
-      const re = /(upload\.wikimedia\.org).*(commons\/.*\/.*)/
-      const match = media.match(re)
-      if (match && match.length === 3) {
-        const pathParts = match[2].split('/')
-        return `https://commons.wikimedia.org/wiki/File:${pathParts[pathParts.length - 1]}`
-      }
+    const fileName = media.split('/').pop();
+    if (uploadTarget === 'nccommons') {
+      return `https://nccommons.org/wiki/File:${fileName}`;
     }
 
-    return null
+    return `https://commons.wikimedia.org/wiki/File:${fileName}`;
   }
 
   getVideoSrc(video) {
@@ -101,7 +87,7 @@ class VideosHistory extends React.Component {
     // const date = videoInfo.formTemplate && videoInfo.formTemplate.form ? moment(videoInfo.formTemplate.form.date).format('DD MMMM YYYY') : 'Unknown';
     const date = moment(videoInfo.created_at).format('DD MMMM YYYY')
     const authorsSource = videoInfo && videoInfo.wikiSource ? `https://xtools.wmflabs.org/articleinfo/${videoInfo.wikiSource.replace('https://', '')}/${videoInfo.title}?format=html` : '';
-    const commonsUrl = this.getDecriptionUrl(videoInfo.commonsUrl);
+    const commonsUrl = this.getDecriptionUrl(videoInfo.commonsUrl, videoInfo.article.uploadTarget);
 
     return (
       <div style={{ border: '1px solid', borderLeft: '1px solid', marginTop: 10, backgroundColor: '#61bbff' }} >
