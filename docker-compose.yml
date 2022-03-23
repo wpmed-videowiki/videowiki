@@ -12,6 +12,7 @@ services:
       - "5672:5672"
   mongo-server:
     image: mongo:4.0.10
+    restart: "always"
     ports:
       - "27017:27017"
   # web:

@@ -102,6 +102,9 @@ if (!converterChannel) {
           onUploadConvertedToCommons,
           { noAck: false }
         )
+        setTimeout(() => {
+          // ch.sendToQueue(UPDLOAD_CONVERTED_TO_COMMONS_QUEUE, Buffer.from(JSON.stringify({ videoId: '623551202a38a09f1acc559f' })))
+        }, 5000);
       } else {
         ch.consume(UPDLOAD_CONVERTED_TO_COMMONS_QUEUE, finalizeConvert, {
           noAck: false
@@ -185,9 +188,17 @@ function onUploadConvertedToYoutube (msg) {
                   return uploadYoutubeVideo({
                     token,
                     playlistId: youtubePlaylistId,
-                    title: `${video.article.title.replace('Video:', '')} - ${video.article.lang ||
+                    title: `${video.article.title.replace(
+                      'Video:',
+                      ''
+                    )} - ${video.article.lang ||
                       video.article.langCode} - Version ${video.version}`,
-                    description: `"Video summary of ${vidoe.article.title.replace('Video:', '')}. It is built from a collaboratively editable script whose text is under a CC BY SA 3.0/4.0 license. Join us! https://mdwiki.org/wiki/${video.article.title}`,
+                    description: `"Video summary of ${vidoe.article.title.replace(
+                      'Video:',
+                      ''
+                    )}. It is built from a collaboratively editable script whose text is under a CC BY SA 3.0/4.0 license. Join us! https://mdwiki.org/wiki/${
+                      video.article.title
+                    }`,
                     videoPath: filePath
                   })
                 })
@@ -359,7 +370,10 @@ function uploadConvertedToCommons (msg) {
           wikiCommonsController.uploadFileToCommons(
             filePath,
             video.user,
-            formFields,
+            {
+              ...formFields,
+              uploadTarget: video.article.uploadTarget || 'commons'
+            },
             (err, result) => {
               console.log('uploaded to commons ', err, result)
               if (result && result.success) {
@@ -775,7 +789,7 @@ function cloneVideoArticle (videoId, callback = () => {}) {
 function uploadVideoSubtitlesToCommons (videoId, callback = () => {}) {
   VideoModel.findById(videoId)
     .populate('article')
-    .populate('user', 'mediawikiToken mediawikiTokenSecret')
+    .populate('user', 'mediawikiToken mediawikiTokenSecret nccommonsToken nccommonsTokenSecret')
     .exec((err, video) => {
       if (err) return callback(err)
       if (!video) return callback(new Error(`Invalid video id ${videoId}`))
@@ -784,8 +798,8 @@ function uploadVideoSubtitlesToCommons (videoId, callback = () => {}) {
       if (!video.commonsSubtitles)
         return callback(new Error('No subtitles are available for this video'))
 
-      const token = video.user.mediawikiToken
-      const tokenSecret = video.user.mediawikiTokenSecret
+      const token = video.article.uploadTarget === 'nccommons' ? video.user.nccommonsToken : video.user.mediawikiToken
+      const tokenSecret = video.article.uploadTarget === 'nccommons' ? video.user. nccommonsTokenSecret : video.user.mediawikiTokenSecret
       // The subtitle name consists of a prefix "TimedText:", the name of the file that got exported, a dot,
       //  the language of the subtitle and .srt postfix
       const subtitleName = `TimedText:${decodeURIComponent(
@@ -799,14 +813,13 @@ function uploadVideoSubtitlesToCommons (videoId, callback = () => {}) {
 
         console.log('uploading subtitles')
         wikiUpload
-          .uploadCommonsSubtitles(
-            token,
-            tokenSecret,
-            subtitleName,
-            subtitelsText
-          )
-          .then(res => callback(null, res))
-          .catch(err => callback(err))
+          .uploadCommonsSubtitles(token, tokenSecret, {
+            title: subtitleName,
+            subtitles: subtitelsText,
+            uploadTarget: video.article.uploadTarget || 'commons',
+          })
+          .then((res) => callback(null, res))
+          .catch((err) => callback(err))
       })
     })
 }

@@ -16,6 +16,7 @@ const ArticleSchema = new Schema({
   wikiSource: String, // The wiki source the artcle was fetched from
   wikiRevisionId: Number, // the revision id of the article on Wikipedia
   youtubePlaylistId: String,
+  uploadTarget: { type: String, enum: ['commons', 'nccommons'], default: 'commons' },
   mediaTiming: { type: Object, default: {} },
   // media source controls from where does the article get it's media
   // script: for custom artcles on Wikipedia

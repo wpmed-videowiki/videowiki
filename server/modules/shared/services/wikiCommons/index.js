@@ -181,6 +181,7 @@ function uploadFileToCommons(fileUrl, user, formFields, callback) {
     comment,
     date,
     customLicence,
+    uploadTarget,
   } = formFields
   let file;
   const errors = []
@@ -219,27 +220,40 @@ function uploadFileToCommons(fileUrl, user, formFields, callback) {
     console.log(errors)
     return callback(errors.join(', '))
   }
-
   if (file) {
     const uploadFuncArray = []
     let token, tokenSecret
     // convert file
     uploadFuncArray.push((cb) => {
       console.log('Logging in wikimedia')
+      const userQuery = uploadTarget === 'nccommons' ? { nccommonsId: user.nccommonsId } : { mediawikiId: user.mediawikiId }
       User
-        .findOne({ mediawikiId: user.mediawikiId })
-        .select('mediawikiToken mediawikiTokenSecret')
+        .findOne(userQuery)
+        .select('mediawikiToken mediawikiTokenSecret nccommonsToken nccommonsTokenSecret')
         .exec((err, userInfo) => {
+          console.log({ userInfo })
           if (err) {
             cb('Something went wrong')
             return callback('Something went wrong, please try again')
           }
-          if (!userInfo || !userInfo.mediawikiToken || !userInfo.mediawikiTokenSecret) {
-            cb('You need to login first');
-            return callback('You need to login first');
+          if (uploadTarget === 'nccommons') {
+            if (uploadTarget === 'nccommons' && (!userInfo || !userInfo.nccommonsToken || !userInfo.nccommonsTokenSecret)) {
+              cb('You need to login to nccommons first');
+              return callback('You need to login to nccommons first');
+            }
+          } else {
+            if (!userInfo || !userInfo.mediawikiToken || !userInfo.mediawikiTokenSecret) {
+              cb('You need to login first');
+              return callback('You need to login first');
+            }
+          } 
+          if (uploadTarget === 'nccommons') {
+            token = userInfo.nccommonsToken;
+            tokenSecret = userInfo.nccommonsTokenSecret;
+          } else {
+            token = userInfo.mediawikiToken;
+            tokenSecret = userInfo.mediawikiTokenSecret;
           }
-          token = userInfo.mediawikiToken
-          tokenSecret = userInfo.mediawikiTokenSecret
           cb()
         })
     })
@@ -266,6 +280,7 @@ function uploadFileToCommons(fileUrl, user, formFields, callback) {
           filename: fileTitle,
           comment: comment || '',
           text: pageText,
+          uploadTarget,
         },
       ).then((result) => {
         if (result.result && result.result.toLowerCase() === 'success') {
@@ -277,7 +292,7 @@ function uploadFileToCommons(fileUrl, user, formFields, callback) {
           const wikiFileName = `File:${result.filename}`;
 
           setTimeout(() => {
-            wikiUpload.updateWikiArticleText(token, tokenSecret, wikiFileName, pageText, (err, result) => {
+            wikiUpload.updateWikiArticleText(token, tokenSecret, { title: wikiFileName, text: pageText, uploadTarget }, (err, result) => {
               if (err) {
                 console.log('error updating file info', err);
               }

@@ -763,7 +763,15 @@ const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
             }
           }
         }
-        const articleUpdate = { slides: article.slides, slidesHtml: article.slidesHtml };
+        const articleUpdate = { slides: article.slides, slidesHtml: article.slidesHtml, uploadTarget: 'commons' };
+        // check if some medias came from nccommons
+        // if so, target upload should be nccommons not commons
+        const isNCUpload = (article.slides || []).some((slide) => (slide.media || []).some((media) => (media.url || '').includes('nccommons.org')));
+
+        if (isNCUpload) {
+          articleUpdate.uploadTarget = 'nccommons';
+        }
+
         if (modified) {
           articleUpdate.version = new Date().getTime();
           console.log('version update');
