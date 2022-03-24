@@ -112,8 +112,11 @@ export function createPlaylist ({ token, title }) {
 }
 
 export function uploadYoutubeVideo ({ playlistId, title, description, videoPath, token }) {
+  console.log('before auth')
   const auth = new OAuth2(clientId, clientSecret, CALLBACK_URL)
+  console.log('after auth')
   auth.credentials = token
+  console.log('after credentials')
   const service = google.youtube('v3')
   let videoId = ''
   console.log('Starting upload');
