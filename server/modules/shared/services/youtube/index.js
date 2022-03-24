@@ -116,6 +116,7 @@ export function uploadYoutubeVideo ({ playlistId, title, description, videoPath,
   auth.credentials = token
   const service = google.youtube('v3')
   let videoId = ''
+  console.log('Starting upload');
   return service.videos
     .insert({
       auth,
