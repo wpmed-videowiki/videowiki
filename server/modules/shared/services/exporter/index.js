@@ -187,7 +187,7 @@ function onUploadConvertedToYoutube (msg) {
                     _ => {}
                   )
 
-                  console.log('Uploading video')
+                  console.log('Uploading video to playlist', youtubePlaylistId)
                   return uploadYoutubeVideo({
                     token,
                     playlistId: youtubePlaylistId,
@@ -196,7 +196,7 @@ function onUploadConvertedToYoutube (msg) {
                       ''
                     )} - ${video.article.lang ||
                       video.article.langCode} - Version ${video.version}`,
-                    description: `"Video summary of ${vidoe.article.title.replace(
+                    description: `Video summary of ${video.article.title.replace(
                       'Video:',
                       ''
                     )}. It is built from a collaboratively editable script whose text is under a CC BY SA 3.0/4.0 license. Join us! https://mdwiki.org/wiki/${
