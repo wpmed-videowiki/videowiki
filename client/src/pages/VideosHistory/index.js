@@ -111,7 +111,14 @@ class VideosHistory extends React.Component {
             {videoInfo.youtubeVideoId ? (
               <a target="_blank" href={`https://www.youtube.com/watch?v=${videoInfo.youtubeVideoId}`}>{`https://www.youtube.com/watch?v=${videoInfo.youtubeVideoId}`}</a>
             ) : (
-              <Button primary loading={['queued', 'processing'].includes(videoInfo.youtubeUploadStatus)} onClick={() => this.retryYoutubeUpload(videoInfo)} >Retry Upload</Button>
+              <Button
+                primary
+                disabled={['queued', 'processing'].includes(videoInfo.youtubeUploadStatus)}
+                loading={['queued', 'processing'].includes(videoInfo.youtubeUploadStatus)}
+                onClick={() => this.retryYoutubeUpload(videoInfo)}
+              >
+                  Retry Upload
+              </Button>
             )}
           </div>
         </div>
