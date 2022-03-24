@@ -63,7 +63,8 @@ export function notifySlideAudioChange (content) {
 export function uploadConvertedToYoutube (videoId) {
   converterChannel.sendToQueue(
     UPDLOAD_CONVERTED_TO_YOUTUBE_QUEUE,
-    Buffer.from(JSON.stringify({ videoId }))
+    Buffer.from(JSON.stringify({ videoId })),
+    { persistent: true }
   )
 }
 
@@ -118,11 +119,13 @@ function onUploadConvertedToYoutube (msg) {
   const { videoId } = JSON.parse(msg.content.toString())
   console.log('received a request to upload ', videoId)
   // return converterChannel.ack(msg);
+  VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'processing' } })
   VideoModel.findById(videoId)
     .populate('article')
     .exec((err, video) => {
       if (err) {
         console.log(err)
+        VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } }, (err) => {})
         return converterChannel.ack(msg)
       }
       let token = ''
@@ -237,6 +240,7 @@ function onUploadConvertedToYoutube (msg) {
             })
         })
         .catch(err => {
+          VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } }, (err) => {})
           console.log('2', err)
           converterChannel.ack(msg)
         })
@@ -440,10 +444,7 @@ function uploadConvertedToCommons (msg) {
                           // Delete video from AWS since it's now on commons
                           // converterChannel.sendToQueue(DELETE_AWS_VIDEO, new Buffer(JSON.stringify({ videoId })));
                           // Upload video to youtube
-                          converterChannel.sendToQueue(
-                            UPDLOAD_CONVERTED_TO_YOUTUBE_QUEUE,
-                            Buffer.from(JSON.stringify({ videoId }))
-                          )
+                          uploadConvertedToYoutube(videoId);
                         }
                         if (uploadedFileName) {
                           if (

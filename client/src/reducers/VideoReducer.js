@@ -55,6 +55,19 @@ const handlers = {
       videos: [],
     },
   }),
+  [actions.RETRY_YOUTUBE_UPLOAD_RECEIVE]: (state, action) => {
+    // const {} = state;
+    const videoIndex = state.videosHistory.videos.findIndex(video => video._id === action.videoId);
+    const videos = state.videosHistory.videos.slice();
+    videos[videoIndex].youtubeUploadStatus = action.youtubeUploadStatus; 
+
+    return mergeImmutable(state, {
+      videosHistory: {
+        ...state.videosHistory,
+        videos,
+      },
+    })
+  },
   [actions.CLEAR_VIDEO]: () =>
     JSON.parse(JSON.stringify(initialState)),
   [actions.FETCH_VIDEO_REQUEST]: (state) =>

@@ -6,6 +6,7 @@ import { checkExportableArticle } from '../shared/middlewares/checkExportableArt
 const mount = function(router) {
   router.get('/history', controller.getVideoHistory);
   router.post('/convert', isAuthenticated, checkExportableArticle, saveTemplate, controller.exportVideo);
+  router.post('/:id/youtube_retry', controller.retryYoutubeUpload);
   router.get('/by_article_title', controller.getVideoByArticleTitle);
   router.get('/by_article_id/:articleId', controller.getVideoByArticleId);
   router.get('/by_article_version/:version', controller.getVideoByArticleVersion);

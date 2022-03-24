@@ -1,5 +1,5 @@
 import { Article, Video as VideoModel, UploadFormTemplate as UploadFormTemplateModel, Humanvoice as HumanVoiceModel } from '../shared/models';
-import { convertArticle } from '../shared/services/exporter';
+import { convertArticle, uploadConvertedToYoutube } from '../shared/services/exporter';
 import { fetchArticleContributors, getCustomVideowikiSubpageName, getLanguageFromWikisource } from '../shared/services/wiki';
 import moment from 'moment';
 
@@ -189,6 +189,33 @@ const controller = {
       })
 
     })
+  },
+
+  retryYoutubeUpload(req, res) {
+    const { id } = req.params;
+    VideoModel.findById(id, (err, video) => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send('Something went wrong');
+      }
+      if (video.youtubeVideoId) {
+        return res.status(400).send('Video is already uploaded');
+      }
+      if (['queued', 'processing'].includes(video.youtubeUploadStatus)) {
+        return res.status(400).send('Video is being uploaded');
+      }
+      uploadConvertedToYoutube(video._id);
+
+      VideoModel.findByIdAndUpdate(video._id,
+        { $set: { youtubeUploadStatus: 'queued', youtubeUploadRetries: 0 } },
+        (err) => {
+          if (err) {
+            console.log(err);
+          }
+
+          return res.json({ youtubeUploadStatus: 'queued' })
+      })
+    });
   },
 
   getVideoByArticleTitle(req, res) {

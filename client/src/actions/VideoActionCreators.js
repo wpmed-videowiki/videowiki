@@ -18,5 +18,6 @@ registerAction('CLEAR_VIDEO')
 registerAsyncAction(VideoApi, 'exportArticleToVideo')
 registerAsyncAction(VideoApi, 'fetchVideoHistory');
 registerAsyncAction(VideoApi, 'fetchVideo');
+registerAsyncAction(VideoApi, 'retryYoutubeUpload');
 
 export default actions

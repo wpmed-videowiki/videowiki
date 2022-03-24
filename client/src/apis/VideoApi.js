@@ -29,8 +29,21 @@ function fetchVideo({ id }) {
     .catch((reason) => { throw { error: 'FAILED', reason } });
 }
 
+function retryYoutubeUpload({ videoId }) {
+  const url = `/api/videos/${videoId}/youtube_retry`;
+  return httpPost(url)
+  .then(
+    ({ body }) => ({
+      videoId,
+      youtubeUploadStatus: body.youtubeUploadStatus,
+    }),
+  )
+  .catch((reason) => { throw { error: 'FAILED', reason } })
+}
+
 export default {
   exportArticleToVideo,
   fetchVideoHistory,
+  retryYoutubeUpload,
   fetchVideo,
 }

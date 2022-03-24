@@ -3,7 +3,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import querystring from 'querystring';
 import moment from 'moment';
-import { Container, Grid } from 'semantic-ui-react';
+import { Container, Grid, Button } from 'semantic-ui-react';
 
 import StateRenderer from '../../components/common/StateRenderer';
 import Editor from '../../components/Editor';
@@ -83,6 +83,10 @@ class VideosHistory extends React.Component {
     return video.commonsUploadUrl || video.commonsUrl || video.url;
   }
 
+  retryYoutubeUpload(video) {
+    this.props.dispatch(videosActions.retryYoutubeUpload({ videoId: video._id }))
+  }
+
   _renderFileInfo(videoInfo) {
     // const date = videoInfo.formTemplate && videoInfo.formTemplate.form ? moment(videoInfo.formTemplate.form.date).format('DD MMMM YYYY') : 'Unknown';
     const date = moment(videoInfo.created_at).format('DD MMMM YYYY')
@@ -101,6 +105,18 @@ class VideosHistory extends React.Component {
           </div>
         )}
         <div style={{ content: '', clear: 'both' }} ></div>
+        <div style={{ ...styles.container, height: 50 }}>
+          <div style={{ ...styles.title, height: '120%' }}>Youtube URL</div>
+          <div style={styles.description}>
+            {videoInfo.youtubeVideoId ? (
+              <a target="_blank" href={`https://www.youtube.com/watch?v=${videoInfo.youtubeVideoId}`}>{`https://www.youtube.com/watch?v=${videoInfo.youtubeVideoId}`}</a>
+            ) : (
+              <Button primary loading={['queued', 'processing'].includes(videoInfo.youtubeUploadStatus)} onClick={() => this.retryYoutubeUpload(videoInfo)} >Retry Upload</Button>
+            )}
+          </div>
+        </div>
+        <div style={{ content: '', clear: 'both' }} ></div>
+
         <div style={{ ...styles.container }}>
           <div style={{ ...styles.title }}>Download</div>
           <div style={styles.description}>
