@@ -162,4 +162,8 @@ export function uploadYoutubeVideo ({ playlistId, title, description, videoPath,
 
       return Promise.resolve(videoId)
     })
+    .catch(err => {
+      console.log(err);
+      throw err
+    })
 }
