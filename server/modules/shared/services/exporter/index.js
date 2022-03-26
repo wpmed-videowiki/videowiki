@@ -13,6 +13,8 @@ import moment from 'moment'
 import rabbitmqService from '../../vendors/rabbitmq'
 import { SUPPORTED_TTS_LANGS } from '../../constants'
 import { createPlaylist, uploadYoutubeVideo } from '../youtube'
+import * as websocketsService from '../../vendors/websockets';
+import { UPLOAD_YOUTUBE_FINISH } from '../../vendors/websockets/events'
 
 const console = process.console
 const fs = require('fs')
@@ -221,9 +223,11 @@ function onUploadConvertedToYoutube (msg) {
                   console.log(
                     `${video.title} - ${video.version}: Finished uploading to youtube`
                   )
+                  websocketsService.socketConnection.emit(UPLOAD_YOUTUBE_FINISH(video.article._id), { success: true });
                   converterChannel.ack(msg)
                 })
                 .catch(err => {
+                  websocketsService.socketConnection.emit(UPLOAD_YOUTUBE_FINISH(`${video.article.title}_${video.article.wikiSource}`), { success: false });
                   console.log('Failed to uplaod to youtube', err)
                   VideoModel.findByIdAndUpdate(
                     videoId,
@@ -241,6 +245,7 @@ function onUploadConvertedToYoutube (msg) {
         })
         .catch(err => {
           VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } }, (err) => {})
+          websocketsService.socketConnection.emit(UPLOAD_YOUTUBE_FINISH(`${video.article.title}_${video.article.wikiSource}`), { success: false });
           console.log('2', err)
           converterChannel.ack(msg)
         })

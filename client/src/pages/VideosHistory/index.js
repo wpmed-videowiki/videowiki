@@ -11,6 +11,7 @@ import Editor from '../../components/Editor';
 import fileUtils from '../../utils/fileUtils';
 import { isoLangs } from '../../utils/langs';
 import videosActions from '../../actions/VideoActionCreators';
+import websockets from '../../websockets';
 
 const styles = {
   container: {
@@ -56,7 +57,16 @@ class VideosHistory extends React.Component {
   componentWillMount() {
     const { title } = this.props.match.params;
     const { wikiSource } = querystring.parse(location.search.replace('?', ''))
-    this.props.dispatch(videosActions.fetchVideoHistory({ title, wikiSource }))
+    this.props.dispatch(videosActions.fetchVideoHistory({ title, wikiSource }));
+    websockets.subscribeToEvent(websockets.websocketsEvents.UPLOAD_YOUTUBE_FINISH(`${title}_${wikiSource}`), (data) => {
+      this.props.dispatch(videosActions.fetchVideoHistory({ title, wikiSource }));
+    });
+  }
+
+  componentWillUnmount() {
+    const { title } = this.props.match.params;
+    const { wikiSource } = querystring.parse(location.search.replace('?', ''))
+    websockets.unsubscribeFromEvent(websockets.websocketsEvents.UPLOAD_YOUTUBE_FINISH(`${title}_${wikiSource}`));
   }
 
   getDecriptionUrl (media, uploadTarget) {
