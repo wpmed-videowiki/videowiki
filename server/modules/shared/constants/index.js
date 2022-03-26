@@ -38,6 +38,7 @@ export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
   kn: 'ವಿಕಿಪೀಡಿಯಾ:ವಿಡಿಯೋವಿಕಿ/',
   ml: 'വിക്കിപീഡിയ:വീഡിയോവിക്കി/',
   ta: 'விக்கிபீடியா:வீடியோவிக்கி/',
+  eu: 'Wikipedia:Videowiki/'
 };
 
 export const customVideowikiPrefixes = Object.keys(
@@ -111,6 +112,7 @@ export const SECTIONS_BLACKLIST = {
   kn: [],
   ml: [],
   ta: [],
+  eu: ['Erreferentziak'],
 };
 
 export const SLIDES_BLACKLIST = {
@@ -131,6 +133,7 @@ export const SLIDES_BLACKLIST = {
   kn: [],
   ml: [],
   ta: [],
+  eu: [],
 };
 
 export const FILE_MATCH_REGEX = {
@@ -171,6 +174,7 @@ export const FILE_PREFIXES = {
   kn: 'File:',
   ml: 'File:',
   ta: 'File:',
+  eu: 'File:',
 };
 
 export const SUPPORTED_TTS_LANGS = [

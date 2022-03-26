@@ -20,6 +20,7 @@ module.exports = {
     kn: `${PROTOCOL}//localhost:4015`,
     ml: `${PROTOCOL}//localhost:4016`,
     ta: `${PROTOCOL}//localhost:4017`,
+    eu: `${PROTOCOL}//localhost:4018`,
   },
   AVAILABLE_LANGUAGES: [
     'en',
@@ -40,6 +41,7 @@ module.exports = {
     'kn',
     'ml',
     'ta',
+    'eu',
   ],
   SUPPORTED_TTS_LANGS: [
     'en',

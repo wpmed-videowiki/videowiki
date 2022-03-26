@@ -77,6 +77,7 @@ export const LANG_CODES = {
   kn: 'kn-IN',
   ml: 'ml-IN',
   ta: 'ta-IN',
+  eu: 'eu-ES',
 };
 
 const CODES_VOICES_MAP = {

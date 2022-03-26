@@ -108,6 +108,11 @@ const LANG_OPTIONS = [
     value: 'ta',
     key: 'ta',
   },
+  {
+    text: 'EU ( Basque )',
+    value: 'eu',
+    key: 'eu',
+  }
 ];
 
 const styles = {

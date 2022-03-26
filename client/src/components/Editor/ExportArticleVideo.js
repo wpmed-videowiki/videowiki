@@ -275,6 +275,7 @@ class ExportArticleVideo extends React.Component {
         <AuthModal
           open={this.state.isLoginModalVisible}
           heading="Only logged in users can export videos to Commons"
+          target={article.uploadTarget}
           onClose={() => this.setState({ isLoginModalVisible: false })}
         />
 
