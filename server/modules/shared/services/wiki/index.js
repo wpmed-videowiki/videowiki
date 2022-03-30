@@ -573,7 +573,7 @@ function parseReadShow (text) {
 
 export function getSectionWikiContent (title, wikiSource, callback) {
   getWikiContentFromWiki(title, wikiSource, (err, text) => {
-    console.log('after getWikiContentFromWiki ')
+    console.log('after getWikiContentFromWiki ', err)
     if (err) {
       return callback(err)
     }
