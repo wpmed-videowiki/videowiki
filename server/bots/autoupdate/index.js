@@ -588,6 +588,9 @@ function diffCustomArticleSections(article, callback) {
           // Remove consumed readShow parts
           deletedRsIndexes.reverse().forEach((i) => slideSection.readShow.splice(i, 1));
         }
+        if (slideSection.templates) {
+          slide.templates = slideSection.templates;
+        }
         const matchingSlide = findMatchingSlide(article.slides, slide);
         // const matchingSlide = article.slides.find((s) => noramalizeText(s.text.trim()).trim() === noramalizeText(slide.text.trim()).trim());
 
