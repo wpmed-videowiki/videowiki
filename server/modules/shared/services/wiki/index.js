@@ -503,7 +503,7 @@ function getWikiContentFromWiki (title, wikiSource, callback) {
   fetchArticleRevisionId(title, wikiSource, (err, revid) => {
     if (err) return callback(err)
     const cirrusdocUrl = `${wikiSource}/w/api.php?action=query&format=json&prop=cirrusbuilddoc&revids=${revid}&redirects&formatversion=2`
-    const visualEditorUrl = `${wikiSource}/w/api.php?action=visualeditor&format=json&page=${title}&paction=wikitext&oldid=${revid}&formatversion=2`
+    const visualEditorUrl = `${wikiSource}/w/api.php?action=visualeditor&format=json&page=${encodeURI(title)}&paction=wikitext&oldid=${revid}&formatversion=2`
 
     const url =
       wikiSource === 'https://mdwiki.org' ? visualEditorUrl : cirrusdocUrl
