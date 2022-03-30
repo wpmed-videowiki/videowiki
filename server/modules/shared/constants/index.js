@@ -115,8 +115,13 @@ export const SECTIONS_BLACKLIST = {
   eu: ['Erreferentziak'],
 };
 
+export const CUSTOM_TEMPLATES = {
+  PLAYALL: 'VW Playall',
+  OPENSTREET_VIDEOZOOM: 'VideoZoom'
+}
+
 export const SLIDES_BLACKLIST = {
-  en: ['template:info videowiki'],
+  en: ['template:info videowiki', 'Template:VW Playall', 'Template:VideoZoom'],
   hi: [],
   fr: [],
   es: [],

@@ -299,7 +299,6 @@ export function getTextFromWiki (wikiSource, title, callback) {
   const url = `${wikiSource}/w/api.php?action=query&format=json&prop=extracts&titles=${encodeURI(
     title
   )}&explaintext=1&exsectionformat=wiki&redirects`
-  // console.log('url is ', url);
   request(url, (err, response, body) => {
     if (err) {
       return callback(err)
@@ -329,6 +328,41 @@ export function getTextFromWiki (wikiSource, title, callback) {
   })
 }
 
+export function getWikiTextFromWiki(wikiSource, title, callback) {
+  // https://mdwiki.org/w/api.php?action=query&format=json&prop=revisions&titles=Video:Sandbox&rvslots=*&rvprop=content&redirects
+  const url = `${wikiSource}/w/api.php?action=query&format=json&prop=revisions&titles=${encodeURI(
+    title
+  )}&rvslots=*&rvprop=content&redirects`
+  // console.log('url is ', url);
+  request(url, (err, response, body) => {
+    if (err) {
+      return callback(err)
+    }
+    // console.log('response is ', body, response)
+
+    body = JSON.parse(body)
+
+    if (body && body.query) {
+      const { pages } = body.query
+      let extract = ''
+
+      if (pages) {
+        for (const page in pages) {
+          if (pages.hasOwnProperty(page)) {
+            extract = pages[page]['revisions'][0]['slots']['main']['*'];
+            break
+          }
+        }
+        callback(null, extract)
+      } else {
+        callback(null, '')
+      }
+    } else {
+      callback(null, '')
+    }
+  })
+}
+
 export function getSectionsFromWiki (wikiSource, title, callback) {
   const url = `${wikiSource}/w/api.php?action=parse&format=json&page=${encodeURI(
     title
@@ -344,29 +378,40 @@ export function getSectionsFromWiki (wikiSource, title, callback) {
       title: 'Overview',
       toclevel: 1,
       tocnumber: '',
-      index: 0
+      index: 0,
     }
 
     if (body && body.parse) {
       const { sections } = body.parse
-
-      const parsedSections = sections.map(section => {
-        const { line } = section
-        const regex = /(<([^>]+)>)/gi
-
-        const s = {
-          title: line.replace(regex, ''),
-          toclevel: section.toclevel,
-          tocnumber: section.number,
-          index: section.index
+      getWikiTextFromWiki(wikiSource, title, (err, wikiText) => {
+        if (err) {
+          console.log(err)
         }
+        let sectionsRaw = [];
+        if (wikiText) {
+          sectionsRaw = wikiText.split(/\=+[A-Za-z\s\d]+?\=+/gm);
+        };
+        const parsedSections = sections.map(section => {
+          const { line } = section
+          const regex = /(<([^>]+)>)/gi
 
-        return s
+          const s = {
+            title: line.replace(regex, ''),
+            toclevel: section.toclevel,
+            tocnumber: section.number,
+            index: section.index,
+            wikiText: sectionsRaw[parseInt(section.index, 10)]
+          }
+
+          s.templates = (s.wikiText || '').match(/{{VW.+?}}/gm) || [];
+
+          return s
+        })
+
+        const allSections = [introSection].concat(parsedSections)
+
+        callback(null, allSections)
       })
-
-      const allSections = [introSection].concat(parsedSections)
-
-      callback(null, allSections)
     } else {
       callback(null, [introSection])
     }

@@ -328,6 +328,7 @@ const breakTextIntoSlides = function (wikiSource, title, user, job, callback) {
                         position: (section['slideStartPosition'] + index),
                         duration: 0,
                         date: new Date(),
+                        templates: section.templates,
                       })
                       cb(null)
                     }, 50);
@@ -347,6 +348,7 @@ const breakTextIntoSlides = function (wikiSource, title, user, job, callback) {
                           position: (section['slideStartPosition'] + index),
                           duration: duration ? duration * 1000 : 0,
                           date: new Date(),
+                          templates: section.templates
                         })
                         cb(null)
                       })
