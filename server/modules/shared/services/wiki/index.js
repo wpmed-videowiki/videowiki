@@ -404,6 +404,7 @@ export function getSectionsFromWiki (wikiSource, title, callback) {
           }
 
           s.templates = (s.wikiText || '').match(/{{VW.+?}}/gm) || [];
+          console.log('Title templates', { title: s.title, templates: s.templates });
 
           return s
         })

@@ -5,7 +5,7 @@ import services from './services';
 const console = process.console;
 
 var job = new CronJob({
-  cronTime: '0 */12 * * *',
+  cronTime: '0 */6 * * *',
   onTick: function() {
     utils.refreshYoutubeToken()
     .then(token => {
