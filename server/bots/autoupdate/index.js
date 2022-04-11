@@ -596,7 +596,10 @@ function diffCustomArticleSections(article, callback) {
 
         if (matchingSlide) {
           Object.keys(matchingSlide).forEach((key) => {
-            slide[key] = matchingSlide[key];
+            // dont update templates key
+            if (key !== 'templates') {
+              slide[key] = matchingSlide[key];
+            }
           })
         } else if (slide.text && slide.text.length > 2) {
           modified = true;
