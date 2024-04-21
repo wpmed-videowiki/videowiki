@@ -47,8 +47,9 @@ socketConnection.on('connection', (socket) => {
   }, 5000);
   registerSocketHandlers.registerHandlers(socket, require('./modules/auth/websocketsHandlers').handlers)
 })
+const dbConnectionParts = DB_CONNECTION_URL.split('?')
 // DB Connection and app initializations
-mongoose.connect(`${DB_CONNECTION_URL}-${lang}`) // connect to our mongoDB database //TODO: !AA: Secure the DB with authentication keys
+mongoose.connect(`${dbConnectionParts[0]}-${lang}?${dbConnectionParts[1] || ''}`) // connect to our mongoDB database //TODO: !AA: Secure the DB with authentication keys
 console.log(`====== Connected to database ${`${DB_CONNECTION_URL}-${lang}`} ===========`)
 app.all('/*', (req, res, next) => {
   // CORS headers - Set custom headers for CORS
