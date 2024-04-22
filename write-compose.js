@@ -132,8 +132,6 @@ services:
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "${ports[0]}", "${langs[0]}"]
     
 ${langs
@@ -144,15 +142,11 @@ ${langs
   web_${lang}:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "${ports[index]}:${ports[index]}"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "${ports[index]}", "${lang}"]
 
 `

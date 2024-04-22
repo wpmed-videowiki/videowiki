@@ -15,278 +15,204 @@ services:
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4000", "en"]
     
 
   web_hi:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4001:4001"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4001", "hi"]
 
 
   web_es:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4002:4002"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4002", "es"]
 
 
   web_ar:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4003:4003"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4003", "ar"]
 
 
   web_ja:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4004:4004"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4004", "ja"]
 
 
   web_uk:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4005:4005"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4005", "uk"]
 
 
   web_fr:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4006:4006"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4006", "fr"]
 
 
   web_or:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4007:4007"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4007", "or"]
 
 
   web_te:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4008:4008"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4008", "te"]
 
 
   web_gu:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4009:4009"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4009", "gu"]
 
 
   web_bn:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4010:4010"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4010", "bn"]
 
 
   web_pa:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4011:4011"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4011", "pa"]
 
 
   web_sat:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4012:4012"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4012", "sat"]
 
 
   web_sv:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4013:4013"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4013", "sv"]
 
 
   web_it:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4014:4014"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4014", "it"]
 
 
   web_kn:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4015:4015"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4015", "kn"]
 
 
   web_ml:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4016:4016"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4016", "ml"]
 
 
   web_ta:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4017:4017"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4017", "ta"]
 
 
   web_eu:
     image: 'videowiki-app'
     restart: unless-stopped
-    ports:
-      - "4018:4018"
     volumes:
       - ./:/home/videowiki
       - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-      - mongo-server
-      - rabbitmq-server
     command: ["node", "index.js", "4018", "eu"]
 
 
