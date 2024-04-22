@@ -121,8 +121,6 @@ services:
   redis-server:
     image: 'redis'
     restart: unless-stopped
-    ports:
-      - "6379:6379"
   web_${langs[0]}:
     image: 'videowiki-app'
     build: .
