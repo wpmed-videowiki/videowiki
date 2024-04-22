@@ -121,33 +121,25 @@ services:
   redis-server:
     image: 'redis'
     restart: unless-stopped
-  web_${langs[0]}:
-    image: 'videowiki-app'
+  base-img:
     build: .
-    restart: unless-stopped
-    ports:
-      - "${ports[0]}:${ports[0]}"
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-    command: ["node", "index.js", "${ports[0]}", "${langs[0]}"]
+    command: ["echo", "base image build done"]
     
 ${langs
   .map((lang, index) =>
-    index === 0
-      ? ""
-      : `
+      `
   web_${lang}:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "${ports[index]}:${ports[index]}"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "${ports[index]}", "${lang}"]
+      ${index == 0 ? '' : `- web_${langs[index - 1]}`} 
+    command: ["node", "server/index.js", "${ports[index]}", "${lang}"]
 
 `
   )

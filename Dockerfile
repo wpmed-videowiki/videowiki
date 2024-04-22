@@ -1,9 +1,8 @@
-FROM node:10.15.0-jessie
+FROM node:12.22.12
 
 WORKDIR /home/videowiki
-COPY ./package.json .
-RUN npm install
 COPY . .
+RUN npm install
 RUN npm run build
 
 CMD ["npm", "start"]

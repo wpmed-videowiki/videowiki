@@ -4,215 +4,238 @@ services:
   redis-server:
     image: 'redis'
     restart: unless-stopped
-  web_en:
-    image: 'videowiki-app'
+  base-img:
     build: .
+    depends_on:
+      - redis-server
+    command: ["echo", "base image build done"]
+    
+
+  web_en:
+    extends:
+      service: base-img
     restart: unless-stopped
     ports:
       - "4000:4000"
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4000", "en"]
-    
+       
+    command: ["node", "server/index.js", "4000", "en"]
+
 
   web_hi:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4001:4001"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4001", "hi"]
+      - web_en 
+    command: ["node", "server/index.js", "4001", "hi"]
 
 
   web_es:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4002:4002"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4002", "es"]
+      - web_hi 
+    command: ["node", "server/index.js", "4002", "es"]
 
 
   web_ar:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4003:4003"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4003", "ar"]
+      - web_es 
+    command: ["node", "server/index.js", "4003", "ar"]
 
 
   web_ja:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4004:4004"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4004", "ja"]
+      - web_ar 
+    command: ["node", "server/index.js", "4004", "ja"]
 
 
   web_uk:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4005:4005"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4005", "uk"]
+      - web_ja 
+    command: ["node", "server/index.js", "4005", "uk"]
 
 
   web_fr:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4006:4006"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4006", "fr"]
+      - web_uk 
+    command: ["node", "server/index.js", "4006", "fr"]
 
 
   web_or:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4007:4007"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4007", "or"]
+      - web_fr 
+    command: ["node", "server/index.js", "4007", "or"]
 
 
   web_te:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4008:4008"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4008", "te"]
+      - web_or 
+    command: ["node", "server/index.js", "4008", "te"]
 
 
   web_gu:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4009:4009"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4009", "gu"]
+      - web_te 
+    command: ["node", "server/index.js", "4009", "gu"]
 
 
   web_bn:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4010:4010"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4010", "bn"]
+      - web_gu 
+    command: ["node", "server/index.js", "4010", "bn"]
 
 
   web_pa:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4011:4011"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4011", "pa"]
+      - web_bn 
+    command: ["node", "server/index.js", "4011", "pa"]
 
 
   web_sat:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4012:4012"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4012", "sat"]
+      - web_pa 
+    command: ["node", "server/index.js", "4012", "sat"]
 
 
   web_sv:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4013:4013"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4013", "sv"]
+      - web_sat 
+    command: ["node", "server/index.js", "4013", "sv"]
 
 
   web_it:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4014:4014"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4014", "it"]
+      - web_sv 
+    command: ["node", "server/index.js", "4014", "it"]
 
 
   web_kn:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4015:4015"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4015", "kn"]
+      - web_it 
+    command: ["node", "server/index.js", "4015", "kn"]
 
 
   web_ml:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4016:4016"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4016", "ml"]
+      - web_kn 
+    command: ["node", "server/index.js", "4016", "ml"]
 
 
   web_ta:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4017:4017"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4017", "ta"]
+      - web_ml 
+    command: ["node", "server/index.js", "4017", "ta"]
 
 
   web_eu:
-    image: 'videowiki-app'
+    extends:
+      service: base-img
     restart: unless-stopped
-    volumes:
-      - ./:/home/videowiki
-      - /home/hassan:/home/hassan
+    ports:
+      - "4018:4018"
     depends_on:
       - redis-server
-    command: ["node", "index.js", "4018", "eu"]
+      - web_ta 
+    command: ["node", "server/index.js", "4018", "eu"]
 
 
