@@ -97,6 +97,7 @@ const CODES_VOICES_MAP = {
   'kn-IN': 'kn-IN-Standard-B',
   'ml-IN': 'ml-IN-Standard-B',
   'ta-IN': 'ta-IN-Standard-B',
+  'eu-ES': 'eu-ES-Standard-A'
 };
 
 // export const AWS_LANGS = [
