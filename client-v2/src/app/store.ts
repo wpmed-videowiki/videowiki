@@ -3,13 +3,15 @@ import articleSlice from "./slices/articleSlice";
 import uiSlice from "./slices/uiSlice";
 import authSlice from "./slices/authSlice";
 import humanVoiceSlice from "./slices/humanVoiceSlice";
+import userSlice from "./slices/userSlice";
 
 export const store = configureStore({
   reducer: {
     article: articleSlice,
     ui: uiSlice,
     auth: authSlice,
-    humanVoice: humanVoiceSlice,
+    humanvoice: humanVoiceSlice,
+    user: userSlice,
   },
 });
 
