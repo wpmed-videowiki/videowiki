@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import articleSlice from "./slices/articleSlice";
 import uiSlice from "./slices/uiSlice";
 import authSlice from "./slices/authSlice";
+import humanVoiceSlice from "./slices/humanVoiceSlice";
 
 export const store = configureStore({
   reducer: {
     article: articleSlice,
     ui: uiSlice,
     auth: authSlice,
+    humanVoice: humanVoiceSlice,
   },
 });
 
