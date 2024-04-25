@@ -159,6 +159,7 @@ export const FILE_MATCH_REGEX = {
   kn: /\[\[\s*File:(.*)\]\]/gim,
   ml: /\[\[\s*File:(.*)\]\]/gim,
   ta: /\[\[\s*File:(.*)\]\]/gim,
+  eu: /\[\[\s*File:(.*)\]\]/gim,
 };
 
 export const FILE_PREFIXES = {
@@ -201,4 +202,5 @@ export const SUPPORTED_TTS_LANGS = [
   'kn',
   'ml',
   'ta',
+  'eu',
 ];
