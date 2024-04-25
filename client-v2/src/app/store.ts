@@ -5,6 +5,7 @@ import authSlice from "./slices/authSlice";
 import humanVoiceSlice from "./slices/humanVoiceSlice";
 import userSlice from "./slices/userSlice";
 import videoSlice from "./slices/videoSlice";
+import wikiSlice from "./slices/wikiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     humanvoice: humanVoiceSlice,
     user: userSlice,
     video: videoSlice,
+    wiki: wikiSlice,
   },
 });
 

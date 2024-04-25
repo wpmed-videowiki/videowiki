@@ -36,4 +36,9 @@ export const uiSlice = createSlice({
 export default uiSlice.reducer;
 
 // Action creators are generated for each case reducer function
-export const {} = uiSlice.actions;
+export const {
+  closeBetaDisclaimer,
+  setLanguage,
+  setShowReopenFormNotification,
+  setWiki,
+} = uiSlice.actions;
