@@ -1,0 +1,44 @@
+////////////
+// Resets //
+////////////
+
+// Normalize
+@import 'node_modules/normalize.scss/normalize';
+
+///////////
+// Utils //
+///////////
+@import 'utils/variables.scss';
+@import 'utils/utils.scss';
+
+////////////
+// Scoped //
+////////////
+@import 'scoped/s-signup-form.scss';
+// @import 'scoped/s-wiki.scss';
+@import 'scoped/s-page.scss';
+
+////////////////
+// Components //
+////////////////
+@import 'components/c-app.scss';
+@import 'components/c-app-footer.scss';
+@import 'components/c-logo.scss';
+@import 'components/c-search-bar.scss';
+@import 'components/c-signup-form.scss';
+@import 'components/c-editor.scss';
+@import 'components/c-contributors.scss';
+@import 'components/c-leaderboard.scss';
+@import 'components/c-bing.scss';
+@import 'components/c-video-history.scss';
+@import 'components/c-add-human-voice-modal.scss';
+@import 'components/c-export-human-voice.scss';
+@import 'components/Slideshow.scss';
+@import 'components/react-soundplayer.scss';
+@import 'components/rc-slider.scss';
+@import 'components/proofread-video-player.scss';
+@import 'components/slides-list-v2.scss';
+
+.notification {
+  opacity: 1;
+}

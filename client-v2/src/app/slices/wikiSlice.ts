@@ -184,6 +184,43 @@ export const wikiSlice = createSlice({
     onGetArticleFormsSuccess: (state, action: PayloadAction<any>) => {
       state.forms = action.payload;
     },
+    updateCommonsUploadFormField: (
+      state,
+      action: PayloadAction<{
+        articleId: string;
+        slideIndex: number;
+        update: any;
+      }>
+    ) => {
+      const { articleId, slideIndex, update } = action.payload;
+      state.uploadToCommonsForms = {
+        ...state.uploadToCommonsForms,
+        [articleId]: {
+          ...(state.uploadToCommonsForms[articleId] || {}),
+          [slideIndex]: {
+            ...((state.uploadToCommonsForms[articleId] &&
+              state.uploadToCommonsForms[articleId][slideIndex]) ||
+              {}),
+            ...update,
+          },
+        },
+      };
+    },
+    clearSlideForm: (
+      state,
+      action: PayloadAction<{ articleId; slideIndex }>
+    ) => {
+      const { articleId, slideIndex } = action.payload;
+      if (
+        state.uploadToCommonsForms[articleId] &&
+        state.uploadToCommonsForms[articleId][slideIndex]
+      ) {
+        delete state.uploadToCommonsForms[articleId][slideIndex];
+        state.uploadToCommonsForms = {
+          ...state.uploadToCommonsForms,
+        };
+      }
+    },
   },
 });
 
@@ -191,6 +228,7 @@ export default wikiSlice.reducer;
 
 // Action creators are generated for each case reducer function
 export const {
+  clearSlideForm,
   onSearchWikiFailure,
   onSearchWikiLoading,
   onSearchWikiSuccess,
@@ -217,6 +255,7 @@ export const {
   onGetInfoboxFailure,
   onGetInfoboxLoading,
   onGetInfoboxSuccess,
+  updateCommonsUploadFormField,
 } = wikiSlice.actions;
 
 export const searchWiki = createAsyncThunk(

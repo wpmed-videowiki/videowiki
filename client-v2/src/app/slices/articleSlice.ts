@@ -267,6 +267,9 @@ export const articleSlice = createSlice({
       state.uploadSlideAudioLoadingState = LoadingStateEnum.FAILED;
       state.uploadSlideAudioError = action.payload;
     },
+    onSetUploadProgress: (state, action: PayloadAction<number>) => {
+      state.uploadProgress = action.payload;
+    }
   },
 });
 
@@ -274,6 +277,7 @@ export default articleSlice.reducer;
 
 // Action creators are generated for each case reducer function
 export const {
+  onSetUploadProgress,
   onFetchArticleFailure,
   onFetchArticleLoading,
   onFetchArticleSuccess,
