@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import request from "../../utils/requestAgent";
-import { NotificationManager } from "react-notifications";
 import {
   Progress,
   Modal,
@@ -35,6 +34,7 @@ import {
   onUploadContentSuccess,
 } from "../../slices/articleSlice";
 import { LoadingStateEnum } from "../../../types/types";
+import { toast } from "react-toastify";
 
 const uploadFormFields = {
   fileType: "",
@@ -230,7 +230,7 @@ const UploadFileInfoModal = ({
 
     uploadRequest.end((err, { text, body }) => {
       if (!err) {
-        NotificationManager.success(
+        toast.success(
           "File Upload Successful! Don't forget to click on the publish icon to save your changes"
         );
         updateField({
@@ -246,7 +246,7 @@ const UploadFileInfoModal = ({
         }, 100);
       } else if (err) {
         const reason = text || "Something went wrong, please try again!";
-        NotificationManager.error("Error", reason);
+        toast.error(reason);
         updateField({
           submitLoading: false,
           submitLoadingPercentage: 100,

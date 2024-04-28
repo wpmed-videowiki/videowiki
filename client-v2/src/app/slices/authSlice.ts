@@ -154,6 +154,15 @@ export const authSlice = createSlice({
     onYouTubeAuthLinkSuccess: (state, action: PayloadAction<any>) => {
       state.youtubeAuthLink = action.payload.youtubeAuthLink;
     },
+    setUser: (state, action: PayloadAction<{ user: any }>) => {
+      state.session = {
+        user: action.payload.user,
+        token: action.payload.user && state.token ? state.token : "",
+      };
+    },
+    setToken: (state, action: PayloadAction<{ token: any }>) => {
+      state.token = action.payload.token;
+    },
   },
 });
 
@@ -169,6 +178,8 @@ function handleError(response) {
 
 // Action creators are generated for each case reducer function
 export const {
+  setToken,
+  setUser,
   onSignupFailure,
   onSignupLoading,
   onSignupSuccess,

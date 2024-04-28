@@ -1,35 +1,53 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+import {
+  Outlet,
+  RouterProvider,
+  createBrowserRouter,
+  useNavigate,
+} from "react-router-dom";
+import { useAppSelector } from "./app/hooks";
+import Header from "./app/components/Header";
+import Footer from "./app/components/Footer";
+import { useEffect } from "react";
+import "semantic-ui-css/semantic.min.css";
+import "./stylesheets/main.scss";
+
+// the * in title param to handle articles having "/"" in their titles
+// https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
+
+const Redirect = () => {
+  const { language } = useAppSelector((state) => state.ui);
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate(`/${language}`);
+  }, []);
+
+  return null;
+};
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Redirect />,
+    },
+    {
+      path: "/:lang",
+      element: (
+        <div className="c-app">
+          <Header />
+          <div className="c-app__main">
+            <Outlet />
+          </div>
+          <Footer />
+          <ToastContainer />
+        </div>
+      ),
+      children: [],
+    },
+  ]);
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -221,6 +221,11 @@ export const wikiSlice = createSlice({
         };
       }
     },
+    resetSearchBar: (state) => {
+      state.isSearchResultLoading = false;
+      state.searchResultState = LoadingStateEnum.LOADING;
+      state.searchResults = [];
+    },
   },
 });
 
@@ -229,6 +234,7 @@ export default wikiSlice.reducer;
 // Action creators are generated for each case reducer function
 export const {
   clearSlideForm,
+  resetSearchBar,
   onSearchWikiFailure,
   onSearchWikiLoading,
   onSearchWikiSuccess,

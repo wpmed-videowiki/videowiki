@@ -66,7 +66,7 @@ export const websocketConfig = {
   url: (routeLanguage) =>
     process.env.NODE_ENV === "production"
       ? `${window.location.protocol}//${window.location.hostname}`
-      : module.exports.LANG_API_MAP[routeLanguage],
+      : LANG_API_MAP[routeLanguage],
   options: (routeLanguage) => ({
     path:
       process.env.NODE_ENV === "production"

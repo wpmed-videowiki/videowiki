@@ -18,7 +18,7 @@ export const uiSlice = createSlice({
   name: "ui",
   initialState,
   reducers: {
-    setWiki: (state, action: PayloadAction<string>) => {
+    setWiki: (state, action: PayloadAction<string|undefined>) => {
       state.wiki = action.payload;
     },
     setShowReopenFormNotification: (state, action: PayloadAction<boolean>) => {

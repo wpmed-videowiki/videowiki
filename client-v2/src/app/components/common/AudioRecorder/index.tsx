@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // TODO: Find replacement
 // import WaveStream from "react-wave-stream";
 import Recorder from "recorder-js";
-import { NotificationManager } from "react-notifications";
+import { toast } from "react-toastify";
 // shim for AudioContext when it's not avb.
 const anyWindow = window as any;
 window.URL =
@@ -83,7 +83,7 @@ const AudioRecorder = (props: IAudioRecorderProps) => {
           props.onStop();
         });
     } else {
-      NotificationManager.info("Your browser doesn't support audio recording");
+      toast.info("Your browser doesn't support audio recording");
     }
   };
 

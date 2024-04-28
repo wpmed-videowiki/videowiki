@@ -204,7 +204,7 @@
     opacity: 0;
   }
 }
-@-keyframes go {
+@keyframes go {
   0% {
     opacity: 1;
   }
@@ -272,7 +272,7 @@ border-right: 10px solid green;
   }
 }
 
-@-keyframes go2 {
+@keyframes go2 {
   0% {
     opacity: 1;
   }
@@ -340,7 +340,7 @@ border-right: 10px solid green;
     opacity: 0;
   }
 }
-@-keyframes go3 {
+@keyframes go3 {
   0% {
     opacity: 1;
   }

@@ -22,7 +22,7 @@ request.use((req) => {
   }
   if (req.url.indexOf("/api") === 0) {
     if (ENVIRONMENT === "production") {
-      req.url = req.url.replace("/api/", `/${lang}/api/`);
+      req.url = `${LANG_API_MAP[lang]}${req.url.replace("/api/", `/${lang}/api/`)}`;
     } else {
       req.url = `${LANG_API_MAP[lang]}${req.url}`;
     }
