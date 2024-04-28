@@ -11,8 +11,10 @@ import { useAppSelector } from "./app/hooks";
 import Header from "./app/components/Header";
 import Footer from "./app/components/Footer";
 import { useEffect } from "react";
-import "semantic-ui-css/semantic.min.css";
+
 import "./stylesheets/main.scss";
+import "semantic-ui-css/semantic.min.css";
+import 'basscss/css/basscss.min.css';
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303

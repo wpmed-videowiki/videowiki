@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { useEffect, useState } from "react";
 import { Search } from "semantic-ui-react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ import { useDebounce } from "use-debounce";
 
 const WikiSearch = () => {
   const [searchText, setSearchText] = useState("");
-  const debouncedSearch = useDebounce(searchText, 500);
+  const [debouncedSearch] = useDebounce(searchText, 500);
   const { searchResults, isSearchResultLoading } = useAppSelector(
     (state) => state.wiki
   );
@@ -38,15 +37,15 @@ const WikiSearch = () => {
     );
   };
 
-  const _handleSearchChange = (e, value) => {
+  const _handleSearchChange = (e, { value }) => {
     if (searchText !== value) {
       setSearchText(value);
-      _.debounce(() => {}, 500)();
     }
   };
 
   useEffect(() => {
     let searchText = debouncedSearch as unknown as string;
+    console.log("searching", searchText);
     if (debouncedSearch.length < 1) {
       return _resetSearchBar();
     }
@@ -78,7 +77,7 @@ const WikiSearch = () => {
         className="c-search-bar"
         loading={isSearchResultLoading}
         onResultSelect={_handleResultSelect}
-        onSearchChange={_handleSearchChange}
+        onSearchChange={(e, { value }) => _handleSearchChange(e, { value })}
         results={searchResults}
         value={searchText}
         placeholder="Search a Topic or Paste a URL"
