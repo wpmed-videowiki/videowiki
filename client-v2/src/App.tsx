@@ -14,7 +14,9 @@ import { useEffect } from "react";
 
 import "./stylesheets/main.scss";
 import "semantic-ui-css/semantic.min.css";
-import 'basscss/css/basscss.min.css';
+import "basscss/css/basscss.min.css";
+import Home from "./pages";
+import AllArticlesPage from "./pages/articles";
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -46,7 +48,16 @@ function App() {
           <ToastContainer />
         </div>
       ),
-      children: [],
+      children: [
+        {
+          path: "/:lang/",
+          element: <Home />,
+        },
+        {
+          path: "/:lang/articles",
+          element: <AllArticlesPage />,
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;

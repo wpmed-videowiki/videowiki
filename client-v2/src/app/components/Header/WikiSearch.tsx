@@ -45,7 +45,6 @@ const WikiSearch = () => {
 
   useEffect(() => {
     let searchText = debouncedSearch as unknown as string;
-    console.log("searching", searchText);
     if (debouncedSearch.length < 1) {
       return _resetSearchBar();
     }

@@ -9,7 +9,7 @@ interface IStateRendererProps {
   loaderDisabled?: boolean;
   loaderMessage: string;
   errorMessage: string;
-  onRender: () => JSX.Element;
+  onRender?: () => JSX.Element | null;
 }
 
 const StateRenderer = (props: IStateRendererProps) => {
@@ -17,7 +17,7 @@ const StateRenderer = (props: IStateRendererProps) => {
 
   switch (componentState) {
     case LoadingStateEnum.DONE:
-      return onRender();
+      return onRender && onRender();
     case LoadingStateEnum.LOADING:
       return !props.loaderDisabled ? (
         <LoaderOverlay loaderImage={props.loaderImage}>
