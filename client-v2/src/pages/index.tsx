@@ -2,6 +2,7 @@ import { Icon, Button, Popup, Input } from "semantic-ui-react";
 import TopArticles from "../app/components/Articles/TopArticles";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 const links = [
   {
@@ -67,6 +68,13 @@ const Home = () => {
 
   return (
     <div className="u-page-info u-center">
+      <Helmet>
+        <title>VideoWiki</title>
+        <meta
+          name="description"
+          content="We are building collaborative wiki-based videos in local languages. Join Us."
+        />
+      </Helmet>
       <div className="joinUsLogo">
         <p>
           We are building collaborative wiki-based videos in local languages.
