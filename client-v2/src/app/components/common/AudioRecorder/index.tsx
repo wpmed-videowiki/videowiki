@@ -120,3 +120,5 @@ const AudioRecorder = (props: IAudioRecorderProps) => {
     </div>
   );
 };
+
+export default AudioRecorder;

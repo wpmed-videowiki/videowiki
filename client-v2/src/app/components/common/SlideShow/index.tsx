@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactPlayer from "react-player";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
@@ -57,31 +57,46 @@ const Slideshow = (data: ISlideShowProps = {}) => {
     slides: props.slides.length > 0 ? props.slides : props.children,
     fade: "in",
     intervalId: null,
+    defaultStartTime: props.defaultStartTime,
+    playing: props.playing,
   });
 
   useEffect(() => {
-    mounted = true;
+    // mounted = true;
     if (props.playing) runSlideShow((props.slides[0] as any).time);
     return () => {
-      mounted = false;
+      // mounted = false;
       stopSlideShow();
     };
   }, []);
 
   // TODO: Check this
   useEffect(() => {
-    if (props.playing && props.isActive) {
-      restartSlideshow();
-    } else {
-      stopSlideShow();
+    if (state.playing !== props.playing) {
+      if (props.playing && props.isActive) {
+        restartSlideshow();
+        console.log("============= Restart slide show");
+      } else {
+        stopSlideShow();
+      }
+      setState((state) => ({ ...state, playing: props.playing }));
     }
-    if (props.isActive) {
+  }, [state.playing, props.playing, props.isActive]);
+
+  useEffect(() => {
+    if (props.isActive && props.defaultStartTime !== state.defaultStartTime) {
       onDefaultStartTimeChange(props.defaultStartTime);
+      console.log(
+        "============= Default start time change",
+        props.defaultStartTime,
+        state.defaultStartTime,
+        props.isActive
+      );
     }
-  }, [props.playing, props.isActive, props.defaultStartTime]);
+  }, [props.defaultStartTime, state.defaultStartTime, props.isActive]);
 
   const onDefaultStartTimeChange = (newStartTime) => {
-    if (!mounted) return;
+    // if (!mounted) return;
     stopSlideShow();
     let currentSlide = 0;
     let consumedTime = newStartTime;
@@ -96,36 +111,43 @@ const Slideshow = (data: ISlideShowProps = {}) => {
       }
     }
     globalConsumedTime = consumedTime;
-    setState((state) => ({ ...state, currentSlide }));
-    props.onSlideChange(currentSlide);
-    if (
-      (props.slides[currentSlide] as any).type === "video" &&
-      playingVideoRef
-    ) {
-      if ((props.slides[currentSlide] as any).playing) {
-        playingVideoRef?.getInternalPlayer().pause();
-      }
-      if (playingVideoRef?.getInternalPlayer()) {
-        playingVideoRef.getInternalPlayer().currentTime =
-          globalConsumedTime / 1000;
-      }
+    setState((state) => ({
+      ...state,
+      currentSlide,
+      defaultStartTime: newStartTime,
+    }));
+    setTimeout(() => {
+      props.onSlideChange(currentSlide);
+      if (
+        (props.slides[currentSlide] as any).type === "video" &&
+        playingVideoRef
+      ) {
+        if ((props.slides[currentSlide] as any).playing) {
+          playingVideoRef?.getInternalPlayer().pause();
+        }
+        if (playingVideoRef?.getInternalPlayer()) {
+          playingVideoRef.getInternalPlayer().currentTime =
+            globalConsumedTime / 1000;
+        }
 
-      if ((props.slides[currentSlide] as any).playing) {
-        setTimeout(() => {
-          playingVideoRef.getInternalPlayer().play();
-        }, 50);
+        if ((props.slides[currentSlide] as any).playing) {
+          setTimeout(() => {
+            playingVideoRef.getInternalPlayer().play();
+          }, 50);
+        }
       }
-    }
-    if (props.playing) {
-      restartSlideshow();
-    }
+      if (props.playing) {
+        restartSlideshow();
+      }
+    }, 100);
   };
 
   const runSlideShow = (interval) => {
-    if (!mounted) return;
+    // if (!mounted) return;
     if (!interval) return;
     // Run the slide transition after "interval" amount of time
     setTimeout(autoSlideshow, interval);
+    console.log("============= Run slide show");
     const intervalId = setInterval(() => {
       if (props.playing) {
         globalConsumedTime = globalConsumedTime + REFRESH_INTERVAL;
@@ -135,9 +157,11 @@ const Slideshow = (data: ISlideShowProps = {}) => {
             FADE_DURATION * 1000
         ) {
           setState((state) => ({ ...state, fade: "out" }));
+          console.log("State update", globalConsumedTime);
         }
       }
     }, REFRESH_INTERVAL);
+    console.log("Setting interval", intervalId);
     setState((state) => ({
       ...state,
       intervalId,
@@ -145,7 +169,14 @@ const Slideshow = (data: ISlideShowProps = {}) => {
   };
 
   const stopSlideShow = () => {
-    clearInterval(state.intervalId);
+    setState((state) => {
+      console.log("============= Stop slide show", state.intervalId);
+      clearInterval(state.intervalId);
+      return {
+        ...state,
+        intervalId: null,
+      };
+    });
   };
 
   const restartSlideshow = () => {
@@ -177,15 +208,18 @@ const Slideshow = (data: ISlideShowProps = {}) => {
     }
     if (!props.playing) return;
     const currentSlide = (state.currentSlide + 1) % props.slides.length;
+    console.log("============= Auto slide show", currentSlide);
     setState((state) => ({
       ...state,
       currentSlide,
       fade: "in",
     }));
-    props.onSlideChange(currentSlide);
-    stopSlideShow();
-    globalConsumedTime = 0;
-    runSlideShow(props.slides[currentSlide].time);
+    setTimeout(() => {
+      props.onSlideChange(currentSlide);
+      stopSlideShow();
+      globalConsumedTime = 0;
+      runSlideShow(props.slides[currentSlide].time);
+    });
   };
 
   const generateRenderedSlides = (slides) => {
@@ -281,6 +315,7 @@ const Slideshow = (data: ISlideShowProps = {}) => {
       </li>
     );
   });
+
   return (
     <div
       style={{

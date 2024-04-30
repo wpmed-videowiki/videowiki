@@ -1,4 +1,4 @@
- module.exports = {
+ export default {
    downloadFile(url) {
      const isChrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
      const isSafari = navigator.userAgent.toLowerCase().indexOf('safari') > -1;

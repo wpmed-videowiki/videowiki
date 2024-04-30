@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 interface IBlinkerProps {
   blink: boolean;
   onStop: () => void;
-  onStart: () => void;
-  primary: string;
+  onStart?: () => void;
+  primary?: string;
   secondary: string;
   interval: number;
   repeat: number;
@@ -34,7 +34,7 @@ const Blinker = (props: IBlinkerProps) => {
         blink();
       }, props.interval);
 
-      props.onStart();
+      props.onStart?.();
       setIntervalId(interval);
     }
   };

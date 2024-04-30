@@ -97,16 +97,16 @@ const sourceOptions = [
 ];
 
 interface IUploadFileInfoModalProps {
-  articleForms: any[];
-  standalone: boolean;
-  withSubtitles: boolean;
-  uploadMessage: string;
-  subTitle: string;
-  initialFormValues: any;
-  disabledFields: any[];
-  showExtraUsers: boolean;
-  showAutoDownload: boolean;
-  uploadForms: any[];
+  articleForms?: any[];
+  standalone?: boolean;
+  withSubtitles?: boolean;
+  uploadMessage?: string;
+  subTitle?: string;
+  initialFormValues?: any;
+  disabledFields?: any[];
+  showExtraUsers?: boolean;
+  showAutoDownload?: boolean;
+  uploadForms?: any[];
   articleId: string;
   currentSlideIndex: number;
   title: string;
@@ -115,20 +115,20 @@ interface IUploadFileInfoModalProps {
   isUploadResume: boolean;
   visible: boolean;
   onClose: () => void;
-  onSubmit: (formValues: any) => void;
+  onSubmit?: (formValues: any) => void;
 }
 
 const UploadFileInfoModal = ({
-  articleForms,
-  disabledFields,
-  initialFormValues,
-  showAutoDownload,
-  showExtraUsers,
-  standalone,
-  subTitle,
-  uploadMessage = "hold on tight! we are uploading your media directly to wikimedia commons",
-  withSubtitles,
-  uploadForms,
+  articleForms = [],
+  standalone = false,
+  withSubtitles = false,
+  uploadMessage = "Hold on tight! We are uploading your media directly to Wikimedia Commons",
+  subTitle = "",
+  initialFormValues = {},
+  disabledFields = [],
+  showExtraUsers = false,
+  showAutoDownload = false,
+  uploadForms = [],
   articleId,
   currentSlideIndex,
   title,
@@ -136,7 +136,7 @@ const UploadFileInfoModal = ({
   isUploadResume,
   wikiSource,
   onClose,
-  onSubmit,
+  onSubmit = () => {},
   visible,
 }: IUploadFileInfoModalProps) => {
   const { fetchCategoriesFromWikimediaCommonsState, searchCategories } =

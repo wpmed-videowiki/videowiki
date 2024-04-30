@@ -17,6 +17,7 @@ import "semantic-ui-css/semantic.min.css";
 import "basscss/css/basscss.min.css";
 import Home from "./pages";
 import AllArticlesPage from "./pages/articles";
+import VideowikiArticlePage from "./pages/videowiki/[title]";
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -56,6 +57,10 @@ function App() {
         {
           path: "/:lang/articles",
           element: <AllArticlesPage />,
+        },
+        {
+          path: "/:lang/videowiki/:title",
+          element: <VideowikiArticlePage />,
         },
       ],
     },

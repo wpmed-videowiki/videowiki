@@ -269,7 +269,22 @@ export const articleSlice = createSlice({
     },
     onSetUploadProgress: (state, action: PayloadAction<number>) => {
       state.uploadProgress = action.payload;
-    }
+    },
+    updateArticle: (state, action: PayloadAction<{ article: any }>) => {
+      state.article = action.payload.article;
+    },
+    onResetUploadState: (state) => {
+      state.uploadState = LoadingStateEnum.DONE;
+      state.uploadStatus = null;
+    },
+    setPlaybackSpeed: (state, action: PayloadAction<{ playbackSpeed }>) => {
+      state.playbackSpeed = action.payload.playbackSpeed;
+    },
+    resetPublishError(state) {
+      state.publishArticleStatus = null;
+      state.publishArticleError = null;
+      state.publishArticleState = LoadingStateEnum.DONE;
+    },
   },
 });
 
@@ -277,6 +292,10 @@ export default articleSlice.reducer;
 
 // Action creators are generated for each case reducer function
 export const {
+  updateArticle,
+  setPlaybackSpeed,
+  onResetUploadState,
+  resetPublishError,
   onSetUploadProgress,
   onFetchArticleFailure,
   onFetchArticleLoading,
@@ -753,8 +772,8 @@ export const fetchVideoByArticleTitle = createAsyncThunk(
   }
 );
 
-export const updateSlideMediaDuration = createAsyncThunk(
-  "article/updateSlideMediaDuration",
+export const updateSlideMediaDurations = createAsyncThunk(
+  "article/updateSlideMediaDurations",
   async (
     {
       title,

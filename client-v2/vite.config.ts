@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,8 +8,19 @@ export default defineConfig({
     alias: [
       {
         find: /^@\/(.+)/,
-        replacement: `${__dirname}/src/$1`
-      }
-    ]
-  }
-})
+        replacement: `${__dirname}/src/$1`,
+      },
+    ],
+  },
+  // define: {
+  //   global: {},
+  // },
+  optimizeDeps: {
+    esbuildOptions: {
+      // Node.js global to browser globalThis
+      define: {
+        global: "globalThis",
+      },
+    },
+  },
+});

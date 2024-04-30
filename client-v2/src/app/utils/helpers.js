@@ -1,4 +1,4 @@
-import { IMAGE_EXTENSIONS, VIDEOS_EXTESION, GIF_EXTESIONS } from '../constants.js';
+import { IMAGE_EXTENSIONS, VIDEOS_EXTESION, GIF_EXTESIONS } from '../../constants.js';
 
 export const getUrlMediaType = function(url) {
   const extension = url.split('.').pop().toLowerCase();
