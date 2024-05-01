@@ -25,6 +25,7 @@ import websockets from "./app/websockets";
 import VideoConvertProgress from "./pages/videos/progress/[id]";
 import VideosHistory from "./pages/videos/history/[title]";
 import Commons from "./pages/commons/[file]";
+import YouTubeAuthPage from "./pages/auth/youtube";
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "/:lang/auth/youtube",
+        element: <YouTubeAuthPage />,
+      },
+      {
         path: "/:lang/articles",
         element: <AllArticlesPage />,
       },
@@ -86,9 +91,9 @@ const router = createBrowserRouter([
         element: <VideosHistory />,
       },
       {
-        path: '/:lang/commons/:file',
+        path: "/:lang/commons/:file",
         element: <Commons />,
-      }
+      },
     ],
   },
 ]);

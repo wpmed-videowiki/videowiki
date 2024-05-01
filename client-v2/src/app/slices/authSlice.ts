@@ -165,6 +165,12 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       localStorage.setItem("token", action.payload.token);
     },
+    setYouTubeChannelInfo: (state, action: PayloadAction<any>) => {
+      state.youtubeChannelInfo = action.payload;
+    },
+    setYouTubeAuthLink: (state, action: PayloadAction<any>) => {
+      state.youtubeAuthLink = action.payload;
+    },
   },
 });
 
@@ -182,6 +188,8 @@ function handleError(response) {
 export const {
   setToken,
   setUser,
+  setYouTubeChannelInfo,
+  setYouTubeAuthLink,
   onSignupFailure,
   onSignupLoading,
   onSignupSuccess,
@@ -394,7 +402,7 @@ export const generateYoutubeAuthLink = createAsyncThunk(
       const response = await httpPost(url, data).then(({ body }: any) => ({
         youtubeAuthLink: body.url,
       }));
-      dispatch(response.youtubeAuthLink);
+      dispatch(setYouTubeAuthLink(response.youtubeAuthLink));
     } catch (err) {
       console.error(err);
     }
