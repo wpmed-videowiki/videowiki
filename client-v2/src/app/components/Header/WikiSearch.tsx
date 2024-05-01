@@ -20,7 +20,8 @@ const WikiSearch = () => {
     dispatch(resetSearchBar());
   };
 
-  const _handleResultSelect = (e, result) => {
+  const _handleResultSelect = (e, {result}) => {
+    console.log({result})
     let { title } = result;
     const { description } = result;
 

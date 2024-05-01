@@ -262,22 +262,24 @@ const Slideshow = (data: ISlideShowProps = {}) => {
               >
                 {/* TODO: check this transition */}
                 <CSSTransition
-                  classNames="carousel__image"
+                  in={true}
                   timeout={{ enter: 5000, exit: 0, appear: 20000 }}
                 >
-                  {!slide.fullWidth && (
+                  <span className="carousel__image">
+                    {!slide.fullWidth && (
+                      <img
+                        src={slide.url}
+                        alt=""
+                        className="blurred_background"
+                      />
+                    )}
                     <img
                       src={slide.url}
                       alt=""
-                      className="blurred_background"
+                      className={`${slide.fullWidth ? "stretch" : ""}`}
+                      style={{ height: "100%", zIndex: 1 }}
                     />
-                  )}
-                  <img
-                    src={slide.url}
-                    alt=""
-                    className={`${slide.fullWidth ? "stretch" : ""}`}
-                    style={{ height: "100%", zIndex: 1 }}
-                  />
+                  </span>
                 </CSSTransition>
               </div>
             ),

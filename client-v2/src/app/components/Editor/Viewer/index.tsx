@@ -65,75 +65,78 @@ const Viewer = (props: IViewerProps) => {
     }
   };
 
-  const showItem = useCallback((item, isActive) => {
-    if (!item) return;
+  const showItem = useCallback(
+    (item, isActive) => {
+      if (!item) return;
 
-    const { media } = item;
-    // const media = item.media?.slice().map(m => ({...m}))
-    let component;
-    const mediaArray: any[] = [];
-    if (media && media.length > 0) {
-      if (isActive) {
-        media.forEach((mitem, index) => {
-          const array = mitem.url.split(".");
+      const { media } = item;
+      // const media = item.media?.slice().map(m => ({...m}))
+      let component;
+      const mediaArray: any[] = [];
+      if (media && media.length > 0) {
+        if (isActive) {
+          media.forEach((mitem, index) => {
+            const array = mitem.url.split(".");
+            const format = array[array.length - 1];
+            switch (format) {
+              case "mp4":
+              case "ogg":
+              case "ogv":
+              case "webm":
+                const playing =
+                  props.isPlaying && props.currentSubmediaIndex === index;
+                mediaArray.push({ ...mitem, playing });
+                break;
+              default:
+                mediaArray.push({ ...mitem });
+                break;
+            }
+          });
+        } else {
+          const array = media[0].url.split(".");
           const format = array[array.length - 1];
           switch (format) {
             case "mp4":
             case "ogg":
             case "ogv":
             case "webm":
-              const playing =
-                props.isPlaying && props.currentSubmediaIndex === index;
-              mediaArray.push({...mitem, playing});
+              mediaArray.push({ ...media[0], playing: false });
               break;
             default:
-              mediaArray.push({...mitem});
+              mediaArray.push({ ...media[0] });
               break;
           }
-        });
-      } else {
-        const array = media[0].url.split(".");
-        const format = array[array.length - 1];
-        switch (format) {
-          case "mp4":
-          case "ogg":
-          case "ogv":
-          case "webm":
-            mediaArray.push({...media[0], playing: false});
-            break;
-          default:
-            mediaArray.push({...media[0]});
-            break;
         }
+
+        component = (
+          <div style={{ position: "relative", width: "100%", height: "100%" }}>
+            <SlideShow
+              slides={mediaArray}
+              playing={props.isPlaying && isActive}
+              isActive={isActive}
+              key={`slideshow-${props.currentSlideIndex}`}
+              defaultStartTime={props.defaultSlideStartTime}
+              onSlideChange={props.onSubMediaSlideChange}
+            />
+          </div>
+        );
+      } else {
+        component = defaultComponent;
       }
 
-      component = (
-        <div style={{ position: "relative", width: "100%", height: "100%" }}>
-          <SlideShow
-            slides={mediaArray}
-            playing={props.isPlaying && isActive}
-            isActive={isActive}
-            key={`slideshow-${props.currentSlideIndex}`}
-            defaultStartTime={props.defaultSlideStartTime}
-            onSlideChange={props.onSubMediaSlideChange}
-          />
+      return isActive ? (
+        component
+      ) : (
+        <div className="outer-container">
+          <div className="inner-container">
+            <div className="overlay" />
+            <div className="component-wrapper">{component}</div>
+          </div>
         </div>
       );
-    } else {
-      component = defaultComponent;
-    }
-
-    return isActive ? (
-      component
-    ) : (
-      <div className="outer-container">
-        <div className="inner-container">
-          <div className="overlay" />
-          <div className="component-wrapper">{component}</div>
-        </div>
-      </div>
-    );
-  }, [props.currentSlideIndex, props.isPlaying, props.currentSubmediaIndex]);
+    },
+    [props.currentSlideIndex, props.isPlaying, props.currentSubmediaIndex]
+  );
 
   const renderItems = useMemo(() => {
     const { currentSlideIndex, slides } = props;
@@ -247,10 +250,9 @@ const Viewer = (props: IViewerProps) => {
       <CSSTransition
         in={true}
         appear={true}
-        timeout={{appear: 2000, enter: 2000, exit: 0}}
-        classNames="carousel__slide"
+        timeout={{ appear: 2000, enter: 2000, exit: 0 }}
       >
-        {renderItems}
+        <span className="carousel__slide">{renderItems}</span>
       </CSSTransition>
       <AudioPlayer
         description={text}

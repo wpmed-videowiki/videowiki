@@ -168,7 +168,8 @@ export const articleSlice = createSlice({
     },
     onFetchAllArticlesSuccess: (state, action: PayloadAction<any>) => {
       state.fetchAllArticlesState = LoadingStateEnum.DONE;
-      state.allArticles = state.allArticles.concat(action.payload);
+      const allArticleIds = state.allArticles.map((article) => article._id);
+      state.allArticles = state.allArticles.concat(action.payload.filter((article) => !allArticleIds.includes(article._id)));
       state.deltaArticles = action.payload;
     },
     onFetchAllArticlesFailure: (state) => {
@@ -285,6 +286,14 @@ export const articleSlice = createSlice({
       state.publishArticleError = null;
       state.publishArticleState = LoadingStateEnum.DONE;
     },
+    clearConversionProgress(state) {
+      state.conversionPercentage = {
+        progress: 0,
+        converted: false,
+        title: '',
+      };
+      state.conversionPercentageState = LoadingStateEnum.DONE;
+    }
   },
 });
 
@@ -293,6 +302,7 @@ export default articleSlice.reducer;
 // Action creators are generated for each case reducer function
 export const {
   updateArticle,
+  clearConversionProgress,
   setPlaybackSpeed,
   onResetUploadState,
   resetPublishError,
