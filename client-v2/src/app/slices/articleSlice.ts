@@ -169,7 +169,9 @@ export const articleSlice = createSlice({
     onFetchAllArticlesSuccess: (state, action: PayloadAction<any>) => {
       state.fetchAllArticlesState = LoadingStateEnum.DONE;
       const allArticleIds = state.allArticles.map((article) => article._id);
-      state.allArticles = state.allArticles.concat(action.payload.filter((article) => !allArticleIds.includes(article._id)));
+      state.allArticles = state.allArticles.concat(
+        action.payload.filter((article) => !allArticleIds.includes(article._id))
+      );
       state.deltaArticles = action.payload;
     },
     onFetchAllArticlesFailure: (state) => {
@@ -290,10 +292,10 @@ export const articleSlice = createSlice({
       state.conversionPercentage = {
         progress: 0,
         converted: false,
-        title: '',
+        title: "",
       };
       state.conversionPercentageState = LoadingStateEnum.DONE;
-    }
+    },
   },
 });
 
