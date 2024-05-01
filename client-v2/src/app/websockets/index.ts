@@ -7,6 +7,7 @@ const createWebsocketConnection = function createWebsocketConnection(
   options = {}
 ) {
   connection = io(url, options);
+  console.log("Connecting")
   return connection;
 };
 
@@ -19,6 +20,7 @@ const emitEvent = function emitEvent(event, args) {
 };
 
 const subscribeToEvent = function subscribeToEvent(event, callback) {
+  console.log("Subscribing to event", event)
   return connection.on(event, callback);
 };
 

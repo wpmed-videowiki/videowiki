@@ -159,9 +159,11 @@ export const authSlice = createSlice({
         user: action.payload.user,
         token: action.payload.user && state.token ? state.token : "",
       };
+      localStorage.setItem("session", JSON.stringify(state.session));
     },
     setToken: (state, action: PayloadAction<{ token: any }>) => {
       state.token = action.payload.token;
+      localStorage.setItem("token", action.payload.token);
     },
   },
 });

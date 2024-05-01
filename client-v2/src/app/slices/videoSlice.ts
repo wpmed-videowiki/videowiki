@@ -66,7 +66,6 @@ export const videoSlice = createSlice({
     onFetchVideoLoading: (state) => {
       state.videoConvertProgress.videoConvertProgressState =
         LoadingStateEnum.LOADING;
-      state.videoConvertProgress.video = {};
     },
     onFetchVideoSuccess: (state, action: PayloadAction<any>) => {
       state.videoConvertProgress.videoConvertProgressState =
@@ -88,6 +87,14 @@ export const videoSlice = createSlice({
         action.payload.youtubeUploadStatus;
       state.videosHistory.videos = videos;
     },
+    onClearVideo: (state) => {
+      console.log("Clearing video")
+      state.videoConvertProgress = {
+        ...state.videoConvertProgress,
+        videoConvertProgressState: LoadingStateEnum.LOADING,
+        video: {},
+      };
+    },
   },
 });
 
@@ -95,6 +102,7 @@ export default videoSlice.reducer;
 
 // Action creators are generated for each case reducer function
 export const {
+  onClearVideo,
   onExportArticleToVideoFailure,
   onExportArticleToVideoLoading,
   onExportArticleToVideoSuccess,

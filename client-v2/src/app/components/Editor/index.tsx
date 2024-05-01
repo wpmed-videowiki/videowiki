@@ -511,7 +511,7 @@ const Editor = (data: IEditorProps) => {
   const handleClose = () => {
     const { wikiSource } = queryString.parse(location.search);
 
-    return navigate(`/videowiki/${props.title}?wikiSource=${wikiSource}`);
+    return navigate(`/${language}/videowiki/${props.title}?wikiSource=${wikiSource}`);
   };
 
   const _handleTimelineSeekEnd = (defaultSlideStartTime) => {
