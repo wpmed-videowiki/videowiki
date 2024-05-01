@@ -13,16 +13,20 @@
  * objectMatches(['a', 'b'])({ a: 1, b: 2, c: 3 })
  * // false
  */
-export function objectMatches (propertyNames) {
-  const propertyNamesSet = new Set(propertyNames)
+export function objectMatches(propertyNames) {
+  const propertyNamesSet = new Set(propertyNames);
 
   return (object) => {
-    if (!object || typeof object !== 'object') { return false }
+    if (!object || typeof object !== "object") {
+      return false;
+    }
 
-    const keys = Object.keys(object)
-    return keys.length === propertyNamesSet.size &&
+    const keys = Object.keys(object);
+    return (
+      keys.length === propertyNamesSet.size &&
       keys.every((key) => propertyNamesSet.has(key))
-  }
+    );
+  };
 }
 
 /**
@@ -37,26 +41,26 @@ export function objectMatches (propertyNames) {
  * // { a: { b: 3, c: 2 }, e: 5, z: {...} }
  * // z is not mentioned in the addition and thus it has not been deep cloned
  */
-export function mergeImmutable (source, addition) {
+export function mergeImmutable(source, addition) {
   // filtering out unmeargeable data
   if (
-    typeof source !== 'object' ||
+    typeof source !== "object" ||
     source === null ||
     Array.isArray(source) || // merging arrays makes no sense
-    typeof addition !== 'object' ||
+    typeof addition !== "object" ||
     addition === null ||
     Array.isArray(addition)
   ) {
-    return addition
+    return addition;
   }
 
-  const clone = Object.assign({}, source)
+  const clone = Object.assign({}, source);
 
   Object.keys(addition).forEach((key) => {
-    clone[key] = mergeImmutable(clone[key], addition[key])
-  })
+    clone[key] = mergeImmutable(clone[key], addition[key]);
+  });
 
-  return clone
+  return clone;
 }
 
 /**
@@ -76,36 +80,36 @@ export function mergeImmutable (source, addition) {
  * // { a: {...}, d: { e: 1 }, z: {...} }
  * // if the chain is longer than the depth of source then new nodes/objects are created
  */
-export function applyImmutable (source, chain, fun) {
-  function createObject (index) {
+export function applyImmutable(source, chain, fun) {
+  function createObject(index) {
     return index < chain.length
       ? { [chain[index]]: createObject(index + 1) }
-      : fun()
+      : fun();
   }
 
-  function recurse (source, index) {
+  function recurse(source, index) {
     if (index >= chain.length) {
-      return fun(source)
+      return fun(source);
     }
 
-    if (typeof source !== 'object' || source === null) {
-      return createObject(index)
+    if (typeof source !== "object" || source === null) {
+      return createObject(index);
     }
 
     const shallow = Array.isArray(source)
       ? source.slice()
-      : Object.assign({}, source)
+      : Object.assign({}, source);
 
-    const propertyName = chain[index]
-    shallow[propertyName] = recurse(source[propertyName], index + 1)
-    return shallow
+    const propertyName = chain[index];
+    shallow[propertyName] = recurse(source[propertyName], index + 1);
+    return shallow;
   }
 
   if (!Array.isArray(chain)) {
-    chain = [chain]
+    chain = [chain];
   }
 
-  return recurse(source, 0)
+  return recurse(source, 0);
 }
 
 /**
@@ -121,11 +125,11 @@ export function applyImmutable (source, chain, fun) {
  * )
  * // { a: 121, b: 23 }
  */
-export function applyImmutableMore (source, ...pairs) {
+export function applyImmutableMore(source, ...pairs) {
   return pairs.reduce(
     (partial, [chain, fun]) => applyImmutable(partial, chain, fun),
-    source,
-  )
+    source
+  );
 }
 
 /**
@@ -146,8 +150,8 @@ export function applyImmutableMore (source, ...pairs) {
  * // { a: { b: { d: { e: 3 } }, c: 2 }, z: {...} }
  * // if the chain is longer than the depth of source then new nodes/objects are created
  */
-export function setImmutable (source, chain, value) {
-  return applyImmutable(source, chain, () => value)
+export function setImmutable(source, chain, value) {
+  return applyImmutable(source, chain, () => value);
 }
 
 /**
@@ -163,11 +167,11 @@ export function setImmutable (source, chain, value) {
  * )
  * // { a: 123, b: 321 }
  */
-export function setImmutableMore (source, ...pairs) {
+export function setImmutableMore(source, ...pairs) {
   return pairs.reduce(
     (partial, [chain, value]) => setImmutable(partial, chain, value),
-    source,
-  )
+    source
+  );
 }
 
 /**
@@ -186,34 +190,34 @@ export function setImmutableMore (source, ...pairs) {
  * // { a: { c: 2 }, z: {...} }
  * // the chain can be longer than the depth of the source
  */
-export function deleteImmutable (source, chain) {
-  function recurse (source, index) {
-    if (typeof source !== 'object' || source === null) {
-      return source
+export function deleteImmutable(source, chain) {
+  function recurse(source, index) {
+    if (typeof source !== "object" || source === null) {
+      return source;
     }
 
     const shallow = Array.isArray(source)
       ? source.slice()
-      : Object.assign({}, source)
+      : Object.assign({}, source);
 
-    const propertyName = chain[index]
+    const propertyName = chain[index];
 
     if (shallow.hasOwnProperty(propertyName)) {
       if (index < chain.length - 1) {
-        shallow[propertyName] = recurse(source[propertyName], index + 1)
+        shallow[propertyName] = recurse(source[propertyName], index + 1);
       } else {
-        Reflect.deleteProperty(shallow, chain[index])
+        Reflect.deleteProperty(shallow, chain[index]);
       }
     }
 
-    return shallow
+    return shallow;
   }
 
   if (!Array.isArray(chain)) {
-    chain = [chain]
+    chain = [chain];
   }
 
-  return recurse(source, 0)
+  return recurse(source, 0);
 }
 
 /**
@@ -229,16 +233,16 @@ export function deleteImmutable (source, chain) {
  * )
  * // {}
  */
-export function deleteImmutableMore (source, ...chains) {
+export function deleteImmutableMore(source, ...chains) {
   return chains.reduce(
     (partial, chain) => deleteImmutable(partial, chain),
-    source,
-  )
+    source
+  );
 }
 
-export function shallowEqualArray (arrayA, arrayB) {
+export function shallowEqualArray(arrayA, arrayB) {
   if (arrayA === arrayB) {
-    return true
+    return true;
   }
 
   if (
@@ -246,16 +250,16 @@ export function shallowEqualArray (arrayA, arrayB) {
     !Array.isArray(arrayB) ||
     arrayA.length !== arrayB.length
   ) {
-    return false
+    return false;
   }
 
   for (let i = 0; i < arrayA.length; i++) {
     if (arrayA[i] !== arrayB[i]) {
-      return false
+      return false;
     }
   }
 
-  return true
+  return true;
 }
 
 // https://github.com/gaearon/react-pure-render/blob/master/src/shallowEqual.js
@@ -268,23 +272,25 @@ export function shallowEqualArray (arrayA, arrayB) {
  * @param {*} objB
  * @returns {boolean}
  */
-export function shallowEqual (objA, objB) {
+export function shallowEqual(objA, objB) {
   if (objA === objB) {
-    return true
+    return true;
   }
 
   if (
-    typeof objA !== 'object' || objA === null ||
-    typeof objB !== 'object' || objB === null
+    typeof objA !== "object" ||
+    objA === null ||
+    typeof objB !== "object" ||
+    objB === null
   ) {
-    return false
+    return false;
   }
 
-  const keysA = Object.keys(objA)
-  const keysB = Object.keys(objB)
+  const keysA = Object.keys(objA);
+  const keysB = Object.keys(objB);
 
   if (keysA.length !== keysB.length) {
-    return false
+    return false;
   }
 
   //! AT: why is having the property more important than it being on the
@@ -292,14 +298,14 @@ export function shallowEqual (objA, objB) {
   // on the prototype chain?
 
   // Test for A's keys different from B.
-  const bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB)
+  const bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
   for (let i = 0; i < keysA.length; i++) {
     if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-      return false
+      return false;
     }
   }
 
-  return true
+  return true;
 }
 
 /**
@@ -311,25 +317,27 @@ export function shallowEqual (objA, objB) {
  * @param {Array<string>} keys
  * @returns {boolean}
  */
-export function shallowEqualOnly (objA, objB, keys) {
+export function shallowEqualOnly(objA, objB, keys) {
   if (objA === objB) {
-    return true
+    return true;
   }
 
   if (
-    typeof objA !== 'object' || objA === null ||
-    typeof objB !== 'object' || objB === null
+    typeof objA !== "object" ||
+    objA === null ||
+    typeof objB !== "object" ||
+    objB === null
   ) {
-    return false
+    return false;
   }
 
   for (let i = 0; i < keys.length; i++) {
-    const key = keys[i]
+    const key = keys[i];
 
     if (objA[key] !== objB[key]) {
-      return false
+      return false;
     }
   }
 
-  return true
+  return true;
 }

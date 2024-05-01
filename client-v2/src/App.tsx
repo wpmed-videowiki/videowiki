@@ -23,6 +23,7 @@ import WikiConvert from "./pages/wiki/convert/[title]";
 import { LANG_API_MAP, websocketConfig } from "./app/utils/config";
 import websockets from "./app/websockets";
 import VideoConvertProgress from "./pages/videos/progress/[id]";
+import VideosHistory from "./pages/videos/history/[title]";
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -77,7 +78,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/:lang/videos/progress/:id",
-        element: <VideoConvertProgress />
+        element: <VideoConvertProgress />,
+      },
+      {
+        path: "/:lang/videos/history/:title",
+        element: <VideosHistory />,
       },
     ],
   },
@@ -101,7 +106,7 @@ function App() {
         }
       );
     }
-    console.log('Websocket ')
+    console.log("Websocket ");
 
     return () => {
       if (websocketConection.current) {
