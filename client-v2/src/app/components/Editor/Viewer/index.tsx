@@ -44,7 +44,7 @@ interface IViewerProps {
   onAudioLoad: (e: any) => void;
   muted: boolean;
   defaultSlideStartTime: number;
-  layout: string;
+  layout: string | number;
 }
 const Viewer = (props: IViewerProps) => {
   /*

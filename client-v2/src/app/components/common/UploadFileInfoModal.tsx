@@ -108,11 +108,11 @@ interface IUploadFileInfoModalProps {
   showAutoDownload?: boolean;
   uploadForms?: any[];
   articleId: string;
-  currentSlideIndex: number;
+  currentSlideIndex: number | string;
   title: string;
   wikiSource: string;
-  file: any;
-  isUploadResume: boolean;
+  file?: any;
+  isUploadResume?: boolean;
   visible: boolean;
   onClose: () => void;
   onSubmit?: (formValues: any) => void;

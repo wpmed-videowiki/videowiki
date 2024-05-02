@@ -21,6 +21,7 @@ const emitEvent = function emitEvent(event, args) {
 
 const subscribeToEvent = function subscribeToEvent(event, callback) {
   console.log("Subscribing to event", event)
+  if (!connection) return;
   return connection.on(event, callback);
 };
 

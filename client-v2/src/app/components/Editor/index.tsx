@@ -70,7 +70,7 @@ interface IEditorProps {
   controlled?: boolean;
   onViewerModeChange?: any;
   viewerMode?: string;
-  layout?: string;
+  layout?: string | number;
   headerOptions?: any;
   enableRecordAudio?: boolean;
 }

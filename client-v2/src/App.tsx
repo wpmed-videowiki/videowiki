@@ -26,6 +26,7 @@ import VideoConvertProgress from "./pages/videos/progress/[id]";
 import VideosHistory from "./pages/videos/history/[title]";
 import Commons from "./pages/commons/[file]";
 import YouTubeAuthPage from "./pages/auth/youtube";
+import ExportHumanVoice from "./pages/export/humanvoice/[title]";
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
       {
         path: "/:lang/commons/:file",
         element: <Commons />,
+      },
+      {
+        path: "/:lang/export/humanvoice/:title",
+        element: <ExportHumanVoice />,
       },
     ],
   },
