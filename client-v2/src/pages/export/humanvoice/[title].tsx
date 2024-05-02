@@ -961,7 +961,6 @@ const ExportHumanVoice = () => {
       uploadAudioLoading,
       editorMuted,
       inPreview,
-      translatedSlides,
     } = state;
     const { lang } = queryString.parse(location.search);
     if (!article) return <div>loading...</div>;

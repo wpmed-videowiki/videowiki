@@ -188,7 +188,7 @@ export const wikiSlice = createSlice({
       state,
       action: PayloadAction<{
         articleId: string;
-        slideIndex: number;
+        slideIndex: number | string;
         update: any;
       }>
     ) => {

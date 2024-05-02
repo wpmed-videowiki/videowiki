@@ -27,8 +27,8 @@ const makeSimpleCallback = (resolve, reject) =>
 const makeSlowCallback = (resolve, reject) =>
   (err, res) => setTimeout(() => { err ? reject(err) : resolve(res) }, DELAY)
 
-export const makeCallback = (...args) =>
-  (localStorage['dev-slow'] ? makeSlowCallback : makeSimpleCallback)(...args)
+export const makeCallback = (resolve, reject) =>
+  (localStorage['dev-slow'] ? makeSlowCallback : makeSimpleCallback)(resolve, reject)
 
 const makeSimpleMethod = (method) =>
   (url, headers = {}) =>

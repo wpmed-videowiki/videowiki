@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { connect } from "react-redux";
 import querystring from "querystring";
 import moment from "moment";
 import { Grid, Button } from "semantic-ui-react";

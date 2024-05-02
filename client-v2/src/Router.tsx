@@ -11,24 +11,27 @@ import {
 import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Header from "./app/components/Header";
 import Footer from "./app/components/Footer";
-import { useEffect, useRef } from "react";
+import { Suspense, lazy, useEffect, useRef } from "react";
 
 import "semantic-ui-css/semantic.min.css";
 import "basscss/css/basscss.min.css";
 import "./stylesheets/main.scss";
-import Home from "./pages";
-import AllArticlesPage from "./pages/articles";
-import VideowikiArticlePage from "./pages/videowiki/[title]";
-import WikiPage from "./pages/wiki";
-import WikiConvert from "./pages/wiki/convert/[title]";
 import { LANG_API_MAP, websocketConfig } from "./app/utils/config";
 import websockets from "./app/websockets";
-import VideoConvertProgress from "./pages/videos/progress/[id]";
-import VideosHistory from "./pages/videos/history/[title]";
-import Commons from "./pages/commons/[file]";
-import YouTubeAuthPage from "./pages/auth/youtube";
-import ExportHumanVoice from "./pages/export/humanvoice/[title]";
 import { setLanguage } from "./app/slices/uiSlice";
+
+const Home = lazy(() => import("./pages"));
+const AllArticlesPage = lazy(() => import("./pages/articles"));
+const VideowikiArticlePage = lazy(() => import("./pages/videowiki/[title]"));
+const WikiPage = lazy(() => import("./pages/wiki"));
+const WikiConvert = lazy(() => import("./pages/wiki/convert/[title]"));
+const VideoConvertProgress = lazy(() => import("./pages/videos/progress/[id]"));
+const VideosHistory = lazy(() => import("./pages/videos/history/[title]"));
+const Commons = lazy(() => import("./pages/commons/[file]"));
+const YouTubeAuthPage = lazy(() => import("./pages/auth/youtube"));
+const ExportHumanVoice = lazy(
+  () => import("./pages/export/humanvoice/[title]")
+);
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -68,7 +71,9 @@ const RootLayout = () => {
     <div className="c-app">
       <Header />
       <div className="c-app__main">
-        <Outlet />
+        <Suspense fallback={<div className="u-center">Loading...</div>}>
+          <Outlet />
+        </Suspense>
       </div>
       <Footer />
       <ToastContainer />

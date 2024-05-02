@@ -312,12 +312,9 @@ const Header = () => {
     <div>
       {_renderBetaDisclaimer()}
       <header className="c-app__header">
-        {/* TODO: Check this */}
-        {/* <Logo className="c-app__header__logo" match={this.props.match} /> */}
         <Logo />
         <WikiSearch />
         {_renderAllArticle()}
-        {/* { this._renderLeaderboard() } */}
         {_renderLanguages()}
         {_renderWikiScripts()}
         {_renderUser()}

@@ -118,8 +118,8 @@ const AddHumanVoiceModal = (data: IAddHumanVoiceModalProps) => {
             <Dropdown.Menu scrolling>
               {state.dropdownOptions.map((option) => (
                 <Dropdown.Item
-                  key={option.value}
                   {...option}
+                  key={option.value}
                   onClick={() =>
                     setState({
                       language: option.value,
