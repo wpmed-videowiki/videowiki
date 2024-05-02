@@ -21,7 +21,6 @@ const WikiSearch = () => {
   };
 
   const _handleResultSelect = (e, {result}) => {
-    console.log({result})
     let { title } = result;
     const { description } = result;
 

@@ -37,13 +37,14 @@ const Commons = () => {
   );
 
   const params = useParams();
+  const paramsFile = params["*"] as string;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (params.file) {
-      dispatch(fetchAudioFileInfo(params.file));
+    if (paramsFile) {
+      dispatch(fetchAudioFileInfo(paramsFile));
     }
-  }, [params.file]);
+  }, [paramsFile]);
 
   const _renderFileInfo = () => {
     if (!audioInfo || !audioInfo.title) return <span>loading</span>;

@@ -5,9 +5,10 @@ import {
   Outlet,
   RouterProvider,
   createBrowserRouter,
+  useLocation,
   useNavigate,
 } from "react-router-dom";
-import { useAppSelector } from "./app/hooks";
+import { useAppDispatch, useAppSelector } from "./app/hooks";
 import Header from "./app/components/Header";
 import Footer from "./app/components/Footer";
 import { useEffect, useRef } from "react";
@@ -27,6 +28,7 @@ import VideosHistory from "./pages/videos/history/[title]";
 import Commons from "./pages/commons/[file]";
 import YouTubeAuthPage from "./pages/auth/youtube";
 import ExportHumanVoice from "./pages/export/humanvoice/[title]";
+import { setLanguage } from "./app/slices/uiSlice";
 
 // the * in title param to handle articles having "/"" in their titles
 // https://github.com/ReactTraining/react-router/issues/313#issuecomment-261403303
@@ -41,6 +43,40 @@ const Redirect = () => {
   return null;
 };
 
+const RootLayout = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { language } = useAppSelector((state) => state.ui);
+
+  useEffect(() => {
+    console.log("Location changed", location.pathname);
+    const routeLanguage = Object.keys(LANG_API_MAP).find(
+      (lang) => location.pathname.indexOf(`/${lang}`) === 0
+    );
+    if (routeLanguage && language !== routeLanguage) {
+      dispatch(setLanguage(routeLanguage));
+    }
+    const newLanguage = routeLanguage || language;
+    if (location.pathname.indexOf(`/${newLanguage}`) !== 0) {
+      navigate(`/${newLanguage}${location.pathname}${location.search || ""}`, {
+        state: location.state,
+      });
+    }
+  }, [location.pathname, location.search]);
+
+  return (
+    <div className="c-app">
+      <Header />
+      <div className="c-app__main">
+        <Outlet />
+      </div>
+      <Footer />
+      <ToastContainer />
+    </div>
+  );
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -48,16 +84,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/:lang",
-    element: (
-      <div className="c-app">
-        <Header />
-        <div className="c-app__main">
-          <Outlet />
-        </div>
-        <Footer />
-        <ToastContainer />
-      </div>
-    ),
+    element: <RootLayout />,
     children: [
       {
         path: "/:lang/",
@@ -72,15 +99,15 @@ const router = createBrowserRouter([
         element: <AllArticlesPage />,
       },
       {
-        path: "/:lang/videowiki/:title",
+        path: "/:lang/videowiki/*",
         element: <VideowikiArticlePage />,
       },
       {
-        path: "/:lang/wiki/:title",
+        path: "/:lang/wiki/*",
         element: <WikiPage />,
       },
       {
-        path: "/:lang/wiki/convert/:title",
+        path: "/:lang/wiki/convert/*",
         element: <WikiConvert />,
       },
       {
@@ -88,22 +115,26 @@ const router = createBrowserRouter([
         element: <VideoConvertProgress />,
       },
       {
-        path: "/:lang/videos/history/:title",
+        path: "/:lang/videos/history/*",
         element: <VideosHistory />,
       },
       {
-        path: "/:lang/commons/:file",
+        path: "/:lang/commons/*",
         element: <Commons />,
       },
       {
-        path: "/:lang/export/humanvoice/:title",
+        path: "/:lang/export/humanvoice/*",
         element: <ExportHumanVoice />,
+      },
+      {
+        path: "*",
+        element: <h1 className="u-center">Not found</h1>,
       },
     ],
   },
 ]);
 
-function App() {
+function Router() {
   const websocketConection = useRef<any>(null);
   useEffect(() => {
     const routeLanguage = Object.keys(LANG_API_MAP).find(
@@ -121,7 +152,6 @@ function App() {
         }
       );
     }
-    console.log("Websocket ");
 
     return () => {
       if (websocketConection.current) {
@@ -135,4 +165,4 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
-export default App;
+export default Router;

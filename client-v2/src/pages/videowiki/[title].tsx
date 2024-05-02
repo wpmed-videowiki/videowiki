@@ -32,9 +32,12 @@ const VideowikiArticlePage = () => {
   } = useAppSelector((state) => state.article);
   const { language } = useAppSelector((state) => state.ui);
   const params = useParams();
+  const paramsTitle = params["*"] as string;
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  console.log({ params });
   useEffect(() => {
     const { wikiSource, viewerMode } = queryString.parse(location.search);
     if (viewerMode && viewerMode === "editor") {
@@ -54,7 +57,7 @@ const VideowikiArticlePage = () => {
     }
     dispatch(
       fetchArticle({
-        title: params.title as string,
+        title: paramsTitle,
         mode: "viewer",
         wikiSource: wikiSource as string,
       })
@@ -100,7 +103,7 @@ const VideowikiArticlePage = () => {
     }
     if (fetchArticleState === "done" && (!article || !article._id)) {
       const { wikiSource } = queryString.parse(location.search);
-      navigate(`/${language}/wiki/${params.title}?wikiSource=${wikiSource}`);
+      navigate(`/${language}/wiki/${paramsTitle}?wikiSource=${wikiSource}`);
     }
   }, [fetchArticleState]);
 
@@ -158,10 +161,10 @@ const VideowikiArticlePage = () => {
             <Grid.Column computer={2}></Grid.Column>
             <Grid.Column computer={4} mobile={16}>
               <div className="c-editor-infobox-container">
-                <Contributors title={params.title!} />
+                <Contributors title={paramsTitle!} />
                 {state.wikiSource && (
                   <InfoBox
-                    title={params.title!}
+                    title={paramsTitle!}
                     titleWikiSource={state.wikiSource as string}
                   />
                 )}

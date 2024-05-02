@@ -61,6 +61,7 @@ const VideosHistory = () => {
   const videosHistory = useAppSelector((state) => state.video.videosHistory);
 
   const params = useParams();
+  const paramsTitle = params["*"] as string;
   const dispatch = useAppDispatch();
 
   const getDecriptionUrl = (media, uploadTarget) => {
@@ -252,7 +253,6 @@ const VideosHistory = () => {
   };
 
   const _render = () => {
-    const { title } = params;
     const { wikiSource } = querystring.parse(location.search.replace("?", ""));
 
     return (
@@ -269,7 +269,7 @@ const VideosHistory = () => {
           >
             <h3 style={{ flex: 5, margin: 0, textAlign: "left" }}>
               <Link
-                to={`/${language}/videowiki/${title}?wikiSource=${wikiSource}`}
+                to={`/${language}/videowiki/${paramsTitle}?wikiSource=${wikiSource}`}
               >
                 Back to article
               </Link>
@@ -282,7 +282,7 @@ const VideosHistory = () => {
                 wordBreak: "break-all",
               }}
             >
-              Export History: {title}
+              Export History: {paramsTitle}
             </h3>
           </div>
         </div>
@@ -377,7 +377,7 @@ const VideosHistory = () => {
   const { fetchVideosHistoryState } = videosHistory;
 
   useEffect(() => {
-    const title = params.title as string;
+    const title = paramsTitle as string;
     const wikiSource = querystring.parse(location.search.replace("?", ""))
       .wikiSource as string;
     dispatch(fetchVideosHistory({ title, wikiSource: wikiSource as string }));
@@ -396,7 +396,7 @@ const VideosHistory = () => {
         )
       );
     };
-  }, [params.title]);
+  }, [paramsTitle]);
 
   return (
     <StateRenderer

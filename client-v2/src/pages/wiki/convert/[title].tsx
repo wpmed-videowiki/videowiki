@@ -17,9 +17,10 @@ const WikiConvert = () => {
   const navigate = useNavigate();
 
   const params = useParams();
+  const paramsTitle = params["*"] as string;
 
   useEffect(() => {
-    const title = params.title as string;
+    const title = paramsTitle as string;
     const { wikiSource } = queryString.parse(location.search);
 
     dispatch(
@@ -59,7 +60,7 @@ const WikiConvert = () => {
   }, [conversionPercentage, language]);
 
   const _startPoller = () => {
-    const title = params.title as string;
+    const title = paramsTitle as string;
     const { wikiSource } = queryString.parse(location.search);
 
     _sessionPoller.current = setInterval(() => {
@@ -77,7 +78,7 @@ const WikiConvert = () => {
   };
 
   const _render = () => {
-    const title = params.title as string;
+    const title = paramsTitle as string;
 
     const progress = conversionPercentage ? conversionPercentage.progress : 0;
 

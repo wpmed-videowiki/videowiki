@@ -69,6 +69,7 @@ const ExportHumanVoice = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams();
+  const paramsTitle = params["*"] as string;
 
   const setState = (newState) => {
     updateState((prevState) => ({
@@ -76,13 +77,6 @@ const ExportHumanVoice = () => {
       ...newState,
     }));
   };
-  // article: article.article,
-  // fetchArticleState: article.fetchArticleState,
-  // articleLastVideo: article.articleLastVideo,
-  // humanvoice,
-  // video,
-  // language: ui.language,
-  // auth,
   const { article, fetchArticleState, articleLastVideo } = useAppSelector(
     (state) => state.article
   );
@@ -99,7 +93,7 @@ const ExportHumanVoice = () => {
       return navigate(`/${language}`);
     }
 
-    const { title } = params;
+    const title = paramsTitle;
     const { wikiSource, lang } = queryString.parse(location.search);
     if (!title || !wikiSource || !lang) {
       return navigate(`/videowiki/${title}`);
@@ -110,7 +104,7 @@ const ExportHumanVoice = () => {
     dispatch(
       fetchArticle({ title, wikiSource: wikiSource as string, mode: "viewer" })
     );
-  }, [params.title]);
+  }, [paramsTitle]);
 
   useEffect(() => {
     websockets.subscribeToEvent(
@@ -209,7 +203,7 @@ const ExportHumanVoice = () => {
   // success action for loading the article
   useEffect(() => {
     if (fetchArticleState === "done" && article) {
-      const { title } = params;
+      const title = paramsTitle;
       const { wikiSource, lang } = queryString.parse(location.search);
       const articleClone = JSON.parse(JSON.stringify(article));
       setState({ article: articleClone });

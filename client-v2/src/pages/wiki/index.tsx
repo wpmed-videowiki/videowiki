@@ -18,6 +18,7 @@ const WikiPage = () => {
   });
 
   const params = useParams();
+  const paramsTitle = params["*"] as string;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
@@ -34,7 +35,7 @@ const WikiPage = () => {
   useEffect(() => {
     const { wikiSource } = queryString.parse(location.search);
     dispatch(
-      fetchWikiPage({ title: params.title!, wikiSource: wikiSource as string })
+      fetchWikiPage({ title: paramsTitle!, wikiSource: wikiSource as string })
     );
   }, []);
 
@@ -42,6 +43,9 @@ const WikiPage = () => {
     const queryParams = queryString.parse(location.search);
 
     if (state.wikiContentState === "loading" && wikiContentState === "done") {
+      setState({
+        wikiContentState,
+      });
       try {
         const parsedContent = JSON.parse(wikiContent);
         if (!parsedContent.redirect) {
@@ -54,22 +58,9 @@ const WikiPage = () => {
       }
     }
 
-    // if (
-    //   this.props.match.url !== nextProps.match.url ||
-    //   this.props.location.search !== nextProps.location.search
-    // ) {
-    //   const { wikiSource } = queryString.parse(location.search);
-    //   nextProps.dispatch(
-    //     actions.fetchWikiPage({
-    //       title: nextProps.match.params.title,
-    //       wikiSource,
-    //     })
-    //   );
-    // }
-
     if (!queryParams.wikiSource && wikiSource) {
       return navigate(
-        `/${language}/wiki/${params.title}?wikiSource=${wikiSource}`
+        `/${language}/wiki/${paramsTitle}?wikiSource=${wikiSource}`
       );
     }
 
@@ -77,14 +68,18 @@ const WikiPage = () => {
       if (convertError && convertError.response && convertError.response.text) {
         toast.info(convertError.response.text);
       }
-      navigate(`/${language}/`);
       setState({
         shouldShowError: true,
+        convertState,
       });
+      navigate(`/${language}`);
     }
     if (state.convertState === "loading" && convertState === "done") {
+      setState({
+        convertState,
+      });
       navigate(
-        `/${language}/wiki/convert/${params.title}?wikiSource=${wikiSource}`
+        `/${language}/wiki/convert/${paramsTitle}?wikiSource=${wikiSource}`
       );
     }
   }, [
@@ -129,21 +124,21 @@ const WikiPage = () => {
 
   const _handleConvertToVideoWiki = () => {
     const { wikiSource } = queryString.parse(location.search);
-    const title = params.title as string;
+    const title = paramsTitle as string;
     dispatch(convertWiki({ title, wikiSource: wikiSource as string }));
   };
 
-//   const _renderConvertToVideoWikiButton = () => {
-//     return (
-//       <Button
-//         primary
-//         className="u-block-center u-display-block u-margin-bottom"
-//         onClick={() => _handleConvertToVideoWiki()}
-//       >
-//         Convert this article to VideoWiki
-//       </Button>
-//     );
-//   };
+  //   const _renderConvertToVideoWikiButton = () => {
+  //     return (
+  //       <Button
+  //         primary
+  //         className="u-block-center u-display-block u-margin-bottom"
+  //         onClick={() => _handleConvertToVideoWiki()}
+  //       >
+  //         Convert this article to VideoWiki
+  //       </Button>
+  //     );
+  //   };
 
   const _render = () => {
     try {
