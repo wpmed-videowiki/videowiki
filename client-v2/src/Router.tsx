@@ -50,7 +50,6 @@ const RootLayout = () => {
   const { language } = useAppSelector((state) => state.ui);
 
   useEffect(() => {
-    console.log("Location changed", location.pathname);
     const routeLanguage = Object.keys(LANG_API_MAP).find(
       (lang) => location.pathname.indexOf(`/${lang}`) === 0
     );

@@ -37,7 +37,6 @@ const VideowikiArticlePage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  console.log({ params });
   useEffect(() => {
     const { wikiSource, viewerMode } = queryString.parse(location.search);
     if (viewerMode && viewerMode === "editor") {
