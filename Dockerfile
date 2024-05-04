@@ -6,7 +6,7 @@ RUN npm install
 RUN npm run build
 RUN rm -rf build
 RUN mkdir build
-RUN mv client-v2/dist/* build/
+RUN mv client/dist/* build/
 
 CMD ["npm", "start"]
 

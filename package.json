@@ -7,7 +7,7 @@
     "test": "mocha --timeout 60000 || true",
     "dev:client": "node scripts/start.js",
     "dev:server": "nodemon ./server/index.js 4000 en",
-    "build": "cd client-v2 && npm run build",
+    "build": "cd client && npm run build",
     "start": "node index.js",
     "stop": "pm2 stop /^videowiki-app-.*$/ && pm2 delete /^videowiki-app-.*$/",
     "restart": "npm stop && npm start && pm2 logs"
