@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Grid, Popup, Icon } from "semantic-ui-react";
-import Range from "rc-slider/lib/Range";
+// import Range from "rc-slider/lib/Range";
+import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import ProgressSoundPlayer from "../common/ProgressSoundPlayer";
 import { getUrlMediaType } from "../../utils/helpers";
@@ -232,7 +233,8 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
                 )}
               </Grid.Column>
               <Grid.Column width={16}>
-                <Range
+                <Slider
+                  range
                   key={`range-slider-${props.currentSlideIndex}`}
                   style={{ height: 100 }}
                   defaultValue={state.value}

@@ -2,28 +2,22 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Icon, Popup, Dropdown } from "semantic-ui-react";
 import copy from "clipboard-copy";
-import { ShareButtons, generateShareIcon } from "react-share";
-import { NotificationManager } from "react-notifications";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  TwitterShareButton,
+  VKShareButton,
+  RedditShareButton,
+  TwitterIcon,
+  VKIcon,
+  RedditIcon,
+} from "react-share";
 import Blinker from "../common/Blinker";
 import UpdateArticleModal from "./modals/UpdateArticleModal";
 import ExportArticleVideo from "./ExportArticleVideo";
 import AddHumanVoiceModal from "./modals/AddHumanVoiceModal";
 import AuthModal from "../common/AuthModal";
 import { toast } from "react-toastify";
-
-const {
-  FacebookShareButton,
-  // GooglePlusShareButton,
-  TwitterShareButton,
-  VKShareButton,
-  RedditShareButton,
-} = ShareButtons;
-
-const FacebookIcon = generateShareIcon("facebook");
-const TwitterIcon = generateShareIcon("twitter");
-// const GooglePlusIcon = generateShareIcon('google')
-const VKIcon = generateShareIcon("vk");
-const RedditIcon = generateShareIcon("reddit");
 
 interface IEditorHeaderProps {
   article: any;
@@ -192,8 +186,8 @@ const EditorHeader = (data: IEditorHeaderProps) => {
               <FacebookShareButton
                 url={url}
                 title={title}
-                picture={article.image}
-                description={description}
+                // picture={article.image}
+                // description={description}
                 className="c-editor__share-icon"
               >
                 <FacebookIcon size={32} round />
@@ -287,7 +281,7 @@ const EditorHeader = (data: IEditorHeaderProps) => {
     const wikiSource = article.wikiSource || "https://en.wikipedia.org";
 
     if (article.mediaSource === "script") {
-      return NotificationManager.info(
+      return toast.info(
         "The media of custom Videowiki articles are editable only in the script page"
       );
     }

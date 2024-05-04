@@ -1,8 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 import { Image, Button, Form } from "semantic-ui-react";
 import PopupTools from "popup-tools";
-import { NotificationManager } from "react-notifications";
 import "./style.css";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {

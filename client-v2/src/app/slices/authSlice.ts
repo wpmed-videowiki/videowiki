@@ -94,7 +94,7 @@ export const authSlice = createSlice({
     },
     // validate session
     onValidateSessionLoading: (state) => {
-      state.session = null;
+      // state.session = null;
     },
     onValidateSessionSuccess: (state, action: PayloadAction<any>) => {
       state.session = action.payload.session || {};

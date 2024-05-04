@@ -17,13 +17,6 @@ const TranslateBoxV2 = (props: ITranslateBoxV2Props) => {
     if (props.value !== value) {
       setValue(props.value);
     }
-  }, []);
-
-  useEffect(() => {
-    if (props.value !== value) {
-      props.onSave(value, props.currentSlideIndex, props.currentSubslideIndex);
-      setValue(props.value);
-    }
   }, [props.value]);
 
   const onValueChange = (value) => {

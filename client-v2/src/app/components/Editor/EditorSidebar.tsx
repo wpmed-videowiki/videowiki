@@ -1,5 +1,5 @@
 import { Sidebar, Menu, Progress } from "semantic-ui-react";
-import { Scrollbars } from "react-custom-scrollbars";
+// import { Scrollbars } from "react-custom-scrollbars";
 
 interface IEditrSidebarProps {
   toc: any[];
@@ -68,7 +68,15 @@ const EditorSidebar = (props: IEditrSidebarProps) => {
       inverted
       className="c-sidebar"
     >
-      <Scrollbars>{_renderMenuItem()}</Scrollbars>
+      <div
+        style={{
+          height: "calc(100vh - 60px)",
+          overflowY: "auto",
+          overflowX: "hidden",
+        }}
+      >
+        {_renderMenuItem()}
+      </div>
     </Sidebar>
   );
 };

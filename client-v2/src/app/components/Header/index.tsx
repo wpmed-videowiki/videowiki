@@ -278,9 +278,9 @@ const Header = () => {
   };
 
   const _renderArticleCount = () => {
-    return fetchArticleCountState === "done" ? (
-      <div>{`( ${articleCount} articles )`}</div>
-    ) : null;
+    return (
+      <div>{`( ${articleCount || '-'} articles )`}</div>
+    );
   };
 
   const _renderAllArticle = () => {

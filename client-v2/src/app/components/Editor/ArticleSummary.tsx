@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Segment, Image } from "semantic-ui-react";
 import queryString from "query-string";
 import { httpGet } from "../../apis/Common";
 
-let _isMounted = false;
-
 const ArticleSummary = (props: any) => {
+  const _isMounted = useRef(false);
   const [state, updateState] = useState({
     position: props.position || null,
     title: props.title || null,
@@ -18,9 +17,9 @@ const ArticleSummary = (props: any) => {
   };
 
   useEffect(() => {
-    _isMounted = true;
+    _isMounted.current = true;
     return () => {
-      _isMounted = false;
+      _isMounted.current = false;
     };
   }, []);
 
@@ -55,7 +54,7 @@ const ArticleSummary = (props: any) => {
       }`
     )
       .then((res: any) => {
-        if (_isMounted) {
+        if (_isMounted.current) {
           setState({ loading: false, article: res.body });
         }
       })

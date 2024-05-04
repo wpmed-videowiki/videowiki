@@ -2,7 +2,7 @@ import { Button, Icon } from "semantic-ui-react";
 import moment from "moment";
 
 import VoiceSpeedController from "./VoiceSpeedController";
-import { NotificationManager } from "react-notifications";
+import { toast } from "react-toastify";
 
 interface IEditorFooterProps {
   currentSlideIndex: number;
@@ -76,7 +76,7 @@ const EditorFooter = (props: IEditorFooterProps) => {
           onClick={() =>
             uploadState !== "loading"
               ? onSlideBack()
-              : NotificationManager.info(
+              : toast.info(
                   "An upload is already in progress, please hold"
                 )
           }
@@ -99,7 +99,7 @@ const EditorFooter = (props: IEditorFooterProps) => {
           onClick={() =>
             uploadState !== "loading"
               ? onSlideForward()
-              : NotificationManager.info(
+              : toast.info(
                   "An upload is already in progress, please hold"
                 )
           }

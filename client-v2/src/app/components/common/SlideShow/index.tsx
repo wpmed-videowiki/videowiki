@@ -1,11 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const REFRESH_INTERVAL = 30;
 const FADE_DURATION = 0.75;
 const ZOOM_EFFECT_CLASSES = ["zoom-t-l", "zoom-t-r", "zoom-b-l", "zoom-b-r"];
-let globalConsumedTime = 0;
 let mounted = false;
 let playingVideoRef: any = null;
 
@@ -30,6 +29,8 @@ interface ISlideShowProps {
 }
 
 const Slideshow = (data: ISlideShowProps = {}) => {
+  const oldProps = useRef(data);
+  const globalConsumedTime = useRef(0);
   const props = {
     showIndex: false,
     repeat: false,
@@ -72,16 +73,16 @@ const Slideshow = (data: ISlideShowProps = {}) => {
 
   // TODO: Check this
   useEffect(() => {
-    if (state.playing !== props.playing) {
+    if (oldProps.current.playing !== props.playing) {
       if (props.playing && props.isActive) {
         restartSlideshow();
         console.log("============= Restart slide show");
       } else {
         stopSlideShow();
       }
-      setState((state) => ({ ...state, playing: props.playing }));
     }
-  }, [state.playing, props.playing, props.isActive]);
+    oldProps.current = props;
+  }, [props.playing, props.isActive]);
 
   useEffect(() => {
     if (props.isActive && props.defaultStartTime !== state.defaultStartTime) {
@@ -110,7 +111,7 @@ const Slideshow = (data: ISlideShowProps = {}) => {
         break;
       }
     }
-    globalConsumedTime = consumedTime;
+    globalConsumedTime.current = consumedTime;
     setState((state) => ({
       ...state,
       currentSlide,
@@ -127,7 +128,7 @@ const Slideshow = (data: ISlideShowProps = {}) => {
         }
         if (playingVideoRef?.getInternalPlayer()) {
           playingVideoRef.getInternalPlayer().currentTime =
-            globalConsumedTime / 1000;
+            globalConsumedTime.current / 1000;
         }
 
         if ((props.slides[currentSlide] as any).playing) {
@@ -150,10 +151,10 @@ const Slideshow = (data: ISlideShowProps = {}) => {
     console.log("============= Run slide show");
     const intervalId = setInterval(() => {
       if (props.playing) {
-        globalConsumedTime = globalConsumedTime + REFRESH_INTERVAL;
+        globalConsumedTime.current = globalConsumedTime.current + REFRESH_INTERVAL;
         if (
           state.fade === "in" &&
-          (props.slides[state.currentSlide] as any).time - globalConsumedTime <=
+          (props.slides[state.currentSlide] as any).time - globalConsumedTime.current <=
             FADE_DURATION * 1000
         ) {
           setState((state) => ({ ...state, fade: "out" }));
@@ -188,11 +189,11 @@ const Slideshow = (data: ISlideShowProps = {}) => {
     if (
       globalConsumedTime &&
       slides[currentSlide] &&
-      globalConsumedTime < slides[currentSlide].time - REFRESH_INTERVAL
+      globalConsumedTime.current < slides[currentSlide].time - REFRESH_INTERVAL
     ) {
-      runSlideShow(slides[currentSlide].time - globalConsumedTime);
+      runSlideShow(slides[currentSlide].time - globalConsumedTime.current);
     } else if (props.slides[state.currentSlide]) {
-      globalConsumedTime = 0;
+      globalConsumedTime.current = 0;
       runSlideShow(props.slides[state.currentSlide].time);
     }
   };
@@ -217,7 +218,7 @@ const Slideshow = (data: ISlideShowProps = {}) => {
     setTimeout(() => {
       props.onSlideChange(currentSlide);
       stopSlideShow();
-      globalConsumedTime = 0;
+      globalConsumedTime.current = 0;
       runSlideShow(props.slides[currentSlide].time);
     });
   };

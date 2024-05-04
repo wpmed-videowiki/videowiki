@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Grid, Button, Icon, Progress, Input } from "semantic-ui-react";
 import queryString from "query-string";
-import { NotificationManager } from "react-notifications";
 
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
@@ -130,7 +129,7 @@ const ExportHumanVoice = () => {
                 uploadAudioLoading: false,
                 uploadAudioInputValue: null,
               });
-              NotificationManager.info(
+              toast.info(
                 "Something went wrong while processing the audio, we kept you original recording though."
               );
             }
@@ -656,15 +655,17 @@ const ExportHumanVoice = () => {
       const { title, wikiSource } = article;
       translatedSlides[currentSlideIndex] = value;
 
-      dispatch(
-        savetranslatedText({
-          title,
-          wikiSource,
-          lang: lang as string,
-          slideNumber: currentSlideIndex,
-          text: value,
-        })
-      );
+      setTimeout(() => {
+        dispatch(
+          savetranslatedText({
+            title,
+            wikiSource,
+            lang: lang as string,
+            slideNumber: currentSlideIndex,
+            text: value,
+          })
+        );
+      }, 100);
       return {
         ...state,
         saveTranslatedTextLoading: true,
