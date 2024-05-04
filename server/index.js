@@ -51,7 +51,6 @@ socketConnection.on('connection', (socket) => {
 const dbConnectionParts = DB_CONNECTION_URL.split('?')
 // DB Connection and app initializations
 mongoose.connect(`${dbConnectionParts[0]}-${lang}?${dbConnectionParts[1] || ''}`) // connect to our mongoDB database //TODO: !AA: Secure the DB with authentication keys
-console.log(`====== Connected to database ${`${DB_CONNECTION_URL}-${lang}`} ===========`)
 app.all('/*', (req, res, next) => {
   // CORS headers - Set custom headers for CORS
   res.header('Access-Control-Allow-Origin', '*'); // restrict it to the required domain
