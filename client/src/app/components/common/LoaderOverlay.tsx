@@ -9,8 +9,18 @@ interface ILoaderOverlayProps {
 const LoaderOverlay = (props: ILoaderOverlayProps) => {
   return props.loaderImage ? (
     <Dimmer active inverted>
-      <Image src={props.loaderImage} size="small" />
-      <h3>{props.children}</h3>
+      <div
+        style={{
+          color: "black",
+          display: "flex",
+          justifyContent: "center",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Image src={props.loaderImage} size="small" />
+        <h3>{props.children}</h3>
+      </div>
     </Dimmer>
   ) : (
     <Dimmer active inverted>

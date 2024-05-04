@@ -17,7 +17,7 @@ const StateRenderer = (props: IStateRendererProps) => {
 
   switch (componentState) {
     case LoadingStateEnum.DONE:
-      return onRender ?  onRender() : null;
+      return onRender ? onRender() : null;
     case LoadingStateEnum.LOADING:
       return !props.loaderDisabled ? (
         <LoaderOverlay loaderImage={props.loaderImage}>
