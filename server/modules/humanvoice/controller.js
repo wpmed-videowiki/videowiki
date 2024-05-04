@@ -17,12 +17,14 @@ const humanvoiceController = {
     if (!title || !wikiSource || !lang) {
       return res.status(400).send('title, wikiSource and lang are required');
     }
-    HumanVoiceModel.findOne({ title, wikiSource, lang, user: req.user._id }, (err, humanvoice) => {
+    HumanVoiceModel.findOne({ title, wikiSource, lang, user: req.user._id }).then((humanvoice) => {
+      return res.json({ humanvoice });
+    })
+    .catch(err => {
       if (err) {
         console.log('error retrieving human voice', err);
         return res.status(400).send('Something went wrong');
       }
-      return res.json({ humanvoice });
     })
   },
 
@@ -30,11 +32,7 @@ const humanvoiceController = {
     if (!req.files || !req.files.file) return res.status(400).end('File is required');
     const file = req.files.file;
     const { title, wikiSource, position, lang, enableAudioProcessing } = req.body;
-    ArticleModel.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        console.log('error fetching article ', err);
-        return res.status(400).end('Something went wrong');
-      }
+    ArticleModel.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) {
         return res.status(400).end('Invalid article');
       }
@@ -56,11 +54,7 @@ const humanvoiceController = {
           if (err) {
             console.log('error getting audio url', err);
           }
-          HumanVoiceModel.findOne({ title, wikiSource, lang, user: req.user._id }, (err, humanvoice) => {
-            if (err) {
-              console.log('error finding human voice', err);
-              return res.status(400).end('Something went wrong');
-            }
+          HumanVoiceModel.findOne({ title, wikiSource, lang, user: req.user._id }).then((humanvoice) => {
             if (!humanvoice) {
               const newHumanVoiceData = {
                 title,
@@ -93,16 +87,24 @@ const humanvoiceController = {
               }
               const audios = humanvoice.audios.filter((a) => Number(a.position) !== Number(position));
               audios.push({ position, audioURL, Key: filename, duration: duration ? duration * 1000 : 0 });
-              HumanVoiceModel.findByIdAndUpdate(humanvoice._id, { $set: { audios } }, { new: true }, (err, newHumanVoice) => {
-                if (err) {
-                  console.log('error updating human voice', err);
-                  return res.status(400).end('Something went wrong');
-                }
+              HumanVoiceModel.findByIdAndUpdate(humanvoice._id, { $set: { audios } }, { new: true }).then((newHumanVoice) => {
                 if (enableAudioProcessing) {
                   processHumanVoiceAudio({ humanvoiceId: newHumanVoice._id, audioPosition: position });
                 }
                 return res.json({ humanvoice: newHumanVoice, slideAudioInfo: { position, audioURL } });
               })
+              .catch(err => {
+                if (err) {
+                  console.log('error updating human voice', err);
+                  return res.status(400).end('Something went wrong');
+                }
+              })
+            }
+          })
+          .catch(err => {
+            if (err) {
+              console.log('error finding human voice', err);
+              return res.status(400).end('Something went wrong');
             }
           })
         })
@@ -112,30 +114,40 @@ const humanvoiceController = {
         return res.status(400).end('Something went wrong');
       })
     })
+    .catch(err => {
+      if (err) {
+        console.log('error fetching article ', err);
+        return res.status(400).end('Something went wrong');
+      }
+    })
   },
 
   deleteAudio(req, res) {
     const { title, wikiSource, lang, position } = req.body;
     const userId = req.user._id;
-    HumanVoiceModel.findOne({ title, wikiSource, lang, user: userId }, (err, humanvoice) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).send('Something went wrong');
-      }
+    HumanVoiceModel.findOne({ title, wikiSource, lang, user: userId }).then((humanvoice) => {
       if (!humanvoice) return res.status(400).send('Invalid custom human voice');
 
       const deletedAudios = humanvoice.audios.filter((audio) => Number(audio.position) === Number(position));
       if (!deletedAudios || deletedAudios.length === 0) {
         return res.status(400).send('Invalid audio position');
       }
-      HumanVoiceModel.findByIdAndUpdate(humanvoice._id, { $pull: { audios: { position } } }, { new: true }, (err) => {
+      HumanVoiceModel.findByIdAndUpdate(humanvoice._id, { $pull: { audios: { position } } }, { new: true }).then(() => {
+        deletedAudios.forEach((audio) => utils.deleteAudioFromS3(bucketName, audio.Key));
+        return res.json({ deletedAudio: deletedAudios[0] });
+      })
+      .catch(err => {
         if (err) {
           console.log(err);
           return res.status(400).send('Something went wrong')
         }
-        deletedAudios.forEach((audio) => utils.deleteAudioFromS3(bucketName, audio.Key));
-        return res.json({ deletedAudio: deletedAudios[0] });
       })
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
 
@@ -144,21 +156,19 @@ const humanvoiceController = {
     const userId = req.user._id;
     const newSlide = { text, position: Number(position) };
 
-    HumanVoiceModel.findOne({ title, wikiSource, lang, user: userId }, (err, humanvoice) => {
-      if (err) {
-        console.log('error fethcing human voice', err);
-        return res.status(400).send('Something went wrong');
-      }
+    HumanVoiceModel.findOne({ title, wikiSource, lang, user: userId }).then((humanvoice) => {
 
       if (humanvoice) {
         const filteredTranslatedSlides = humanvoice.translatedSlides ? humanvoice.translatedSlides.filter((slide) => Number(slide.position) !== Number(newSlide.position)) : [];
         filteredTranslatedSlides.push(newSlide);
-        HumanVoiceModel.findByIdAndUpdate(humanvoice._id, { $set: { translatedSlides: filteredTranslatedSlides } }, { new: true }, (err, newHumanVoice) => {
+        HumanVoiceModel.findByIdAndUpdate(humanvoice._id, { $set: { translatedSlides: filteredTranslatedSlides } }, { new: true }).then((newHumanVoice) => {
+          return res.json({ humanvoice: newHumanVoice, translatedTextInfo: newSlide })
+        })
+        .catch(err => {
           if (err) {
             console.log('error saving updated translated slides', err);
             return res.status(400).send('Something went wrong');
           }
-          return res.json({ humanvoice: newHumanVoice, translatedTextInfo: newSlide })
         })
       } else {
         // Create a new human voice for the user
@@ -177,6 +187,12 @@ const humanvoiceController = {
           }
           return res.json({ humanvoice: newHumanVoice, translatedTextInfo: newSlide });
         })
+      }
+    })
+    .catch(err => {
+      if (err) {
+        console.log('error fethcing human voice', err);
+        return res.status(400).send('Something went wrong');
       }
     })
   },

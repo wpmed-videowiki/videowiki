@@ -8,12 +8,14 @@ const controller = {
       .sort({ totalEdits: -1 })
       .limit(limit || 10)
       .select('firstName lastName email totalEdits')
-      .exec((err, users) => {
+      .exec().then((users) => {
+
+        return res.json({ users })
+      })
+      .catch(err => {
         if (err) {
           return res.status(503).send('Error while fetching top users!')
         }
-
-        return res.json({ users })
       })
   },
 }

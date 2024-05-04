@@ -15,7 +15,6 @@ import { isCustomVideowikiScript, isMDwikiScript } from '../article'
 
 const lang = process.argv.slice(2)[1]
 const VIDEOWIKI_LANG = lang
-const console = process.console
 
 const PLAYER_IMAGE_WIDTH = 1280
 const PLAYER_IMAGE_HEIGHT = 720

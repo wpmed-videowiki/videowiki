@@ -9,15 +9,17 @@ const controller = {
   getVideoById(req, res) {
     const { id } = req.params;
 
-    VideoModel.findById(id, (err, video) => {
-      if (err) {
-        return res.status(400).send('Something went wrong while fetching the video');
-      }
+    VideoModel.findById(id).then((video) => {
       if (!video) {
         return res.status(400).send('Invalid video');
       }
 
       return res.json({ video });
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(400).send('Something went wrong while fetching the video');
+      }
     })
   },
   getVideoHistory(req, res) {
@@ -39,11 +41,13 @@ const controller = {
     .populate('article')
     .populate('formTemplate')
     .populate('user', 'username email')
-    .exec((err, videos) => {
+    .exec().then((videos) => {
+      return res.status(200).json({ videos });
+    })
+    .catch(err => {
       if (err) {
         return res.status(400).send('Something went wrong');
       }
-      return res.status(200).json({ videos });
     })
   },
 
@@ -90,10 +94,7 @@ const controller = {
       return res.status(400).send(errors.join(', '))
     }
 
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        return res.status(400).send('Something went wrong');
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) {
         return res.status(400).send('Invalid article title or wiki source');
       }
@@ -109,11 +110,7 @@ const controller = {
         wikiSource,
         user: req.user._id,
         form: formValues,
-      }, (err, formTemplate) => {
-        if (err) {
-          console.log('error creating form template', err);
-          return res.status(400).send('Something went wrong, please try again');
-        }
+      }).then((formTemplate) => {
 
         const newVideo = {
           title,
@@ -126,78 +123,95 @@ const controller = {
         };
 
         // Check if there's a video already being converted for this article
-        VideoModel.count({ title, wikiSource, status: { $in: ['queued', 'progress'] } }, (err, count) => {
-          if (err) {
-            return res.status(400).send('Something went wrong, please try again');
-          }
+        VideoModel.countDocuments({ title, wikiSource, status: { $in: ['queued', 'progress'] } }).then((count) => {
 
           if (count !== 0) {
             const message = 'This article is currently being converted. though We\'ve saved the form template for you to try later.';
-            UploadFormTemplateModel.findByIdAndUpdate(formTemplate._id, { $set: { published: true } }, () => {
-            })
+            UploadFormTemplateModel.findByIdAndUpdate(formTemplate._id, { $set: { published: true } }).then(() => {}).catch(err => {});
             return res.status(400).send(message);
           }
           if (humanvoiceId) {
-            HumanVoiceModel.findById(humanvoiceId, (err, humanvoice) => {
-              if (err) {
-                console.log('error finding human voice', err);
-                return res.status(400).send('Something went wrong');
-              }
+            HumanVoiceModel.findById(humanvoiceId).then((humanvoice) => {
               if (!humanvoice) {
                 return res.status(400).send('Invalid human voice id provided');
               }
-              VideoModel.create(newVideo, (err, video) => {
+              VideoModel.create(newVideo).then((video) => {
+                res.json({ video });
+                VideoModel.findByIdAndUpdate(video._id, { $set: { lang: humanvoice.lang, humanvoice: humanvoiceId } }, { new: true }).then((newVideo) => {
+                  return convertArticle({ videoId: video._id });
+                })
+                .catch(err => {
+                  if (err) {
+                    console.log('error updating video lang', err);
+                  }
+                })
+                // If there's a human voice associated, change the language of the video document
+              })
+              .catch(err => {
                 if (err) {
                   console.log('error creating new video', err);
                   return res.status(400).send('something went wrong');
                 }
-                res.json({ video });
-                VideoModel.findByIdAndUpdate(video._id, { $set: { lang: humanvoice.lang, humanvoice: humanvoiceId } }, { new: true }, (err, newVideo) => {
-                  if (err) {
-                    console.log('error updating video lang', err);
-                  }
-                  return convertArticle({ videoId: video._id });
-                })
-                // If there's a human voice associated, change the language of the video document
               })
               // Check to see if that version of the article has been exported before in the specified language of humanvoice
             })
-          } else {
-            // Check to see if that version of the article has been exported before in the specified language
-            VideoModel.count({ title, wikiSource, articleVersion: article.version, lang: article.lang, status: 'uploaded' }, (err, count) => {
+            .catch(err => {
               if (err) {
-                console.log('error counting same version of videos', err);
+                console.log('error finding human voice', err);
                 return res.status(400).send('Something went wrong');
               }
+            })
+          } else {
+            // Check to see if that version of the article has been exported before in the specified language
+            VideoModel.countDocuments({ title, wikiSource, articleVersion: article.version, lang: article.lang, status: 'uploaded' }).then(( count) => {
               if (count === 0 || count === undefined) {
-                VideoModel.create(newVideo, (err, video) => {
+                VideoModel.create(newVideo).then((video) => {
+                  res.json({ video });
+                  return convertArticle({ videoId: video._id });
+                  // If there's a human voice associated, change the language of the video document
+                })
+                .catch(err => {
                   if (err) {
                     console.log('error creating new video', err);
                     return res.status(400).send('something went wrong');
                   }
-
-                  res.json({ video });
-                  return convertArticle({ videoId: video._id });
-                  // If there's a human voice associated, change the language of the video document
                 })
               } else {
                 return res.status(400).send('A video has already been exported for this version, please check the history page');
               }
             })
+            .catch(err => {
+              if (err) {
+                console.log('error counting same version of videos', err);
+                return res.status(400).send('Something went wrong');
+              }
+            })
+          }
+        })
+        .catch(err => {
+          if (err) {
+            return res.status(400).send('Something went wrong, please try again');
           }
         })
       })
+      .catch(err => {
+        if (err) {
+          console.log('error creating form template', err);
+          return res.status(400).send('Something went wrong, please try again');
+        }
+      })
 
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
 
   retryYoutubeUpload(req, res) {
     const { id } = req.params;
-    VideoModel.findById(id, (err, video) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).send('Something went wrong');
-      }
+    VideoModel.findById(id).then((video) => {
       if (video.youtubeVideoId) {
         return res.status(400).send('Video is already uploaded');
       }
@@ -208,14 +222,22 @@ const controller = {
 
       VideoModel.findByIdAndUpdate(video._id,
         { $set: { youtubeUploadStatus: 'queued', youtubeUploadRetries: 0 } },
-        (err) => {
+      ).then((err) => {
+          return res.json({ youtubeUploadStatus: 'queued' })
+      })
+      .catch(err => {
           if (err) {
             console.log(err);
           }
-
           return res.json({ youtubeUploadStatus: 'queued' })
       })
-    });
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send('Something went wrong');
+      }
+    })
   },
 
   getVideoByArticleTitle(req, res) {
@@ -226,11 +248,7 @@ const controller = {
       searchQuery.wikiSource = wikiSource;
       articleQuery.wikiSource = wikiSource;
     }
-    Article.findOne(articleQuery, (err, article) => {
-      if (err) {
-        console.log('error fetchign article by title', err);
-        return res.status(400).send('Something went wrong');
-      }
+    Article.findOne(articleQuery).then((article) => {
       if (!article) return res.status(400).send('Invalid article title');
 
       if (lang) {
@@ -243,13 +261,21 @@ const controller = {
       .sort({ version: -1 })
       .populate('formTemplate')
       .limit(1)
-      .exec((err, videos) => {
-        if (err) return res.status(400).send('Something went wrong');
+      .exec().then((videos) => {
         if (videos.length > 0) {
           return res.json({ video: videos[0] });
         }
         return res.json({ videos });
       })
+      .catch(err => {
+        if (err) return res.status(400).send('Something went wrong');
+      })
+    })
+    .catch(err => {
+      if (err) {
+        console.log('error fetchign article by title', err);
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
 
@@ -260,30 +286,34 @@ const controller = {
     if (lang) {
       searchQuery.lang = lang;
     }
-    VideoModel.findOne(searchQuery, (err, video) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).send('Something went wrong');
-      }
+    VideoModel.findOne(searchQuery).then((video) => {
       if (video) {
         return res.json({ exported: true, video });
       }
       return res.json({ exported: false });
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
   getVideoByArticleVersion(req, res) {
     const { version } = req.params;
     const { title, wikiSource, lang } = req.query;
 
-    VideoModel.findOne({ title, wikiSource, articleVersion: version, lang, status: 'uploaded' }, (err, video) => {
-      if (err) {
-        console.log(err);
-        return res.status(400).send('Something went wrong');
-      }
+    VideoModel.findOne({ title, wikiSource, articleVersion: version, lang, status: 'uploaded' }).then((video) => {
       if (video) {
         return res.json({ exported: true, video });
       }
       return res.json({ exported: false });
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
 };

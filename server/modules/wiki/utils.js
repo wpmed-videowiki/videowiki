@@ -26,7 +26,6 @@ const VIDEOWIKI_LANG = lang;
 
 const convertQueue = new Queue(`convert-articles-${lang}`, process.env.REDIS_SERVER)
 
-const console = process.console
 
 const updateTitleOnAllModels = function (oldTitle, newTitle, callback = () => { }) {
   const updateFuncArray = [];
@@ -265,11 +264,7 @@ const breakTextIntoSlides = function (wikiSource, title, user, job, callback) {
     $addToSet: { contributors: user },
   }
 
-  Article.findOneAndUpdate({ title, wikiSource }, article, { upsert: true }, (err) => {
-    if (err) {
-      console.log(err)
-      return callback(err)
-    }
+  Article.findOneAndUpdate({ title, wikiSource }, article, { upsert: true }).then(() => {
     getMainImage(wikiSource, title, (image) => {
       article['image'] = image
 
@@ -403,17 +398,25 @@ const breakTextIntoSlides = function (wikiSource, title, user, job, callback) {
             } else if (namespace !== undefined && namespace !== null) {
               article['ns'] = namespace
             }
-            Article.findOneAndUpdate({ title: article.title, wikiSource: article.wikiSource }, article, { upsert: true }, (err) => {
+            Article.findOneAndUpdate({ title: article.title, wikiSource: article.wikiSource }, article, { upsert: true }).then(() => {
+              callback(null, article)
+            })
+            .catch(err => {
               if (err) {
                 console.log(err)
                 return callback(err)
               }
-              callback(null, article)
             })
           })
         })
       })
     })
+  })
+  .catch(err => {
+    if (err) {
+      console.log(err)
+      return callback(err)
+    }
   })
 }
 
@@ -442,14 +445,16 @@ convertQueue.on('completed', (job, result) => {
 
   const finalizeFuncArray = [];
 
-  Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-    if (err || !article) {
+  Article.findOne({ title, wikiSource, published: true }).then((article) => {
+    if (!article) {
       console.log('error finding article', err);
     }
 
     finalizeFuncArray.push((cb) => {
       runBotOnArticle({ title, wikiSource }, () => {
-        Article.findOneAndUpdate({ title }, { conversionProgress: 100 }, { upsert: true }, (err) => {
+        Article.findOneAndUpdate({ title }, { conversionProgress: 100 }, { upsert: true }).then(() => {
+        })
+        .catch(err => {
           console.log(err)
         })
         if (user) {
@@ -457,18 +462,22 @@ convertQueue.on('completed', (job, result) => {
           User.findByIdAndUpdate(user._id, {
             $inc: { totalEdits: 1 },
             $addToSet: { articlesEdited: title },
-          }, { new: true }, (err, article) => {
-            if (err) {
-              return console.log(err)
-            }
+          }, { new: true }).then((article) => {
             if (article) {
               User.findByIdAndUpdate(user._id, {
                 articlesEditCount: article.articlesEdited.length,
-              }, (err) => {
+              }).then((err) => {
+              })
+              .catch(err => {
                 if (err) {
                   console.log(err)
                 }
               })
+            }
+          })
+          .catch(err => {
+            if (err) {
+              return console.log(err)
             }
           })
         }
@@ -478,11 +487,14 @@ convertQueue.on('completed', (job, result) => {
 
     async.series(finalizeFuncArray, () => { });
   })
+  .catch(err => {
+    console.log(err)
+  })
 })
 
 convertQueue.on('progress', (job, progress) => {
   const { title } = job.data
-  Article.findOneAndUpdate({ title }, { conversionProgress: progress }, { upsert: true }, (err) => {
+  Article.findOneAndUpdate({ title }, { conversionProgress: progress }, { upsert: true }).then(() => {}).catch((err) => {
     console.log(err)
   })
 })
@@ -495,13 +507,7 @@ const convertArticleToVideoWiki = function (wikiSource, title, user, userName, c
       return callback('Our servers are working hard converting other articles and are eager to spend some time with you! Please try back in 10 minutes!')
     }
 
-    Article.findOne({ title, wikiSource }, (err, article) => {
-
-      if (err) {
-        console.log(err)
-        return callback('Error while converting article!')
-      }
-
+    Article.findOne({ title, wikiSource }).then((article) => {
       if (article) {
         return callback(null, 'Article already converted or in progress!')
       }
@@ -510,13 +516,19 @@ const convertArticleToVideoWiki = function (wikiSource, title, user, userName, c
       console.log('queued successfully ')
       callback(null, 'Job queued successfully')
     })
+    .catch(err => {
+      if (err) {
+        console.log(err)
+        return callback('Error while converting article!')
+      }
+    })
   })
 }
 
 const applySlidesHtmlToAllPublishedArticle = function () {
 
   Article
-    .count({ published: true })
+    .countDocuments({ published: true })
     .where('slides.500').exists(false)
     .then(count => {
       let limitPerOperation = 2;
@@ -546,9 +558,8 @@ const publishedArticlesQueue = function () {
       .where('slides.500').exists(false)
       .skip(task.skip)
       .limit(task.limitPerOperation)
-      .exec((err, articles) => {
+      .exec().then((articles) => {
 
-        if (err) return callback(err);
         if (!articles) return callback(null); // end of articles
 
         let articleFunctionArray = [];
@@ -573,6 +584,9 @@ const publishedArticlesQueue = function () {
         })
 
       })
+      .catch(err => {
+        if (err) return callback(err);
+      })
   })
 }
 
@@ -585,12 +599,7 @@ const applySlidesHtmlToArticle = function (wikiSource, title, callback) {
     if (err) {
       console.log('error applying refs on article', err);
     }
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        console.log(err);
-        return callback(err);
-      }
-
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) {
         console.log("Article not found");
         return callback('Article not found');
@@ -640,21 +649,28 @@ const applySlidesHtmlToArticle = function (wikiSource, title, callback) {
         });
 
         // save slidesHtml to the article
-        Article.findByIdAndUpdate(article._id, { slidesHtml }, { new: true }, (err) => {
+        Article.findByIdAndUpdate(article._id, { slidesHtml }, { new: true }).then(() => {
+          return callback(null, true);
+        })
+        .catch(err => {
           if (err) {
             return callback('Error saving article slidesHtml');
           }
-          return callback(null, true);
         })
       });
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err);
+        return callback(err);
+      }
     })
   })
 }
 
 const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
   console.log('apply script media on article', title, wikiSource)
-  Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-    if (err) return callback(err);
+  Article.findOne({ title, wikiSource, published: true }).then((article) => {
     if (!article) return callback(new Error('Invalid article title or wikiSource'));
     article = article.toObject();
     const oldMedia = [];
@@ -671,10 +687,7 @@ const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
       }
       slide.media = [];
     })
-    Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: { slides: article.slides, slidesHtml: article.slidesHtml } }, (err) => {
-      if (err) {
-        console.log('error clearing article media', err);
-      }
+    Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: { slides: article.slides, slidesHtml: article.slidesHtml } }).then(() => {
       getArticleMedia(title, wikiSource, (err, allSectionsImages) => {
         if (err) return callback(err);
         if (!allSectionsImages || allSectionsImages.length === 0) return callback(null, null);
@@ -779,8 +792,7 @@ const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
           console.log('version update');
         }
 
-        Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: articleUpdate }, (err) => {
-          if (err) return callback(err);
+        Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: articleUpdate }).then(() => {
           updateArticleMediaTimingFromSlides(title, wikiSource, (err) => {
             if (err) {
               console.log('error updating media timings', err);
@@ -788,8 +800,19 @@ const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
             return callback(null, true);
           })
         })
+        .catch(err => {
+          if (err) return callback(err);
+        })
       });
     })
+    .catch(err => {
+      if (err) {
+        console.log('error clearing article media', err);
+      }
+    })
+  })
+  .catch(err => {
+    if (err) return callback(err);
   })
 }
 
@@ -932,8 +955,7 @@ const applyNamespacesOnArticles = function () {
         .sort({ created_at: 1 })
         .skip(task.skip)
         .limit(task.limitPerOperation)
-        .exec((err, articles) => {
-          if (err) return callback(err);
+        .exec().then((articles) => {
           if (!articles || articles.length === 0) return callback(null); // end of articles
 
           const articleFunctionArray = [];
@@ -965,11 +987,14 @@ const applyNamespacesOnArticles = function () {
             callback();
           })
         })
+        .catch(err => {
+          if (err) return callback(err);
+        })
     })
   }
 
   Article
-    .count({ published: true, ns: { $exists: false } })
+    .countDocuments({ published: true, ns: { $exists: false } })
     .then((count) => {
       const limitPerOperation = 10;
       const q = noNamespacesArticlesQueue();
@@ -1174,10 +1199,7 @@ function applyRefsOnArticle(title, wikiSource, callback = () => { }) {
       return callback(null, { success: false, reason: 'no references in the article ' });
     }
 
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        return callback(err);
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article || !article.slides || article.slides.length === 0) return callback(null, { success: false, reason: 'No slides in article' });
 
       // Clean up previous references
@@ -1232,12 +1254,19 @@ function applyRefsOnArticle(title, wikiSource, callback = () => { }) {
       // const referencesModified = Object.keys(referencesList).some((key) =>
       //   !article.referencesList || !article.referencesList[key] || article.referencesList[key] !== referencesList[key]);
       // console.log('references modified', referencesModified);
-      Article.findByIdAndUpdate(article._id, { $set: { slides: articleSlides, referencesList } }, (err, article) => {
+      Article.findByIdAndUpdate(article._id, { $set: { slides: articleSlides, referencesList } }).then((article) => {
+        return callback(null, { success: true });
+      })
+      .catch(err => {
         if (err) {
           return callback(err);
         }
-        return callback(null, { success: true });
-      });
+      })
+    })
+    .catch(err=> {
+      if (err) {
+        return callback(err);
+      }
     })
   })
 }

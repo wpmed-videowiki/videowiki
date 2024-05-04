@@ -4,7 +4,6 @@ import { HUMANVOICE_AUDIO_PROCESSING } from '../../vendors/websockets/events';
 
 import * as websocketsService from '../../vendors/websockets';
 
-const console = process.console;
 const args = process.argv.slice(2);
 const lang = args[1];
 
@@ -59,18 +58,12 @@ function onProcessHumanvoiceAudioFinish(msg) {
   audioProcessorChannel.ack(msg);
 
   HumanvoiceModel.findById(humanvoiceId).populate('user')
-  .exec((err, humanvoice) => {
-    if (err) {
-      return console.log('processing human voice retrieve error ', err);
-    }
+  .exec().then((humanvoice) => {
     if (!humanvoice) {
       return console.log('Invalid human voice id', humanvoiceId);
     }
     console.log('on process done')
-    SocketConnectionModel.findOne({ mediawikiId: humanvoice.user.mediawikiId }, (err, socketConnection) => {
-      if (err) {
-        return console.log('error retrieve socket connection model', err);
-      }
+    SocketConnectionModel.findOne({ mediawikiId: humanvoice.user.mediawikiId }).then((socketConnection) => {
       if (!socketConnection) {
         return console.log('user offline');
       }
@@ -80,5 +73,15 @@ function onProcessHumanvoiceAudioFinish(msg) {
         websocketsService.socketConnection.to(socketConnection.socketId).emit(HUMANVOICE_AUDIO_PROCESSING, { success, humanvoiceId, slideAudioInfo: audioItem });
       }
     })
+    .catch(err => {
+      if (err) {
+        return console.log('error retrieve socket connection model', err);
+      }
+    })
+  })
+  .catch(err => {
+    if (err) {
+      return console.log('processing human voice retrieve error ', err);
+    }
   })
 }

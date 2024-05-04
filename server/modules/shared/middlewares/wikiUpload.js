@@ -70,18 +70,20 @@ export const uploadFileToWikiCommons = (req, res, next) => {
       User
         .findOne({ mediawikiId: req.user.mediawikiId })
         .select('mediawikiToken mediawikiTokenSecret')
-        .exec((err, userInfo) => {
+        .exec().then((userInfo) => {
           console.log('user is ', err, userInfo)
           
-          if (err) {
-            return res.status(400).send('Something went wrong, please try again')
-          }
           if (!userInfo || !userInfo.mediawikiToken || !userInfo.mediawikiTokenSecret) {
             return res.redirect('/login')
           }
           token = userInfo.mediawikiToken
           tokenSecret = userInfo.mediawikiTokenSecret
           cb()
+        })
+        .catch(err => {
+          if (err) {
+            return res.status(400).send('Something went wrong, please try again')
+          }
         })
     })
 

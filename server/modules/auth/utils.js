@@ -50,13 +50,17 @@ function signupCrossWikiUser(userInfo) {
     } = userInfo;
 
     if (mediawikiId) {
-      User.findOneAndUpdate({ mediawikiId }, { $set: { mediawikiId, username, mediawikiToken, mediawikiTokenSecret } }, { upsert: true, new: true }, (err, user) => {
+      User.findOneAndUpdate({ mediawikiId }, { $set: { mediawikiId, username, mediawikiToken, mediawikiTokenSecret } }, { upsert: true, new: true }).then((user) => {
+      })
+      .catch(err => {
         if (err) {
           return console.log('error creating cross authentication user ', err);
         }
       })
     } else if (nccommonsId) {
-      User.findOneAndUpdate({ nccommonsId }, { $set: { nccommonsId, username, nccommonsToken, nccommonsTokenSecret } }, { upsert: true, new: true }, (err, user) => {
+      User.findOneAndUpdate({ nccommonsId }, { $set: { nccommonsId, username, nccommonsToken, nccommonsTokenSecret } }, { upsert: true, new: true }).then((user) => {
+      })
+      .catch(err => {
         if (err) {
           return console.log('error creating cross authentication user ', err);
         }
@@ -70,6 +74,9 @@ function saveCrossWikiYoutubeToken(token) {
         { key: 'youtube_token' },
         { key: 'youtube_token', value: JSON.stringify(token) },
         { upsert: true },
+      )
+      .then(() => {})
+      .catch(
         (err) => {
           if (err) {
             console.log('Error insering cross youtube token', err)
@@ -80,14 +87,16 @@ function saveCrossWikiYoutubeToken(token) {
 
 function refreshYoutubeToken() {
   return new Promise((resolve, reject) => {
-    GlobalSettings.findOne({ key: 'youtube_token'}, (err, record) => {
-      if (err) return reject(err);
+    GlobalSettings.findOne({ key: 'youtube_token'}).then(( record) => {
       if (!record) return reject(new Error('No token set yet'))
       refreshToken(JSON.parse(record.value))
       .then((newToken) => {
         saveCrossWikiYoutubeToken(newToken);
         return resolve(newToken);
       }).catch(reject)
+    })
+    .catch(err => {
+      if (err) return reject(err);
     })
   })
 }

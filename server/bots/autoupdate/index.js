@@ -46,22 +46,21 @@ import { getRemoteFileDuration } from '../../modules/shared/utils/fileUtils';
 const lang = process.argv.slice(2)[1];
 const VIDEOWIKI_LANG = lang;
 
-const console = process.console;
 var changedSlidesNumber = 0;
 var convertedCharactersCounter = 0;
 
 const bottest = function (req, res) {
   const title = req.params.title || 'The_Dewarists';
   console.log('title', title)
-  Article.findOne({ title: title, published: true }, (err, article) => {
-    if (err) return res.json(err);
-    console.log(err, article)
+  Article.findOne({ title: title, published: true }).then(( article) => {
     if (!article) return res.end('No published article with this title!');
 
     updateArticle(article, (err, result) => {
       if (err) return res.json({ err: JSON.strigify(err) })
       return res.json(result)
     });
+  }).catch(err => {
+    if (err) return res.json(err);
   });
   // const deletedAudios = ['e2a44b9f-c359-4403-a7a7-6498878e6463.mp3'];
 
@@ -74,10 +73,10 @@ const bottest = function (req, res) {
 const runBot = function (limitPerOperation) {
   // get number of articles to be updated
   Article
-    .count({ published: true })
+    .countDocuments({ published: true })
     .where('slides.500').exists(false)
-    .exec((err, count) => {
-      if (err) return console.log('error fetching articles count for bot', err);
+    .exec()
+    .then((count) => {
       // setup a queue for performing updates on article sets
       const numberOfArticles = count;
       console.log('Number of published articles: ', numberOfArticles)
@@ -96,6 +95,9 @@ const runBot = function (limitPerOperation) {
       };
 
     })
+    .catch(err => {
+      if (err) return console.log('error fetching articles count for bot', err);
+    })
 
 }
 
@@ -106,8 +108,51 @@ const runBotOnArticles = function (titles, callback = function () { }) {
   console.log('running bot on article ', titles)
   Article
     .find({ published: true, title: { $in: titles } })
-    .exec((err, articles) => {
+    .exec().then((articles) => {
+      if (!articles) return callback(null); // end of articles
+      updateArticles(articles, (err, results) => {
+        const modifiedArticles = results.map((result) => {
+          const article = result.value.article;
+
+          const modified = result.value.modified || article.slides.length !== article.slidesHtml.length;
+          return {
+            title: article.title,
+            modified,
+            wikiSource: article.wikiSource,
+            article,
+          }
+        });
+
+        saveUpdatedArticles(results.map((result) => result.value), (err, result) => {
+          // Update slidesHtml after saving updated articles
+          const updateSlidesHtmlArray = [];
+          modifiedArticles.forEach((article) => {
+            updateSlidesHtmlArray.push(function upd(cb) {
+              // Check to see if the article revision has changed, which indicates a change
+              // in either the media or the text. in such case, update the slides html and media if possible
+              validateArticleRevisionAndUpdate(article.title, article.wikiSource, cb);
+            });
+          })
+
+          async.parallel(async.reflectAll(updateSlidesHtmlArray), (err) => {
+            callback(err, result);
+          })
+        });
+      });
+    }).catch(err => {
       if (err) return callback(err);
+    })
+}
+
+// runs the bot against specific article
+const runBotOnArticle = function ({ title, wikiSource }, callback = function () { }) {
+
+  // Article.create()
+  console.log('running bot on article ', title, wikiSource)
+  Article
+    .find({ published: true, title, wikiSource })
+    .exec()
+    .then(( articles) => {
       if (!articles) return callback(null); // end of articles
       updateArticles(articles, (err, results) => {
         const modifiedArticles = results.map((result) => {
@@ -139,47 +184,8 @@ const runBotOnArticles = function (titles, callback = function () { }) {
         });
       });
     })
-}
-
-// runs the bot against specific article
-const runBotOnArticle = function ({ title, wikiSource }, callback = function () { }) {
-
-  // Article.create()
-  console.log('running bot on article ', title, wikiSource)
-  Article
-    .find({ published: true, title, wikiSource })
-    .exec((err, articles) => {
+    .catch(err => {
       if (err) return callback(err);
-      if (!articles) return callback(null); // end of articles
-      updateArticles(articles, (err, results) => {
-        const modifiedArticles = results.map((result) => {
-          const article = result.value.article;
-
-          const modified = result.value.modified || article.slides.length !== article.slidesHtml.length;
-          return {
-            title: article.title,
-            modified,
-            wikiSource: article.wikiSource,
-            article,
-          }
-        });
-
-        saveUpdatedArticles(results.map((result) => result.value), (err, result) => {
-          // Update slidesHtml after saving updated articles
-          const updateSlidesHtmlArray = [];
-          modifiedArticles.forEach((article) => {
-            updateSlidesHtmlArray.push(function upd(cb) {
-              // Check to see if the article revision has changed, which indicates a change
-              // in either the media or the text. in such case, update the slides html and media if possible
-              validateArticleRevisionAndUpdate(article.title, article.wikiSource, cb);
-            });
-          })
-
-          async.parallel(async.reflectAll(updateSlidesHtmlArray), (err) => {
-            callback(err, result);
-          })
-        });
-      });
     })
 }
 
@@ -192,8 +198,7 @@ const articlesQueue = function () {
       .where('slides.500').exists(false)
       .skip(task.skip)
       .limit(task.limitPerOperation)
-      .exec((err, articles) => {
-        if (err) return callback(err);
+      .exec().then((articles) => {
         if (!articles) return callback(null); // end of articles
         updateArticles(articles, (err, results) => {
           console.log('task done ' + task.skip);
@@ -225,6 +230,9 @@ const articlesQueue = function () {
             })
           });
         });
+      })
+      .catch(err => {
+        if (err) return callback(err);
       })
   })
 }

@@ -2,7 +2,6 @@ import { CronJob } from 'cron';
 import utils from './utils';
 import services from './services';
 
-const console = process.console;
 
 var job = new CronJob({
   cronTime: '0 */6 * * *',

@@ -30,15 +30,19 @@ function uploadS3File(Bucket, Key, Body) {
 }
 
 function createHumanVoice(title, wikiSource, values, callback = () => {}) {
-  Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-    if (err) return callback(err);
+  Article.findOne({ title, wikiSource, published: true }).then((article) => {
     if (!article) return callback(new Error('Invalid article'));
     const newHumanVoice = new Humanvoice({ ...values, originalSlides: article.slides });
 
-    newHumanVoice.save((err) => {
-      if (err) return callback(err);
+    newHumanVoice.save().then(() => {
       return callback(null, newHumanVoice);
     })
+    .catch(err => {
+      if (err) return callback(err);
+    })
+  })
+  .catch(err => {
+    if (err) return callback(err);
   })
 }
 export default {
