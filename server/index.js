@@ -9,7 +9,6 @@ const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const passport = require('passport')
 const expressSession = require('express-session')
-const flash = require('connect-flash')
 const cookieParser = require('cookie-parser')
 const formData = require('express-form-data')
 const os = require('os')
@@ -85,8 +84,6 @@ app.use(express.static(path.join(__dirname, '../build')))
 // Passport configuration
 app.use(expressSession({ secret: APP_SECRET, saveUninitialized: false, resave: false }))
 
-
-app.use(flash()) // Using the flash middleware provided by connect-flash to store messages in session
 
 // configuration ===========================================
 // const initPassport = require('./contollers/passport/init')
