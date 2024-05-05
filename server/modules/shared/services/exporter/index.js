@@ -765,7 +765,7 @@ function onHumanVoiceExport (videoId) {
     .populate('humanvoice')
     .populate('user')
     .populate('article')
-    .exec((video) => {
+    .exec().then((video) => {
       const message = createHuamnVoiceExportMessage(video)
       notifyHumanvoiceExport(message)
       // In case of update, mark the updated sections as uploaded
@@ -973,7 +973,7 @@ function onExportedVideoFileTitleChange (
   const newUploadPostfix = `${fileHash[0]}/${fileHash[0]}${fileHash[1]}/${fileName}`
   VideoModel.find({ title, wikiSource, status: { $nin: ['failed'] } })
     .populate('formTemplate')
-    .exec((videos) => {
+    .exec().then((videos) => {
       if (videos.length === 0) return
       const videosUpdates = []
       const updatesArray = []
