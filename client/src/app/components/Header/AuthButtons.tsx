@@ -18,7 +18,7 @@ const ENVIRONMENT = process.env.NODE_ENV;
 
 const getUrlBase = (url, lang) => {
   if (ENVIRONMENT === "production") {
-    url = `${LANG_API_MAP[lang]}${url.replace("/api/", `/${lang}/api/`)}`;
+    url = `${url.replace("/api/", `/${lang}/api/`)}`;
   } else {
     url = `${LANG_API_MAP[lang]}${url}`;
   }
