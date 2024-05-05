@@ -81,7 +81,7 @@ interface IEditorTimelineProps {
 const EditorTimeline = (props: IEditorTimelineProps) => {
   const [durationChangeData, setDurationChangeData] = useState<any>(null);
 
-  const debouncedDurationChange = useDebounce(durationChangeData, 2000);
+  const [debouncedDurationChange] = useDebounce(durationChangeData, 2000);
 
   const [state, updateState] = useState({
     value: [],
@@ -102,8 +102,8 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
   }, []);
 
   useEffect(() => {
-    if (debouncedDurationChange) {
-      props.onDurationsChange(durationChangeData[0], durationChangeData[1]);
+    if (debouncedDurationChange && debouncedDurationChange.length > 0) {
+      props.onDurationsChange(debouncedDurationChange[0], debouncedDurationChange[1]);
     }
   }, [debouncedDurationChange]);
 
