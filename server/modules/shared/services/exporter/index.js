@@ -120,7 +120,7 @@ function onUploadConvertedToYoutube (msg) {
   const { videoId } = JSON.parse(msg.content.toString())
   console.log('received a request to upload ', videoId)
   // return converterChannel.ack(msg);
-  VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'processing' } }).then(() => {}).catch(err => {});z
+  VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'processing' } }).then(() => {}).catch(err => {});
   VideoModel.findById(videoId)
     .populate('article')
     .exec().then((video) => {
