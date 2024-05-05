@@ -1,4 +1,4 @@
-FROM node:v20.12.2
+FROM node:20.12.2
 
 WORKDIR /home/videowiki
 COPY . .
