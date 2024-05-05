@@ -18,11 +18,7 @@ module.exports = function (passport) {
       const emailLowercase = email.toLowerCase()
 
       // find a user in Mongo with provided email
-      User.findOne({ email: emailLowercase }, (err, user) => {
-        // In case of any error, return using the done method
-        if (err) {
-          return done(err)
-        }
+      User.findOne({ email: emailLowercase }).then((user) => {
         // already exists
         if (user) {
           return done(null, false, 'User Already Exists')
@@ -44,11 +40,7 @@ module.exports = function (passport) {
           newUser.verified = false
 
           // save the user
-          newUser.save((err, user) => {
-            if (err) {
-              console.log(`Error in Saving user: ${err}`)
-              throw err
-            }
+          newUser.save().then((user) => {
 
             const verificationLink = `https://videowikipedia.org/api/auth/verify/${user._id}/${user.verificationToken}`
             const { subject, text, html } = config.mail.verifyEmailConfig
@@ -63,6 +55,18 @@ module.exports = function (passport) {
             // Generate verification link and send email
             return done(null, newUser)
           })
+          .catch(err => {
+            if (err) {
+              console.log(`Error in Saving user: ${err}`)
+              throw err
+            }
+          })
+        }
+      })
+      .catch(err => {
+        // In case of any error, return using the done method
+        if (err) {
+          return done(err)
         }
       })
     }

@@ -5,13 +5,10 @@ require('dotenv').config({ path: path.join(__dirname, '../', 'videowiki.env') })
 // modules =================================================
 const express = require('express')
 const mongoose = require('mongoose')
-const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 const passport = require('passport')
 const expressSession = require('express-session')
-const flash = require('connect-flash')
-const scribe = require('scribe-js')()
 const cookieParser = require('cookie-parser')
 const formData = require('express-form-data')
 const os = require('os')
@@ -24,7 +21,6 @@ const app = express()
 const server = require('http').Server(app);
 
 
-const console = process.console
 
 const formDataOptions = {
   uploadDir: os.tmpdir(),
@@ -38,7 +34,11 @@ const DB_CONNECTION_URL = process.env.DB_CONNECTION_URL;
 const APP_SECRET = process.env.APP_SECRET;
 
 // Initialize sockets
-const socketConnection = websockets.createSocketConnection(server);
+const socketConnection = websockets.createSocketConnection(server, {
+  cors: {
+    origin: '*',
+  },
+});
 
 socketConnection.on('connection', (socket) => {
   console.log('client connected', socket.id);
@@ -50,7 +50,6 @@ socketConnection.on('connection', (socket) => {
 const dbConnectionParts = DB_CONNECTION_URL.split('?')
 // DB Connection and app initializations
 mongoose.connect(`${dbConnectionParts[0]}-${lang}?${dbConnectionParts[1] || ''}`) // connect to our mongoDB database //TODO: !AA: Secure the DB with authentication keys
-console.log(`====== Connected to database ${`${DB_CONNECTION_URL}-${lang}`} ===========`)
 app.all('/*', (req, res, next) => {
   // CORS headers - Set custom headers for CORS
   res.header('Access-Control-Allow-Origin', '*'); // restrict it to the required domain
@@ -77,7 +76,6 @@ app.use(formData.stream())
 // union body and files
 app.use(formData.union())
 
-// app.use(morgan('dev')) // use morgan to log requests to the console
 app.use(methodOverride('X-HTTP-Method-Override')) // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 // app.use(express.static(path.resolve(__dirname, 'public'))) // set the static files location /public/img will be /img for users
 app.use(compression({ threshold: 0 }))
@@ -86,23 +84,19 @@ app.use(express.static(path.join(__dirname, '../build')))
 // Passport configuration
 app.use(expressSession({ secret: APP_SECRET, saveUninitialized: false, resave: false }))
 
-// app.use(scribe.express.logger())
-
-app.use(flash()) // Using the flash middleware provided by connect-flash to store messages in session
 
 // configuration ===========================================
-// const initPassport = require('./controllers/passport/init')
+// const initPassport = require('./contollers/passport/init')
 // // Initialize Passport
 // initPassport(passport)
 // app.use(passport.initialize())
 // app.use(passport.session())
 
-// app.use('/logs', scribe.webPanel())
 
 // routes ==================================================
 require('./router/index.js')(app, passport) // pass our application into our routes
 // start autoupdate bot ====================================
-require('./bots/autoupdate/init');
+// require('./bots/autoupdate/init');
 // Update namespaces on articles ===== this is temporarely
 // require('./controllers/wiki').applyNamespacesOnArticles();
 // Start cron jobs

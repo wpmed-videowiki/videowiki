@@ -31,13 +31,14 @@ const articleController = {
       .sort({ reads: -1 })
       .limit(limit || 4)
       .select('title image reads wikiSource ns')
-      .exec((err, articles) => {
+      .exec().then((articles) => {
+        return res.json({ articles })
+      })
+      .catch(err => {
         if (err) {
           console.log(err)
           return res.status(503).send('Error while fetching top articles!')
         }
-
-        return res.json({ articles })
       })
   },
 
@@ -62,11 +63,7 @@ const articleController = {
       .skip(offset || 0)
       .limit(10)
       .select('title image wikiSource ns slides')
-      .exec((err, articles) => {
-        if (err) {
-          console.log(err)
-          return res.status(503).send('Error while fetching articles!')
-        }
+      .exec().then((articles) => {
 
         return res.json({ articles: articles.map(({ _id, title, image, wikiSource, ns, slides }) => {
           const article = { _id, title, image, wikiSource, ns }
@@ -78,6 +75,12 @@ const articleController = {
           return article
         }),
         })
+      })
+      .catch(err => {
+        if (err) {
+          console.log(err)
+          return res.status(503).send('Error while fetching articles!')
+        }
       })
   },
 
@@ -92,13 +95,14 @@ const articleController = {
     }
 
     Article
-      .find(query)
-      .count((err, count) => {
+      .countDocuments(query)
+      .then((count) => {
+        return res.json({ count })
+      })
+      .catch(err => {
         if (err) {
           return res.status(503).send('Error while fetching article count!')
         }
-
-        return res.json({ count })
       })
   },
 
@@ -108,15 +112,17 @@ const articleController = {
     Article
       .findOne({ title })
       .select('conversionProgress converted')
-      .exec((err, article) => {
-        if (err) {
-          return res.status(503).send('Error while fetching articles!')
-        }
+      .exec().then(( article) => {
 
         if (article) {
           return res.json({ progress: article.conversionProgress, converted: article.converted, title })
         } else {
           return res.json({ progress: 0, converted: false, title })
+        }
+      })
+      .catch(err => {
+        if (err) {
+          return res.status(503).send('Error while fetching articles!')
         }
       })
   },
@@ -144,19 +150,21 @@ const articleController = {
         User.findByIdAndUpdate(req.user._id, {
           $inc: { totalEdits: 1 },
           $addToSet: { articlesEdited: title },
-        }, { new: true }, (err, article) => {
-          if (err) {
-            return console.log(err)
-          }
+        }, { new: true }).then((article) => {
 
           if (article) {
             User.findByIdAndUpdate(req.user._id, {
               articlesEditCount: article.articlesEdited.length,
-            }, (err) => {
+            }).then(() => {}).catch((err) => {
               if (err) {
                 console.log(err)
               }
             })
+          }
+        })
+        .catch(err => {
+          if (err) {
+            return console.log(err)
           }
         })
       }
@@ -171,10 +179,7 @@ const articleController = {
     Article
       .findOne({ title, published: true })
       .select('contributors')
-      .exec((err, article) => {
-        if (err) {
-          return res.status(500).send('Error while fetching contributors list!')
-        }
+      .exec().then((article) => {
 
         if (!article) {
           return res.json({ contributors: [] })
@@ -184,6 +189,11 @@ const articleController = {
           person.split('_')[0].split('-').join(' '))
 
         res.json({ contributors: contributorsNames })
+      })
+      .catch(err => {
+        if (err) {
+          return res.status(500).send('Error while fetching contributors list!')
+        }
       })
   },
 
@@ -227,10 +237,7 @@ const articleController = {
     const version = nameParts[1];
     const fileIndex = nameParts[3];
 
-    Article.findOne({ title, version }, (err, article) => {
-      if (err) {
-        return res.status(400).send('Something went wrong')
-      }
+    Article.findOne({ title, version }).then((article) => {
 
       if (!article) {
         return res.status(404).send('Cannot find article');
@@ -272,6 +279,11 @@ const articleController = {
         })
       })
     })
+    .catch(err => {
+      if (err) {
+        return res.status(400).send('Something went wrong')
+      }
+    })
   },
 
   updateMediaDurations(req, res) {
@@ -281,11 +293,7 @@ const articleController = {
     if (!title || !wikiSource || !durations || durations.length === 0 || slideNumber === undefined || slideNumber === null) {
       return res.status(400).send('Please specify title, wikiSource, durations and slideNumber');
     }
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        console.log('err ', err);
-        return res.status(400).send('Something went wrong');
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) return res.status(400).send('Invalid title and wikiSource');
       const durationsUpdate = {};
       durations.forEach((duration, index) => {
@@ -294,11 +302,7 @@ const articleController = {
           durationsUpdate[`slidesHtml.${slideNumber}.media.${index}.time`] = duration;
         }
       })
-      Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: { ...durationsUpdate } }, (err, doc) => {
-        if (err) {
-          console.log('error updating media durations', err);
-          return res.status(400).send('Something went wrong');
-        }
+      Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: { ...durationsUpdate } }).then(( doc) => {
         updateArticleMediaTimingFromSlides(title, wikiSource, (err) => {
           if (err) {
             console.log('error updating media timing from slides', err);
@@ -306,17 +310,25 @@ const articleController = {
           return res.json({ title, wikiSource, slideNumber, durations });
         })
       })
+      .catch(err => {
+        if (err) {
+          console.log('error updating media durations', err);
+          return res.status(400).send('Something went wrong');
+        }
+      })
+    })
+    .catch(err => {
+      if (err) {
+        console.log('err ', err);
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
 
   deleteSlideAudio(req, res) {
     const { title, wikiSource, position } = req.body;
     const userId = req.user._id;
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        console.log('error fetching article ', err);
-        return res.status(400).end('Something went wrong');
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) {
         return res.status(400).end('Invalid article');
       }
@@ -340,11 +352,7 @@ const articleController = {
         [`slidesHtml.${slideHtmlIndex}.audioUploadedToCommons`]: false,
       };
 
-      Article.findByIdAndUpdate(article._id, { $set: articleUpdate }, { new: true }, (err, updatedArticle) => {
-        if (err) {
-          console.log(err);
-          return res.status(400).send('Something went wrong');
-        }
+      Article.findByIdAndUpdate(article._id, { $set: articleUpdate }, { new: true }).then((updatedArticle) => {
 
         res.json({ article: updatedArticle });
 
@@ -355,6 +363,18 @@ const articleController = {
 
         updateScriptPageWithAudioAction(userId, article, slideIndex, 'deleted');
       })
+      .catch(err => {
+        if (err) {
+          console.log(err);
+          return res.status(400).send('Something went wrong');
+        }
+      })
+    })
+    .catch(err => {
+      if (err) {
+        console.log('error fetching article ', err);
+        return res.status(400).end('Something went wrong');
+      }
     })
   },
 
@@ -363,11 +383,7 @@ const articleController = {
     const file = req.files.file;
     const { title, wikiSource, position, enableAudioProcessing } = req.body;
     const userId = req.user._id;
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        console.log('error fetching article ', err);
-        return res.status(400).end('Something went wrong');
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) {
         return res.status(400).end('Invalid article');
       }
@@ -419,11 +435,7 @@ const articleController = {
                 articleUpdate[`mediaTiming.${position}.${index}`] = newDuration / article.slides[slideIndex].media.length;
               })
             }
-            Article.findByIdAndUpdate(article._id, { $set: articleUpdate }, { new: true }, (err, updatedArticle) => {
-              if (err) {
-                console.log(err);
-                return res.status(400).send('Something went wrong');
-              }
+            Article.findByIdAndUpdate(article._id, { $set: articleUpdate }, { new: true }).then((updatedArticle) => {
               audio_processor.processArticleAudio({ articleId: article._id, position });
               res.json({ article: updatedArticle });
               updateScriptPageWithAudioAction(userId, article, slideIndex, 'updated');
@@ -433,12 +445,25 @@ const articleController = {
                 deleteAudioFromS3(bucketName, article.slides[slideIndex].audioKey);
               }
             })
+            .catch(err => {
+              if (err) {
+                console.log(err);
+                return res.status(400).send('Something went wrong');
+              }
+            })
           })
         })
         .catch((err) => {
           console.log('error uploading file', err);
           return res.status(400).end('Something went wrong');
         })
+    })
+    .catch(err => {
+
+      if (err) {
+        console.log('error fetching article ', err);
+        return res.status(400).end('Something went wrong');
+      }
     })
   },
 

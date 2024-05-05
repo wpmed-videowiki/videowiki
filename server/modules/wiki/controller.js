@@ -120,11 +120,7 @@ const controller = {
       const userId = req.user ? req.user._id : (req.headers['x-vw-anonymous-id'] || uuidV4());
       // res.cookie('vw_anonymous_id', userId, { maxAge: 30 * 24 * 60 * 60 * 1000 })
       // clone doc etc
-      Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-        if (err) {
-          console.log(err);
-          return res.status(400).send('Error while fetching data!');
-        }
+      Article.findOne({ title, wikiSource, published: true }).then((article) => {
         if (!article) return res.status(400).send('Invalid article title');
         if (article.mediaSource === 'script') return res.status(400).send('This article media is only editable in the script page');
 
@@ -135,6 +131,12 @@ const controller = {
           }
           res.json(article)
         })
+      })
+      .catch(err => {
+        if (err) {
+          console.log(err);
+          return res.status(400).send('Error while fetching data!');
+        }
       })
     } else {
       if (false) {
@@ -155,8 +157,7 @@ const controller = {
               return res.json({ redirect: true, title: redirectInfo.title, wikiSource });
             })
           } else {
-            Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-              if (err) return res.send('Error while fetching data');
+            Article.findOne({ title, wikiSource, published: true }).then((article) => {
               if (!article) return res.json(null);
               if (process.env.ENV === 'development') return res.json(article);
 
@@ -182,6 +183,9 @@ const controller = {
                   })
                 }
               })
+            })
+            .catch(err => {
+              if (err) return res.send('Error while fetching data');
             })
           }
         })
@@ -241,10 +245,7 @@ const controller = {
     if (!title || !wikiSource) {
       return res.status(400).send('Title and the Wikisource are required')
     }
-    Article.findOne({ title, wikiSource }, (err, article) => {
-      if (err) {
-        return res.status(400).send('Something went wrong, please try again')
-      }
+    Article.findOne({ title, wikiSource }).then((article) => {
       if (!article) {
         return res.status(400).send('Invalid title');
       }
@@ -255,6 +256,11 @@ const controller = {
         }
         return res.send('Article updated successfully!');
       })
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(400).send('Something went wrong, please try again')
+      }
     })
   },
   getArticleInfobox(req, res) {
@@ -364,11 +370,7 @@ const controller = {
     // Check if DB already contains a VideoWiki article. If yes, redirect user to
     // videowiki article.
 
-    Article.findOne({ title, wikiSource, editor: 'videowiki-bot' }, (err, article) => {
-      if (err) {
-        console.log(err)
-        return res.send('Error while fetching content!')
-      }
+    Article.findOne({ title, wikiSource, editor: 'videowiki-bot' }).then((article) => {
 
       if (article) {
         if (article.published) {
@@ -387,21 +389,29 @@ const controller = {
         })
       }
     })
+    .catch(err => {
+      if (err) {
+        console.log(err)
+        return res.send('Error while fetching content!')
+      }
+    })
   },
   getUserUploadForms(req, res) {
     const { title } = req.query;
     const userId = req.user._id;
 
-    UploadFormTemplate.find({ title, user: userId, published: true }, (err, forms) => {
-      if (err) {
-        return res.status(400).send('Error while fetching the forms');
-      }
+    UploadFormTemplate.find({ title, user: userId, published: true }).then((forms) => {
 
       if (!forms) {
         return res.json({ forms: [] });
       }
 
       return res.json({ forms });
+    })
+    .catch(err => {
+      if (err) {
+        return res.status(400).send('Error while fetching the forms');
+      }
     })
   },
 };

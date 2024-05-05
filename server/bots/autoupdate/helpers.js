@@ -1,7 +1,6 @@
 import * as Diff from 'diff' ;
 import diff from 'deep-diff';
 import { deleteAudios } from '../../modules/shared/utils'
-const console = process.console;
 
 const removeDeletedSlides = function( slides, removedSlidesArray, addedSlidesArray, callback) {
     if(removedSlidesArray && removedSlidesArray.length > 0){

@@ -1,6 +1,5 @@
 import { User as UserModel } from '../../../shared/models';
 
-const console = process.console
 const MediaWikiStrategy = require('passport-mediawiki-oauth').OAuthStrategy
 
 const amqp = require('amqplib/callback_api');
@@ -53,8 +52,8 @@ module.exports = (passport) => {
         // represent the logged-in user.  In a typical application, you would want
         // to associate the MediaWiki account with a user record in your database,
         // and return that user instead.
-        UserModel.findOne({ mediawikiId: profile.id }, (err, userInfo) => {
-          if (err) return done(err)
+        UserModel.findOne({ mediawikiId: profile.id }).then((userInfo) => {
+          console.log({token, tokenSecret, profile, done})
           if (userInfo) {
             // User already exists, update access token and secret
             const userData = {
@@ -64,8 +63,7 @@ module.exports = (passport) => {
               mediawikiTokenSecret: tokenSecret,
             };
 
-            UserModel.findByIdAndUpdate(userInfo._id, { $set: { mediawikiToken: token, mediawikiTokenSecret: tokenSecret } }, { new: true }, (err, userInfo) => {
-              if (err) return done(err);
+            UserModel.findByIdAndUpdate(userInfo._id, { $set: { mediawikiToken: token, mediawikiTokenSecret: tokenSecret } }, { new: true }).then((userInfo) => {
               authExchangeChannel.publish(RABBITMQ_AUTH_EXCHANGE, '', new Buffer(JSON.stringify(userData)));
               return done(null, {
                 _id: userInfo._id,
@@ -74,17 +72,25 @@ module.exports = (passport) => {
                 mediawikiToken: token,
               })
             })
+            .catch(err => {
+              if (err) return done(err);
+            })
           } else {
             // User dont exst, create one
             const newUserData = { mediawikiId: profile.id, username: profile.displayName, mediawikiToken: token, mediawikiTokenSecret: tokenSecret };
             const newUser = new UserModel(newUserData)
 
-            newUser.save((err) => {
-              if (err) return done(err)
+            newUser.save().then(() => {
               authExchangeChannel.publish(RABBITMQ_AUTH_EXCHANGE, '', new Buffer(JSON.stringify(newUserData)));
               return done(null, newUser)
             })
+            .catch(err => {
+              if (err) return done(err)
+            })
           }
+        })
+        .catch(err=> {
+          if (err) return done(err)
         })
       })
     },

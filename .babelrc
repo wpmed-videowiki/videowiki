@@ -10,13 +10,11 @@
         ]
       }
     }],
-    "@babel/react"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-export-default-from",
-    "@babel/plugin-syntax-dynamic-import",
-    ["lodash", {"id": ["lodash", "semantic-ui-react"]}]
+    ["lodash", {"id": ["lodash"]}]
   ],
   "env": {
     "development": {

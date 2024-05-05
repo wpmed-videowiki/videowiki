@@ -14,7 +14,7 @@ export const handlers = [
       if (token) {
         jwt.verify(token, process.env.APP_SECRET, (err, user) => {
           if (err) {
-            console.log('decodeApiToken - error ', err)
+            console.log('Websocket decodeApiToken - error ', err)
             return socket.emit(AUTHENTICATE_FAILED)
           }
           console.log(
@@ -28,20 +28,24 @@ export const handlers = [
               { mediawikiId },
               { $set: { mediawikiId, socketId: socket.id } },
               { upsert: true, new: true },
-              (err, socketConnection) => {
+            ).then(
+              ( socketConnection) => {
+                return socket.emit(AUTHENTICATE_SUCCESS, socketConnection)
+              }
+            )
+            .catch(err => {
                 if (err) {
                   console.log('error authenticating user', err)
                   return socket.emit(AUTHENTICATE_FAILED)
                 }
-                return socket.emit(AUTHENTICATE_SUCCESS, socketConnection)
-              }
-            )
+            })
           } else if (nccommonsId) {
             SocketConnectionModel.findOneAndUpdate(
               { nccommonsId },
               { $set: { nccommonsId, socketId: socket.id } },
               { upsert: true, new: true },
-              (err, socketConnection) => {
+            ).then(
+              (socketConnection) => {
                 if (err) {
                   console.log('error authenticating user', err)
                   return socket.emit(AUTHENTICATE_FAILED)
@@ -49,6 +53,12 @@ export const handlers = [
                 return socket.emit(AUTHENTICATE_SUCCESS, socketConnection)
               }
             )
+            .catch(err => {
+                if (err) {
+                  console.log('error authenticating user', err)
+                  return socket.emit(AUTHENTICATE_FAILED)
+                }
+            })
           }
         })
       } else {

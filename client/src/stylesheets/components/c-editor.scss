@@ -136,7 +136,7 @@
 }
 
 .c-editor__content--container .article-summary {
-  position: absolute;
+  position: relative;
   width: 300px;
   height: 320px;
   background: white;
@@ -234,7 +234,7 @@ img.c-editor__content-smiley {
   max-height: 100%;
   max-width: 100%;
 }
-.c-editor__content .carousel__slide .carousel__image img.scale-appear-active {
+.c-editor__content .carousel__slide .carousel__image img.appear-active {
   transform: scale(1.2);
 }
 

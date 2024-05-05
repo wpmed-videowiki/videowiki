@@ -1,6 +1,5 @@
 import { User as UserModel } from '../../../shared/models'
 
-const console = process.console
 const MediaWikiStrategy = require('passport-mediawiki-oauth').OAuthStrategy
 
 const amqp = require('amqplib/callback_api')
@@ -52,8 +51,7 @@ module.exports = passport => {
         // represent the logged-in user.  In a typical application, you would want
         // to associate the MediaWiki account with a user record in your database,
         // and return that user instead.
-        UserModel.findOne({ nccommonsId: profile.id }, (err, userInfo) => {
-          if (err) return done(err)
+        UserModel.findOne({ nccommonsId: profile.id }).then((userInfo) => {
           if (userInfo) {
             // User already exists, update access token and secret
             const userData = {
@@ -72,8 +70,8 @@ module.exports = passport => {
                 }
               },
               { new: true },
-              (err, userInfo) => {
-                if (err) return done(err)
+            ).then(
+              ( userInfo) => {
                 authExchangeChannel.publish(
                   RABBITMQ_AUTH_EXCHANGE,
                   '',
@@ -87,6 +85,9 @@ module.exports = passport => {
                 })
               }
             )
+            .catch(err => {
+                if (err) return done(err)
+            })
           } else {
             // User dont exst, create one
             const newUserData = {
@@ -97,8 +98,7 @@ module.exports = passport => {
             }
             const newUser = new UserModel(newUserData)
 
-            newUser.save(err => {
-              if (err) return done(err)
+            newUser.save().then(() => {
               authExchangeChannel.publish(
                 RABBITMQ_AUTH_EXCHANGE,
                 '',
@@ -106,7 +106,13 @@ module.exports = passport => {
               )
               return done(null, newUser)
             })
+            .catch(err=> {
+              if (err) return done(err)
+            })
           }
+        })
+        .catch(err => {
+          if (err) return done(err)
         })
       })
     }

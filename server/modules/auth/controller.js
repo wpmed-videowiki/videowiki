@@ -17,9 +17,9 @@ const usersController = {
   validateSession (req, res) {
     // Refresh the token
     if (req.user && req.user.mediawikiId) {
-      User.findOne({ mediawikiId: req.user.mediawikiId }, (err, user) => {
-        if (err || !user || !user.mediawikiId) {
-          console.log('jwt error fetching user data token request ', err)
+      User.findOne({ mediawikiId: req.user.mediawikiId }).then(( user) => {
+        if (!user || !user.mediawikiId) {
+          console.log('jwt error fetching user data token request ', )
           return res.send(401, 'Unauthorized!')
         }
         jwt.sign(
@@ -35,10 +35,16 @@ const usersController = {
           }
         )
       })
+      .catch(err => {
+        if (err) {
+          console.log('jwt error fetching user data token request ', )
+          return res.send(401, 'Unauthorized!')
+        }
+      })
     } else if (req.user && req.user.nccommonsId) {
-      User.findOne({ nccommonsId: req.user.nccommonsId }, (err, user) => {
-        if (err || !user || !user.nccommonsId) {
-          console.log('jwt error fetching user data token request ', err)
+      User.findOne({ nccommonsId: req.user.nccommonsId }).then((user) => {
+        if ( !user || !user.nccommonsId) {
+          console.log('jwt error fetching user data token request ')
           return res.send(401, 'Unauthorized!')
         }
         jwt.sign(
@@ -53,6 +59,12 @@ const usersController = {
             return res.json({ user, token })
           }
         )
+      })
+      .catch(err => {
+        if (err) {
+          console.log('jwt error fetching user data token request ', err)
+          return res.send(401, 'Unauthorized!')
+        }
       })
     } else {
       const anonymId = req.headers['x-vw-anonymous-id'] || uuidV4()
@@ -89,6 +101,9 @@ const usersController = {
         { key: 'youtube_token' },
         { key: 'youtube_token', value: JSON.stringify(token) },
         { upsert: true },
+      )
+      .then(() => {})
+      .catch(
         err => {
           if (err) {
             console.log({ err })

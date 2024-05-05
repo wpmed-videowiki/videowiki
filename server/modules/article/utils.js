@@ -16,21 +16,14 @@ const S3 = new AWS.S3({
 })
 
 const async = require('async');
-const console = process.console
 
 const publishArticle = function (title, wikiSource, editor, user, callback) {
   Article.findOneAndUpdate({ title, wikiSource, editor, published: false }, {
     $addToSet: { contributors: user },
-  }, { new: true }, (err, article) => {
-    if (err) {
-      return callback(err)
-    }
+  }, { new: true }).then((article) => {
 
     // Fetch the published article
-    Article.findOne({ title, wikiSource, published: true }, (err2, publishedArticle) => {
-      if (err2) {
-        return callback(err2)
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((publishedArticle) => {
 
       if (!publishedArticle) {
         return callback()
@@ -44,10 +37,7 @@ const publishArticle = function (title, wikiSource, editor, user, callback) {
 
       Article
         .findOneAndUpdate({ title, wikiSource, published: true, editor: 'videowiki-bot' }, { $set: { published: false } })
-        .exec((err) => {
-          if (err) {
-            return callback(err)
-          }
+        .exec().then(() => {
 
           const clonedArticle = article
           clonedArticle._id = mongoose.Types.ObjectId()
@@ -58,23 +48,34 @@ const publishArticle = function (title, wikiSource, editor, user, callback) {
           clonedArticle.editor = 'videowiki-bot'
           clonedArticle.version = new Date().getTime()
 
-          clonedArticle.save((err) => {
-            if (err) {
+          clonedArticle.save().then((err) => {
+            callback()
+          })
+          .catch(err => {
               callback(err)
-            } else {
-              callback()
-            }
           })
         })
+        .catch(err => {
+          if (err) {
+            return callback(err)
+          }
+        })
     })
+    .catch(err => {
+      if (err) {
+        return callback(err)
+      }
+    })
+  })
+  .catch(err => {
+    if (err) {
+      return callback(err)
+    }
   })
 }
 
 const applyScriptMediaOnArticleOnAllArticles = function() {
-  Article.find({ published: true }, (err, articles) => {
-    if (err) {
-      console.log(err);
-    }
+  Article.find({ published: true }).then((articles) => {
     const updateFunc = [];
     articles.forEach((article) => {
       if (isCustomVideowikiScript(article.title) || isMDwikiScript(article.wikiSource, article.title)) {
@@ -91,22 +92,21 @@ const applyScriptMediaOnArticleOnAllArticles = function() {
       console.log('done all')
     })
   })
+  .catch(err => {
+    if (err) {
+      console.log(err);
+    }
+  })
 }
 
 // applyScriptMediaOnArticleOnAllArticles();
 
 const cloneArticle = function (title, editor, callback) {
   // Check if an article with the same editor and title exists
-  Article.findOne({ title, editor, published: false }, (err, article) => {
-    if (err) {
-      return callback(err)
-    }
+  Article.findOne({ title, editor, published: false }).then(( article) => {
 
     // Fetch the published article
-    Article.findOne({ title, published: true }, (err2, publishedArticle) => {
-      if (err2) {
-        return callback(err2)
-      }
+    Article.findOne({ title, published: true }).then((publishedArticle) => {
 
       if (!publishedArticle) {
         return callback()
@@ -130,17 +130,20 @@ const cloneArticle = function (title, editor, callback) {
 
         clonedArticle.version = publishedArticle.version
 
-        clonedArticle.save((err) => {
-          if (err) {
+        clonedArticle.save().then(() => {
+          // if different, clone the article and replace
+          Article
+            .findOne({ title, editor, published: false, version: article.version })
+            .remove()
+            .exec()
+            .then(() => {})
+            .catch((err) => {
+              console.log('error removing old article', err)
+            })
+          callback(null, clonedArticle)
+        })
+        .catch(err => {
             callback(err)
-          } else {
-            // if different, clone the article and replace
-            Article
-              .findOne({ title, editor, published: false, version: article.version })
-              .remove()
-              .exec()
-            callback(null, clonedArticle)
-          }
         })
       } else { // if no,
         // clone the article and add to db
@@ -154,26 +157,36 @@ const cloneArticle = function (title, editor, callback) {
 
         clonedArticle.version = publishedArticle.version
 
-        clonedArticle.save((err) => {
-          if (err) {
-            callback(err)
-          } else {
-            callback(null, clonedArticle)
-          }
+        clonedArticle.save().then((err) => {
+          callback(null, clonedArticle)
+        })
+        .catch(err => {
+          callback(err)
         })
       }
     })
+    .catch(err => {
+      if (err) {
+        return callback(err)
+      }
+    })
+  })
+  .catch(err => {
+    if (err) {
+      return callback(err)
+    }
   })
 }
 
 const fetchArticle = function (title, callback) {
-  Article.findOneAndUpdate({ title, published: true }, { $inc: { reads: 1 } }, (err, article) => {
+  Article.findOneAndUpdate({ title, published: true }, { $inc: { reads: 1 } }).then((article) => {
+    callback(null, article)
+  })
+  .catch(err => {
     if (err) {
       console.error(err)
       return callback(err)
     }
-
-    callback(null, article)
   })
 }
 
@@ -186,23 +199,20 @@ const fetchArticleAndUpdateReads = function ({ title, wikiSource }, callback) {
     query.wikiSource = wikiSource;
   }
 
-  Article.findOneAndUpdate(query, { $inc: { reads: 1 } }, (err, article) => {
+  Article.findOneAndUpdate(query, { $inc: { reads: 1 } }).then((article) => {
+
+    callback(null, article)
+  })
+  .catch(err => {
     if (err) {
       console.error(err)
       return callback(err)
     }
-
-    callback(null, article)
   })
 }
 
 const updateMediaToSlide = function (title, wikiSource, slideNumber, editor, { mimetype, filepath }, callback) {
-  Article.findOne({ title, wikiSource, editor }, (err, article) => {
-    if (err) {
-      console.error(err)
-      return callback(err)
-    }
-
+  Article.findOne({ title, wikiSource, editor }).then((article) => {
     if (article) {
       const mimetypeKey = `slides.${slideNumber}.mediaType`
       const filepathKey = `slides.${slideNumber}.media`
@@ -236,6 +246,12 @@ const updateMediaToSlide = function (title, wikiSource, slideNumber, editor, { m
       callback(err)
     }
   })
+  .catch(err => {
+    if (err) {
+      console.error(err)
+      return callback(err)
+    }
+  })
 }
 
 function deleteAudioFromS3(Bucket, Key) {
@@ -265,13 +281,16 @@ function isNonTTSLanguage(lang) {
 
 function updateScriptPageWithAudioAction(userId, article, slideIndex, type) {
   User.findById(userId).select('username')
-    .exec((err, userData) => {
+    .exec().then((userData) => {
+      const slideSection = article.sections.find((s) => slideIndex >= s.slideStartPosition && slideIndex < s.slideStartPosition + s.numSlides);
+      notifySlideAudioChange({ title: article.title, wikiSource: article.wikiSource, username: userData.username, sectionTitle: slideSection.title, type, date: moment().format('DD MMMM YYYY') });
+    })
+    .catch(err => {
       if (err) {
         return console.log('error fetching user data', err);
       }
-      const slideSection = article.sections.find((s) => slideIndex >= s.slideStartPosition && slideIndex < s.slideStartPosition + s.numSlides);
-      notifySlideAudioChange({ title: article.title, wikiSource: article.wikiSource, username: userData.username, sectionTitle: slideSection.title, type, date: moment().format('DD MMMM YYYY') });
-    });
+    })
+    ;
 }
 
 export {

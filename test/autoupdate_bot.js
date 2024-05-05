@@ -59,8 +59,12 @@ const editRandomSlide = function(callback) {
         
         Article.findOneAndUpdate({_id: article._id},
             {slides: article.slides},  {new: true},  
-            (err, a ) => {
-            return callback(err, {originalSlide: originalSlide, currentSlide: a.slides[updatedslideIndex]})
+        ).then(
+            ( a ) => {
+            return callback(null, {originalSlide: originalSlide, currentSlide: a.slides[updatedslideIndex]})
+        })
+        .catch(err => {
+            return callback(err, {originalSlide: originalSlide});
         })
     });
 }
@@ -69,15 +73,21 @@ const removeAllSlides = function(callback) {
     getArticle((err, article) => {
         Article.findOneAndUpdate({_id: article._id},
             {slides: []}, {new: true}
-            ,(err1, a) => {
-                return callback(err1 || err, a )
+        ).then((a) => {
+            return callback(err, a )
             }
         )
+        .catch(err1 => {
+            return callback(err1 || err)
+        })
     })
 }
 const getArticle = function(callback) {
-    Article.findOne({title: title, published: true}, (err, article) =>{
-        return callback(err, article);
+    Article.findOne({title: title, published: true}).then((article) =>{
+        return callback(null, article);
+    })
+    .catch(err => {
+        return callback(err);
     })
 }
 

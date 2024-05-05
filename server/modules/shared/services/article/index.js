@@ -5,11 +5,7 @@ import { applySlidesHtmlToArticle, applyScriptMediaOnArticle } from '../../../wi
 import { customVideowikiPrefixes } from '../../constants';
 
 const updateMediaToSlide = function (title, wikiSource, slideNumber, editor, { mimetype, filepath }, callback) {
-  Article.findOne({ title, wikiSource, editor }, (err, article) => {
-    if (err) {
-      console.error(err)
-      return callback(err)
-    }
+  Article.findOne({ title, wikiSource, editor }).then((article) => {
 
     if (article) {
       const mimetypeKey = `slides.${slideNumber}.mediaType`
@@ -44,6 +40,12 @@ const updateMediaToSlide = function (title, wikiSource, slideNumber, editor, { m
       callback(err)
     }
   })
+  .catch(err => {
+    if (err) {
+      console.error(err)
+      return callback(err)
+    }
+  })
 }
 
 const fetchArticleAndUpdateReads = function ({ title, wikiSource }, callback) {
@@ -55,20 +57,20 @@ const fetchArticleAndUpdateReads = function ({ title, wikiSource }, callback) {
     query.wikiSource = wikiSource;
   }
 
-  Article.findOneAndUpdate(query, { $inc: { reads: 1 } }, (err, article) => {
+  Article.findOneAndUpdate(query, { $inc: { reads: 1 } }).then(( article) => {
+    callback(null, article)
+  })
+  .catch(err => {
     if (err) {
       console.error(err)
       return callback(err)
     }
-
-    callback(null, article)
   })
 }
 const updateArticleMediaTimingFromSlides = function(title, wikiSource, callback = () => {}) {
   Article.findOne({ title, wikiSource, published: true })
   .lean()
-  .exec((err, article) => {
-    if (err) return callback(err);
+  .exec().then((article) => {
 
     const mediaTiming = {};
     article.slides.forEach((slide) => {
@@ -81,18 +83,20 @@ const updateArticleMediaTimingFromSlides = function(title, wikiSource, callback 
         })
       }
     })
-    Article.findByIdAndUpdate(article._id, { $set: { mediaTiming } }, { new: true } ,(err, doc) => {
-      if (err) return callback(err);
+    Article.findByIdAndUpdate(article._id, { $set: { mediaTiming } }, { new: true }).then((doc) => {
       return callback(null, doc);
     })
+    .catch(err => {
+      if (err) return callback(err);
+    })
+  })
+  .catch(err => {
+    if (err) return callback(err);
   })
 }
 const cloneArticle = function (title, editor, callback) {
   // Check if an article with the same editor and title exists
-  Article.findOne({ title, editor, published: false }, (err, article) => {
-    if (err) {
-      return callback(err)
-    }
+  Article.findOne({ title, editor, published: false }).then((article) => {
 
     // Fetch the published article
     Article.findOne({ title, published: true }, (err2, publishedArticle) => {
@@ -122,17 +126,20 @@ const cloneArticle = function (title, editor, callback) {
 
         clonedArticle.version = publishedArticle.version
 
-        clonedArticle.save((err) => {
-          if (err) {
-            callback(err)
-          } else {
+        clonedArticle.save().then(() => {
             // if different, clone the article and replace
             Article
               .findOne({ title, editor, published: false, version: article.version })
               .remove()
               .exec()
+              .then(() => {})
+              .catch((err) => {
+                console.log('error removing old article', err)
+              })
             callback(null, clonedArticle)
-          }
+        })
+        .catch(err => {
+            callback(err)
         })
       } else { // if no,
         // clone the article and add to db
@@ -146,21 +153,24 @@ const cloneArticle = function (title, editor, callback) {
 
         clonedArticle.version = publishedArticle.version
 
-        clonedArticle.save((err) => {
-          if (err) {
-            callback(err)
-          } else {
-            callback(null, clonedArticle)
-          }
+        clonedArticle.save().then(() => {
+          callback(null, clonedArticle)
+        })
+        .catch(err => {
+          callback(err)
         })
       }
     })
   })
+  .catch(err => {
+    if (err) {
+      return callback(err)
+    }
+  })
 }
 
 const validateArticleRevisionAndUpdate = function validateArticleRevisionAndUpdate(title, wikiSource, callback) {
-  Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-    if (err) return callback(err);
+  Article.findOne({ title, wikiSource, published: true }).then((article) => {
 
     fetchArticleRevisionId(title, wikiSource, (err, revisionId) => {
       if (err || !revisionId) {
@@ -175,6 +185,9 @@ const validateArticleRevisionAndUpdate = function validateArticleRevisionAndUpda
       //   return callback();
       // }
     })
+  })
+  .catch(err => {
+    if (err) return callback(err);
   })
 }
 
@@ -199,16 +212,18 @@ const finalizeArticleUpdate = (article) => (cb) => {
         if (err) {
           console.log('error applying script media on article', article.title, article.wikiSource, err);
         }
-        Article.findOneAndUpdate({ title: article.title, wikiSource: article.wikiSource, published: true }, { $set: { mediaSource: 'script' } }, (err) => {
-          if (err) {
-            console.log('error updating mediaSource on article', article.title, err);
-          }
+        Article.findOneAndUpdate({ title: article.title, wikiSource: article.wikiSource, published: true }, { $set: { mediaSource: 'script' } }).then(() => {
           updateArticleRevisionId(article.title, article.wikiSource, (err) => {
             if (err) {
               console.log('error updating article revision id', article.title, article.wikiSource, err);
             }
             return cb();
           })
+        })
+        .catch(err => {
+          if (err) {
+            console.log('error updating mediaSource on article', article.title, err);
+          }
         })
       })
     } else {
@@ -226,9 +241,11 @@ const updateArticleRevisionId = function updateArticleRevisionId(title, wikiSour
   fetchArticleRevisionId(title, wikiSource, (err, wikiRevisionId) => {
     if (err) return callback(err);
     if (!wikiRevisionId) return callback(null, null);
-    Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: { wikiRevisionId } }, { new: true }, (err, doc) => {
-      if (err) return callback(err);
+    Article.findOneAndUpdate({ title, wikiSource, published: true }, { $set: { wikiRevisionId } }, { new: true }).then((doc) => {
       return callback(null, doc);
+    })
+    .catch(err => {
+      if (err) return callback(err);
     })
   })
 }

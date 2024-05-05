@@ -230,12 +230,8 @@ function uploadFileToCommons(fileUrl, user, formFields, callback) {
       User
         .findOne(userQuery)
         .select('mediawikiToken mediawikiTokenSecret nccommonsToken nccommonsTokenSecret')
-        .exec((err, userInfo) => {
+        .exec().then((userInfo) => {
           console.log({ userInfo })
-          if (err) {
-            cb('Something went wrong')
-            return callback('Something went wrong, please try again')
-          }
           if (uploadTarget === 'nccommons') {
             if (uploadTarget === 'nccommons' && (!userInfo || !userInfo.nccommonsToken || !userInfo.nccommonsTokenSecret)) {
               cb('You need to login to nccommons first');
@@ -255,6 +251,12 @@ function uploadFileToCommons(fileUrl, user, formFields, callback) {
             tokenSecret = userInfo.mediawikiTokenSecret;
           }
           cb()
+        })
+        .catch(err => {
+          if (err) {
+            cb('Something went wrong')
+            return callback('Something went wrong, please try again')
+          }
         })
     })
 

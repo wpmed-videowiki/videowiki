@@ -16,7 +16,6 @@ import { createPlaylist, uploadYoutubeVideo } from '../youtube'
 import * as websocketsService from '../../vendors/websockets';
 import { UPLOAD_YOUTUBE_FINISH } from '../../vendors/websockets/events'
 
-const console = process.console
 const fs = require('fs')
 const request = require('request')
 const wikiCommonsController = require('../wikiCommons')
@@ -121,15 +120,10 @@ function onUploadConvertedToYoutube (msg) {
   const { videoId } = JSON.parse(msg.content.toString())
   console.log('received a request to upload ', videoId)
   // return converterChannel.ack(msg);
-  VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'processing' } })
+  VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'processing' } }).then(() => {}).catch(err => {});z
   VideoModel.findById(videoId)
     .populate('article')
-    .exec((err, video) => {
-      if (err) {
-        console.log(err)
-        VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } }, (err) => {})
-        return converterChannel.ack(msg)
-      }
+    .exec().then((video) => {
       let token = ''
       GlobalSettings.findOne({ key: 'youtube_token' })
         .then(youtubeToken => {
@@ -173,11 +167,14 @@ function onUploadConvertedToYoutube (msg) {
                       Article.findByIdAndUpdate(
                         video.article._id,
                         { youtubePlaylistId },
-                        err => {
-                          if (err) return reject(err)
+                        ).then(
+                        () => {
                           return resolve(youtubePlaylistId)
                         }
                       )
+                      .catch(err => {
+                          if (err) return reject(err)
+                      })
                     })
                     .catch(reject)
                 }
@@ -186,8 +183,7 @@ function onUploadConvertedToYoutube (msg) {
                   VideoModel.findByIdAndUpdate(
                     videoId,
                     { youtubeUploadStatus: 'pending' },
-                    _ => {}
-                  )
+                  ).then(() => {}).catch(err => {});
 
                   console.log('Uploading video to playlist', youtubePlaylistId)
                   return uploadYoutubeVideo({
@@ -212,11 +208,13 @@ function onUploadConvertedToYoutube (msg) {
                     VideoModel.findByIdAndUpdate(
                       video._id,
                       { youtubeVideoId, youtubeUploadStatus: 'uploaded' },
-                      err => {
-                        if (err) return reject(err)
+                    ).then(err => {
                         return resolve()
                       }
                     )
+                    .catch(err => {
+                      if (err) return reject(err)
+                    })
                   })
                 })
                 .then(() => {
@@ -237,18 +235,26 @@ function onUploadConvertedToYoutube (msg) {
                       youtubeUploadRetries:
                         (video.youtubeUploadRetries || 0) + 1
                     },
-                    _ => {}
                   )
+                  .then(() => {}).catch(err => {})
                   converterChannel.ack(msg)
                 })
             })
         })
         .catch(err => {
-          VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } }, (err) => {})
+          VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } })
+          .then(() => {}).catch(err => {})
           websocketsService.socketConnection.emit(UPLOAD_YOUTUBE_FINISH(`${video.article.title}_${video.article.wikiSource}`), { success: false });
           console.log('2', err)
           converterChannel.ack(msg)
         })
+    })
+    .catch(err => {
+      if (err) {
+        console.log(err)
+        VideoModel.findByIdAndUpdate(videoId, { $set: { youtubeUploadStatus: 'failed' } }).then(() => {}).catch(err => {})
+        return converterChannel.ack(msg)
+      }
     })
 }
 
@@ -264,15 +270,16 @@ function onUploadConvertedToCommons (msg) {
     .populate('article')
     .populate('formTemplate')
     .populate('user')
-    .exec((err, video) => {
-      if (err || !video) {
+    .exec().then((video) => {
+      if (!video) {
         converterChannel.ack(msg)
         console.log('error fetching video', err)
         VideoModel.findByIdAndUpdate(
           videoId,
           { $set: { status: 'failed' } },
-          () => {}
         )
+        .then(() => {})
+        .catch(err => {})
         return
       }
       let fileTitle = video.formTemplate.form.fileTitle
@@ -313,6 +320,19 @@ function onUploadConvertedToCommons (msg) {
         }
       })
     })
+    .catch(err => {
+      if (err) {
+        converterChannel.ack(msg)
+        console.log('error fetching video', err)
+        VideoModel.findByIdAndUpdate(
+          videoId,
+          { $set: { status: 'failed' } },
+        )
+        .then(() => {})
+        .catch(err => {})
+        return
+      }
+    })
 }
 /* eslint-disable no-unused-vars */
 function uploadConvertedToCommons (msg) {
@@ -323,24 +343,14 @@ function uploadConvertedToCommons (msg) {
     .populate('article')
     .populate('formTemplate')
     .populate('user')
-    .exec((err, video) => {
-      if (err) {
-        converterChannel.ack(msg)
-        console.log('error fetching video', err)
-        VideoModel.findByIdAndUpdate(
-          videoId,
-          { $set: { status: 'failed' } },
-          () => {}
-        )
-        return
-      }
-
+    .exec().then((video) => {
       // Update wrapup progress
       VideoModel.findByIdAndUpdate(
         videoId,
         { $set: { wrapupVideoProgress: 90 } },
-        () => {}
       )
+      .then(() => {})
+      .catch(err => {})
 
       const filePath = `${sharedConfig.TEMP_DIR}/${video.url.split('/').pop()}`
       const fileExtension = filePath.split('.').pop()
@@ -354,10 +364,10 @@ function uploadConvertedToCommons (msg) {
           VideoModel.findByIdAndUpdate(
             videoId,
             { $set: { status: 'failed' } },
-            () => {
+          ).then(() => {
               converterChannel.ack(msg)
             }
-          )
+          ).catch(err => {})
         })
         .on('finish', () => {
           const formFields = video.formTemplate.form
@@ -403,16 +413,14 @@ function uploadConvertedToCommons (msg) {
                   }
                 }
                 // Set version to the number of successfully uploaded videos
-                VideoModel.count(
+                VideoModel.countDocuments(
                   {
                     title: video.title,
                     wikiSource: video.wikiSource,
                     status: 'uploaded'
-                  },
-                  (err, count) => {
-                    if (err) {
-                      console.log('error counting videos for version', err)
-                    }
+                  })
+                  .then
+                  ((count) => {
                     if (video.humanvoice) {
                       onHumanVoiceExport(video._id)
                     }
@@ -442,15 +450,12 @@ function uploadConvertedToCommons (msg) {
                     VideoModel.findByIdAndUpdate(
                       videoId,
                       update,
-                      (err, result) => {
-                        if (err) {
-                          console.log('error updating video after upload ', err)
-                        } else {
-                          // Delete video from AWS since it's now on commons
-                          // converterChannel.sendToQueue(DELETE_AWS_VIDEO, new Buffer(JSON.stringify({ videoId })));
-                          // Upload video to youtube
-                          uploadConvertedToYoutube(videoId);
-                        }
+                    ).then(
+                      (result) => {
+                        // Delete video from AWS since it's now on commons
+                        // converterChannel.sendToQueue(DELETE_AWS_VIDEO, new Buffer(JSON.stringify({ videoId })));
+                        // Upload video to youtube
+                        uploadConvertedToYoutube(videoId);
                         if (uploadedFileName) {
                           if (
                             decodeURIComponent(uploadedFileName) !==
@@ -504,8 +509,15 @@ function uploadConvertedToCommons (msg) {
                         )
                       }
                     )
+                    .catch(err => {
+                        console.log('error updating video after upload ', err)
+                    })
                   }
-                )
+                ).catch(err => {
+                    if (err) {
+                      console.log('error counting videos for version', err)
+                    }
+                })
               } else if (
                 !video.uploadRetryCount ||
                 video.uploadRetryCount < MAX_UPLOAD_RETRY_COUNT
@@ -515,10 +527,7 @@ function uploadConvertedToCommons (msg) {
                 VideoModel.findByIdAndUpdate(
                   videoId,
                   { $set: { uploadRetryCount: nextRetryCount } },
-                  err => {
-                    if (err) {
-                      console.log('error updating retry upload count', err)
-                    }
+                ).then(err => {
                     // wait for 10 seconds before retrying
                     setTimeout(() => {
                       console.log('Retrying to upload', videoId)
@@ -529,19 +538,20 @@ function uploadConvertedToCommons (msg) {
                       )
                     }, 10 * 1000)
                   }
-                )
+                ).catch(err => {
+                    if (err) {
+                      console.log('error updating retry upload count', err)
+                    }
+                })
               } else {
                 // If it failed, just keep it in export history page
-                VideoModel.count(
+                VideoModel.countDocuments(
                   {
                     title: video.title,
                     wikiSource: video.wikiSource,
                     status: 'uploaded'
-                  },
-                  (err, count) => {
-                    if (err) {
-                      console.log('error counting videos for version', err)
-                    }
+                  }).then(
+                  ( count) => {
                     const update = {
                       $set: {
                         status: 'uploaded',
@@ -555,16 +565,23 @@ function uploadConvertedToCommons (msg) {
                       update.$set.version = 1
                     }
 
-                    VideoModel.findByIdAndUpdate(videoId, update, err => {
-                      if (err) {
-                        console.log('error updating failed video', err)
-                      }
+                    VideoModel.findByIdAndUpdate(videoId, update).then(err => {
                       console.log(
                         'Video upload failed, but kept in history page'
                       )
                     })
+                    .catch(err => {
+                      if (err) {
+                        console.log('error updating failed video', err)
+                      }
+                    })
                   }
                 )
+                .catch(err => {
+                  if (err) {
+                    console.log('error counting videos for version', err)
+                  }
+                })
               }
 
               fs.unlink(filePath, () => {})
@@ -575,14 +592,24 @@ function uploadConvertedToCommons (msg) {
         })
       console.log('recieved a request to uplaod video', video, filePath)
     })
+    .catch(err => {
+      if (err) {
+        converterChannel.ack(msg)
+        console.log('error fetching video', err)
+        VideoModel.findByIdAndUpdate(
+          videoId,
+          { $set: { status: 'failed' } },
+        )
+        .then(() => {})
+        .catch(err => {})
+        return
+      }
+    })
 }
 
 function uploadArticleAudioSlides (title, wikiSource, user) {
-  Article.findOne({ title, wikiSource, published: true }).exec(
-    (err, article) => {
-      if (err) {
-        return console.log(err)
-      }
+  Article.findOne({ title, wikiSource, published: true }).exec().then(
+    (article) => {
       if (!article) {
         return console.log('invalid title or wikiSource', article)
       }
@@ -659,15 +686,23 @@ function uploadArticleAudioSlides (title, wikiSource, user) {
           return console.log('error while uploading audios', err)
         }
         // Mark all slides as audio uploaded
-        Article.findByIdAndUpdate(article._id, { $set: articleUpdate }, err => {
+        Article.findByIdAndUpdate(article._id, { $set: articleUpdate }).then(_ => {
+          console.log('updated audioUploadedToCommons')
+        })
+        .catch(err => {
           if (err) {
             return console.log('error updating audioUploadedToCommons', err)
           }
-          console.log('updated audioUploadedToCommons')
         })
+        
       })
     }
   )
+  .catch(err => {
+    if (err) {
+      console.log('error fetching article', err)
+    }
+  })
 }
 
 function generateAudioSlideTitle (lang, title, index, extension) {
@@ -681,24 +716,22 @@ function finalizeConvert (msg) {
   const update = {
     $set: { status: 'uploaded', conversionProgress: 100 }
   }
-  VideoModel.findById(videoId, (err, video) => {
-    if (err || !video) {
+  VideoModel.findById(videoId).then((video) => {
+    if (!video) {
       console.log(err)
       return converterChannel.ack(msg)
     }
-    VideoModel.count(
+    VideoModel.countDocuments(
       { title: video.title, wikiSource: video.wikiSource, status: 'uploaded' },
-      (err, count) => {
-        if (err) {
-          console.log('error counting videos for version', err)
-        }
+    ).then(
+      ( count) => {
         if (count !== undefined && count !== null) {
           update.$set.version = count + 1
         } else {
           update.$set.version = 1
         }
 
-        VideoModel.findByIdAndUpdate(videoId, update, () => {
+        VideoModel.findByIdAndUpdate(videoId, update).then(() => {
           converterChannel.ack(msg)
 
           converterChannel.sendToQueue(
@@ -706,8 +739,24 @@ function finalizeConvert (msg) {
             Buffer.from(JSON.stringify({ videoId }))
           )
         })
+        .catch(err => {
+          converterChannel.ack(msg)
+          converterChannel.sendToQueue(
+            UPDLOAD_CONVERTED_TO_YOUTUBE_QUEUE,
+            Buffer.from(JSON.stringify({ videoId }))
+          )
+        })
       }
     )
+    .catch(err => {
+      if (err) {
+        console.log('error counting videos for version', err)
+      }
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    return converterChannel.ack(msg)
   })
 }
 
@@ -716,10 +765,7 @@ function onHumanVoiceExport (videoId) {
     .populate('humanvoice')
     .populate('user')
     .populate('article')
-    .exec((err, video) => {
-      if (err) {
-        return console.log('error getting human voice', err)
-      }
+    .exec((video) => {
       const message = createHuamnVoiceExportMessage(video)
       notifyHumanvoiceExport(message)
       // In case of update, mark the updated sections as uploaded
@@ -730,6 +776,11 @@ function onHumanVoiceExport (videoId) {
       //   }
 
       // }
+    })
+    .catch(err => {
+      if (err) {
+        return console.log('error getting human voice', err)
+      }
     })
 }
 
@@ -760,8 +811,7 @@ function getUpdatedHumanvoiceSections (video) {
 function cloneVideoArticle (videoId, callback = () => {}) {
   VideoModel.findById(videoId)
     .populate('article')
-    .exec((err, video) => {
-      if (err) return callback(err)
+    .exec().then((video) => {
       const clonedArticle = video.article
       clonedArticle._id = mongoose.Types.ObjectId()
       clonedArticle.isNew = true
@@ -771,24 +821,32 @@ function cloneVideoArticle (videoId, callback = () => {}) {
       clonedArticle.editor = 'videowiki-bot'
       clonedArticle.version = new Date().getTime()
 
-      clonedArticle.save(err => {
-        if (err) {
-          console.log('error cloning article', err)
-          return callback(err)
-        }
+      clonedArticle.save().then(() => {
 
         VideoModel.findByIdAndUpdate(
           video._id,
           { $set: { article: clonedArticle._id } },
           { new: true },
-          (err, updatedVideo) => {
-            if (err) {
-              return callback(err)
-            }
+        ).then(
+          (updatedVideo) => {
             return callback(null, updatedVideo)
           }
         )
+        .catch(err => {
+          if (err) {
+            return callback(err)
+          }
+        })
       })
+      .catch(err => {
+        if (err) {
+          console.log('error cloning article', err)
+          return callback(err)
+        }
+      })
+    })
+    .catch(err => {
+      if (err) return callback(err)
     })
 }
 
@@ -796,8 +854,7 @@ function uploadVideoSubtitlesToCommons (videoId, callback = () => {}) {
   VideoModel.findById(videoId)
     .populate('article')
     .populate('user', 'mediawikiToken mediawikiTokenSecret nccommonsToken nccommonsTokenSecret')
-    .exec((err, video) => {
-      if (err) return callback(err)
+    .exec().then((video) => {
       if (!video) return callback(new Error(`Invalid video id ${videoId}`))
       if (!video.commonsUrl)
         return callback(new Error('Video was not uploaded to commons'))
@@ -828,6 +885,9 @@ function uploadVideoSubtitlesToCommons (videoId, callback = () => {}) {
           .catch((err) => callback(err))
       })
     })
+    .catch(err => {
+      if (err) return callback(err)
+    })
 }
 /*
   since a new version of the file is uploaded to commons, the previous version
@@ -844,9 +904,8 @@ function updateArchivedVideoUrl (title, wikiSource, lang, version) {
       commonsUrl: { $exists: true },
       commonsTimestamp: { $exists: true },
       commonsFileInfo: { $exists: true }
-    },
-    (err, videos) => {
-      if (err) return console.log('error updateArchivedVideoUrl ', err)
+    }).then(
+    ( videos) => {
       if (!videos || videos.length === 0)
         return console.log(
           'updateArchivedVideoUrl didnt find matching video version'
@@ -878,11 +937,15 @@ function updateArchivedVideoUrl (title, wikiSource, lang, version) {
                 VideoModel.findByIdAndUpdate(
                   video._id,
                   { $set: update },
-                  (err, result) => {
-                    if (err)
-                      console.log('error updating file archive name', err)
+                ).then(
+                  (result) => {
                   }
                 )
+                .catch(err => {
+                    if (err) {
+                      console.log('error updating file archive name', err)
+                    }
+                })
               }
             }
           )
@@ -890,6 +953,9 @@ function updateArchivedVideoUrl (title, wikiSource, lang, version) {
       })
     }
   )
+  .catch(err => {
+    if (err) return console.log('error updateArchivedVideoUrl ', err)
+  })
 }
 
 // updateArchivedVideoUrl('Wikipedia:VideoWiki/Mark_Zuckerberg', 'https://en.wikipedia.org', 2);
@@ -907,14 +973,7 @@ function onExportedVideoFileTitleChange (
   const newUploadPostfix = `${fileHash[0]}/${fileHash[0]}${fileHash[1]}/${fileName}`
   VideoModel.find({ title, wikiSource, status: { $nin: ['failed'] } })
     .populate('formTemplate')
-    .exec((err, videos) => {
-      if (err)
-        return console.log(
-          'onExportedVideoUpload find error',
-          title,
-          wikiSource,
-          err
-        )
+    .exec((videos) => {
       if (videos.length === 0) return
       const videosUpdates = []
       const updatesArray = []
@@ -937,11 +996,13 @@ function onExportedVideoFileTitleChange (
                   }
                 }
               },
-              err => {
-                if (err) console.log('error updating upload form template', err)
+            ).then(_ => {
                 cb()
               }
             )
+            .catch(err => {
+              if (err) console.log('error updating upload form template', err)
+            })
           })
         }
         if (
@@ -988,6 +1049,15 @@ function onExportedVideoFileTitleChange (
         if (err) return callback(err)
         return callback()
       })
+    })
+    .catch(err => {
+      if (err)
+        return console.log(
+          'onExportedVideoUpload find error',
+          title,
+          wikiSource,
+          err
+        )
     })
 }
 

@@ -16,12 +16,7 @@ const controller = {
 
     Article
       .findOne({ published: true, ...input })
-      .exec((err, article) => {
-        if (err) {
-          console.log(err)
-          return res.status(503).send('Error while fetching articles!')
-        }
-
+      .exec().then((article) => {
         if (!article) {
           return res.set('Content-Type', 'text/html').send(`
           <!DOCTYPE html>
@@ -66,6 +61,12 @@ const controller = {
           </body>
           </html>
         `)
+      })
+      .catch(err => {
+        if (err) {
+          console.log(err)
+          return res.status(503).send('Error while fetching articles!')
+        }
       })
   },
 };

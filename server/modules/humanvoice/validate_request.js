@@ -14,15 +14,17 @@ const validations = {
       return res.status(500).send('Invalid title or wikiSource');
     }
 
-    Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-      if (err) {
-        console.log('error validating article', err);
-        return res.status(400).send('Something went wrong');
-      }
+    Article.findOne({ title, wikiSource, published: true }).then((article) => {
       if (!article) {
         return res.status(400).send('Invalid article title or wikiSource');
       }
       return next();
+    })
+    .catch(err => {
+      if (err) {
+        console.log('error validating article', err);
+        return res.status(400).send('Something went wrong');
+      }
     })
   },
 }

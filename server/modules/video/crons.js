@@ -2,7 +2,6 @@ import { CronJob } from 'cron'
 import { Video } from '../shared/models'
 import { uploadConvertedToYoutube } from '../shared/services/exporter';
 
-const console = process.console
 
 var job = new CronJob({
   cronTime: '*/30 * * * *',
