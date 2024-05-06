@@ -19,7 +19,7 @@ const topArticles = homeArticles[lang];
 const articleController = {
   getTopArticles(req, res) {
     let { limit } = req.query
-    if (!topArticles) return res.json(null)
+    if (!topArticles) return res.json({articles: []})
     const titles = topArticles.map((category) => category.articles).reduce((acc, a) => [...acc, ...a], []);
 
     if (limit) {
