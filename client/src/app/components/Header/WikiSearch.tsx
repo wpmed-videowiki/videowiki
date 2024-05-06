@@ -30,11 +30,9 @@ const WikiSearch = () => {
       description,
       getLanguageFromWikisource(description)
     );
-    navigate(
-      `/${getLanguageFromWikisource(
+    window.location.href = `/${getLanguageFromWikisource(
         description
       )}/videowiki/${title}?wikiSource=${description}`
-    );
   };
 
   const _handleSearchChange = (e, { value }) => {

@@ -28,8 +28,8 @@ export const uiSlice = createSlice({
       state.showBetaDisclaimer = false;
     },
     setLanguage: (state, action: PayloadAction<string>) => {
-      state.language = action.payload;
       localStorage.setItem("language", action.payload);
+      state.language = action.payload;
     },
   },
 });

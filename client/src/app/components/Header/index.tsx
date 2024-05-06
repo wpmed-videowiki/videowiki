@@ -249,7 +249,7 @@ const Header = () => {
       }
 
       setTimeout(() => {
-        window.location.assign(window.location.origin);
+        window.location.href = `/${value}`
       }, 500);
     }
   };

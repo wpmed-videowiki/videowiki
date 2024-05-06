@@ -18,7 +18,7 @@ import "basscss/css/basscss.min.css";
 import "./stylesheets/main.scss";
 import { LANG_API_MAP, websocketConfig } from "./app/utils/config";
 import websockets from "./app/websockets";
-import { setLanguage } from "./app/slices/uiSlice";
+import { setLanguage, setWiki } from "./app/slices/uiSlice";
 
 const Home = lazy(() => import("./pages"));
 const AllArticlesPage = lazy(() => import("./pages/articles"));
@@ -41,7 +41,7 @@ const Redirect = () => {
   const navigate = useNavigate();
   useEffect(() => {
     navigate(`/${language}`);
-  }, []);
+  }, [language]);
 
   return null;
 };
@@ -52,20 +52,23 @@ const RootLayout = () => {
   const dispatch = useAppDispatch();
   const { language } = useAppSelector((state) => state.ui);
 
-  useEffect(() => {
-    const routeLanguage = Object.keys(LANG_API_MAP).find(
-      (lang) => location.pathname.indexOf(`/${lang}`) === 0
-    );
-    if (routeLanguage && language !== routeLanguage) {
-      dispatch(setLanguage(routeLanguage));
+  const routeLanguage = Object.keys(LANG_API_MAP).find(
+    (lang) => location.pathname.indexOf(`/${lang}`) === 0
+  );
+  if (routeLanguage && language !== routeLanguage) {
+    dispatch(setLanguage(routeLanguage));
+    if (routeLanguage !== "en") {
+      dispatch(setWiki(undefined));
     }
-    const newLanguage = routeLanguage || language;
-    if (location.pathname.indexOf(`/${newLanguage}`) !== 0) {
-      navigate(`/${newLanguage}${location.pathname}${location.search || ""}`, {
-        state: location.state,
-      });
-    }
-  }, [location.pathname, location.search]);
+  }
+
+  const newLanguage = routeLanguage || language;
+  if (location.pathname.indexOf(`/${newLanguage}`) !== 0) {
+    navigate(`/${newLanguage}${location.pathname}${location.search || ""}`, {
+      state: location.state,
+    });
+    return null;
+  }
 
   return (
     <div className="c-app">
