@@ -1,8 +1,9 @@
 FROM node:20.12.2
 
 WORKDIR /home/videowiki
-COPY . .
+COPY package.json package-lock.json ./
 RUN npm install
+COPY . .
 RUN cd client && npm install
 RUN npm run build
 RUN rm -rf build
