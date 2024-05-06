@@ -115,6 +115,8 @@ export const authSlice = createSlice({
       if (!action.payload.session || !action.payload.session.token) {
         state.session.token = null;
       }
+      localStorage.setItem("session", JSON.stringify(state.session));
+      localStorage.setItem("token", state.token || '');
     },
     onValidateSessionFailure: (state) => {
       state.session = null;

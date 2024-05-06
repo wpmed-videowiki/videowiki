@@ -29,6 +29,7 @@ export const uiSlice = createSlice({
     },
     setLanguage: (state, action: PayloadAction<string>) => {
       state.language = action.payload;
+      localStorage.setItem("language", action.payload);
     },
   },
 });
