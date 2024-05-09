@@ -28,6 +28,7 @@
     "amqplib": "^0.10.4",
     "async": "^3.2.5",
     "aws-sdk": "^2.94.0",
+    "axios": "^1.6.8",
     "babel-plugin-lodash": "^3.3.4",
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.17.1",

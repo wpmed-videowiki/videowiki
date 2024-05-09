@@ -1,7 +1,9 @@
 import uuidV4 from 'uuid/v4';
 import AWS from 'aws-sdk';
-
 import { bucketName, url } from '../config/aws';
+import axios from 'axios'
+
+const ALHUYAR_API_URL = 'https://ttsneuronala.elhuyar.eus/api/standard';
 
 const GCTextToSpeech = require('@google-cloud/text-to-speech');
 const GCTTSClient = new GCTextToSpeech.TextToSpeechClient();
@@ -134,7 +136,9 @@ export const textToSpeech = ({ text, langCode }, callback) => {
       //   return callback(new Error('Language is not supported'));
       // }
 
-      if (langCode === 'es-US') {
+      if (langCode === 'eu-ES' && process.env.ELHUYAR_API_KEY && process.env.ELHUYAR_API_ID) {
+        generateAudioFunc = generateEUAudio;
+      } else if (langCode === 'es-US') {
         generateAudioFunc = generatePollyAudio;
       } else if (Object.keys(CODES_VOICES_MAP).includes(langCode)) {
         generateAudioFunc = generateGoogleAudio;
@@ -218,6 +222,25 @@ const generateGoogleAudio = ({ text, langCode }, cb) => {
     return cb('Something went wrong synthetizing speech');
   })
   ;
+};
+
+const generateEUAudio = ({ text }, cb) => {
+  const body = {
+    text,
+    speaker: 'female_low',
+    language: 'eu',
+    extension: 'mp3',
+    api_id: process.env.ELHUYAR_API_ID,
+    api_key: process.env.ELHUYAR_API_KEY,
+  }
+
+  axios.post(ALHUYAR_API_URL, body, {responseType: 'arraybuffer'}).then((res) => {
+    const audio = res.data;
+    return cb(null, { AudioStream: audio });
+  }).catch((err) => {
+    console.log(err)
+    return cb(err);
+  });
 };
 
 const writeAudioStreamToS3 = (audioStream, filename, cb) => {

@@ -447,7 +447,7 @@ convertQueue.on('completed', (job, result) => {
 
   Article.findOne({ title, wikiSource, published: true }).then((article) => {
     if (!article) {
-      console.log('error finding article', err);
+      console.log('error finding article');
     }
 
     finalizeFuncArray.push((cb) => {
