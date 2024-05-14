@@ -7,7 +7,7 @@ import {
   isCustomVideowikiScript,
   isMDwikiScript,
 } from '../../modules/shared/services/article';
-import { SLIDES_BLACKLIST, SUPPORTED_TTS_LANGS } from '../../modules/shared/constants';
+import { SLIDES_BLACKLIST, SUPPORTED_TTS_LANGS, TTS_CONCURRENT_REQUESTS } from '../../modules/shared/constants';
 import { getRemoteFileDuration } from '../../modules/shared/utils/fileUtils';
 // import wiki from 'wikijs'
 // import request from 'request'
@@ -368,7 +368,7 @@ const updateArticleSlides = function (currentSlides, newSlides, langCode, callba
   })
 
   // lets generate some audios now!
-  async.parallelLimit(pollyFunctionArray, 5, (err) => {
+  async.parallelLimit(pollyFunctionArray, TTS_CONCURRENT_REQUESTS, (err) => {
     if (err) {
       console.log(err)
       return callback(err)
@@ -648,7 +648,7 @@ function diffCustomArticleSections(article, callback) {
         }
       })
       // lets generate some audios now!
-      async.parallelLimit(pollyFunctionArray, 5, (err) => {
+      async.parallelLimit(pollyFunctionArray, TTS_CONCURRENT_REQUESTS, (err) => {
         if (err) {
           console.log(err)
           return callback(err)
@@ -912,7 +912,7 @@ function diffArticleSectionsV2(article, callback) {
     })
 
     // lets generate some audios now!
-    async.parallelLimit(pollyFunctionArray, 5, (err) => {
+    async.parallelLimit(pollyFunctionArray, TTS_CONCURRENT_REQUESTS, (err) => {
       if (err) {
         console.log(err)
         return callback(err)

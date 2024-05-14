@@ -4,16 +4,10 @@ services:
   redis-server:
     image: 'redis'
     restart: unless-stopped
-  base-img:
-    build: .
-    depends_on:
-      - redis-server
-    command: ["echo", "base image build done"]
     
 
   web_en:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4000:4000"
@@ -24,8 +18,7 @@ services:
 
 
   web_hi:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4001:4001"
@@ -36,8 +29,7 @@ services:
 
 
   web_es:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4002:4002"
@@ -48,8 +40,7 @@ services:
 
 
   web_ar:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4003:4003"
@@ -60,8 +51,7 @@ services:
 
 
   web_ja:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4004:4004"
@@ -72,8 +62,7 @@ services:
 
 
   web_uk:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4005:4005"
@@ -84,8 +73,7 @@ services:
 
 
   web_fr:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4006:4006"
@@ -96,8 +84,7 @@ services:
 
 
   web_or:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4007:4007"
@@ -108,8 +95,7 @@ services:
 
 
   web_te:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4008:4008"
@@ -120,8 +106,7 @@ services:
 
 
   web_gu:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4009:4009"
@@ -132,8 +117,7 @@ services:
 
 
   web_bn:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4010:4010"
@@ -144,8 +128,7 @@ services:
 
 
   web_pa:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4011:4011"
@@ -156,8 +139,7 @@ services:
 
 
   web_sat:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4012:4012"
@@ -168,8 +150,7 @@ services:
 
 
   web_sv:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4013:4013"
@@ -180,8 +161,7 @@ services:
 
 
   web_it:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4014:4014"
@@ -192,8 +172,7 @@ services:
 
 
   web_kn:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4015:4015"
@@ -204,8 +183,7 @@ services:
 
 
   web_ml:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4016:4016"
@@ -216,8 +194,7 @@ services:
 
 
   web_ta:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4017:4017"
@@ -228,8 +205,7 @@ services:
 
 
   web_eu:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "4018:4018"
@@ -237,5 +213,16 @@ services:
       - redis-server
       - web_ta 
     command: ["node", "server/index.js", "4018", "eu"]
+
+
+  web_ha:
+    image: videowiki/app:latest
+    restart: unless-stopped
+    ports:
+      - "4019:4019"
+    depends_on:
+      - redis-server
+      - web_eu 
+    command: ["node", "server/index.js", "4019", "ha"]
 
 

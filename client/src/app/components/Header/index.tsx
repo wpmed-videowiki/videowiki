@@ -117,6 +117,11 @@ const LANG_OPTIONS = [
     value: "eu",
     key: "eu",
   },
+  {
+    text: 'HA ( Hausa )',
+    value: 'ha',
+    key: 'ha'
+  }
 ];
 
 let _sessionPoller: any = null;

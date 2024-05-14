@@ -20,10 +20,11 @@ const langs = [
   "ml",
   "ta",
   "eu",
+  'ha',
 ];
 const ports = [
   4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011, 4012,
-  4013, 4014, 4015, 4016, 4017, 4018,
+  4013, 4014, 4015, 4016, 4017, 4018, 4019
 ];
 
 // Write nginx config
@@ -121,18 +122,12 @@ services:
   redis-server:
     image: 'redis'
     restart: unless-stopped
-  base-img:
-    build: .
-    depends_on:
-      - redis-server
-    command: ["echo", "base image build done"]
     
 ${langs
   .map((lang, index) =>
       `
   web_${lang}:
-    extends:
-      service: base-img
+    image: videowiki/app:latest
     restart: unless-stopped
     ports:
       - "${ports[index]}:${ports[index]}"

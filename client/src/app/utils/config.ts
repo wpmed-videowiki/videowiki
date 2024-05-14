@@ -20,6 +20,7 @@ export const LANG_API_MAP = {
   ml: `${PROTOCOL}//localhost:4016`,
   ta: `${PROTOCOL}//localhost:4017`,
   eu: `${PROTOCOL}//localhost:4018`,
+  ha: `${PROTOCOL}//localhost:4019`,
 };
 export const AVAILABLE_LANGUAGES = [
   "en",
@@ -41,6 +42,7 @@ export const AVAILABLE_LANGUAGES = [
   "ml",
   "ta",
   "eu",
+  'ha',
 ];
 export const SUPPORTED_TTS_LANGS = [
   "en",
@@ -61,6 +63,8 @@ export const SUPPORTED_TTS_LANGS = [
   "kn",
   "ml",
   "ta",
+  "eu",
+  'ha',
 ];
 export const websocketConfig = {
   url: (routeLanguage) =>

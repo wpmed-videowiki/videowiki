@@ -113,6 +113,7 @@ export const SECTIONS_BLACKLIST = {
   ml: [],
   ta: [],
   eu: ['Erreferentziak'],
+  ha: ['Manazarta']
 };
 
 export const CUSTOM_TEMPLATES = {
@@ -139,6 +140,7 @@ export const SLIDES_BLACKLIST = {
   ml: [],
   ta: [],
   eu: [],
+  ha: []
 };
 
 export const FILE_MATCH_REGEX = {
@@ -181,6 +183,7 @@ export const FILE_PREFIXES = {
   ml: 'File:',
   ta: 'File:',
   eu: 'File:',
+  ha: 'File:',
 };
 
 export const SUPPORTED_TTS_LANGS = [
@@ -203,4 +206,7 @@ export const SUPPORTED_TTS_LANGS = [
   'ml',
   'ta',
   'eu',
+  'ha'
 ];
+
+export const TTS_CONCURRENT_REQUESTS = 5;

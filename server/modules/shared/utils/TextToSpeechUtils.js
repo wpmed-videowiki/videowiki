@@ -4,6 +4,7 @@ import { bucketName, url } from '../config/aws';
 import axios from 'axios'
 
 const ALHUYAR_API_URL = 'https://ttsneuronala.elhuyar.eus/api/standard';
+const HAUSA_TTS_API_URL = process.env.HAUSA_TTS_API_URL;
 
 const GCTextToSpeech = require('@google-cloud/text-to-speech');
 const GCTTSClient = new GCTextToSpeech.TextToSpeechClient();
@@ -80,6 +81,7 @@ export const LANG_CODES = {
   ml: 'ml-IN',
   ta: 'ta-IN',
   eu: 'eu-ES',
+  ha: 'ha-HA',
 };
 
 const CODES_VOICES_MAP = {
@@ -140,6 +142,8 @@ export const textToSpeech = ({ text, langCode }, callback) => {
         generateAudioFunc = generateEUAudio;
       } else if (langCode === 'es-US') {
         generateAudioFunc = generatePollyAudio;
+      } else if (langCode === 'ha-HA') {
+        generateAudioFunc = generateHAAudio;
       } else if (Object.keys(CODES_VOICES_MAP).includes(langCode)) {
         generateAudioFunc = generateGoogleAudio;
       } else {
@@ -235,6 +239,20 @@ const generateEUAudio = ({ text }, cb) => {
   }
 
   axios.post(ALHUYAR_API_URL, body, {responseType: 'arraybuffer'}).then((res) => {
+    const audio = res.data;
+    return cb(null, { AudioStream: audio });
+  }).catch((err) => {
+    console.log(err)
+    return cb(err);
+  });
+};
+
+const generateHAAudio = ({ text }, cb) => {
+  const body = {
+    text,
+  }
+
+  axios.post(HAUSA_TTS_API_URL, body, {responseType: 'arraybuffer'}).then((res) => {
     const audio = res.data;
     return cb(null, { AudioStream: audio });
   }).catch((err) => {
