@@ -194,7 +194,7 @@ function onUploadConvertedToYoutube (msg) {
                       'Video:',
                       ''
                     )} - ${articleLang} - Version ${video.version}`,
-                    description: `Video of ${!video.article.wikiSource.includes('mdwiki.org') ? `${articleLang}:` : 'MD'}:${video.article.title}. Built collaboratively and open source. Join us! https://mdwiki.org/wiki/WikiProjectMed:VideoWiki`,
+                    description: `Video of ${!video.article.wikiSource.includes('mdwiki.org') ? `${articleLang}` : 'MD'}:${video.article.title}. Built collaboratively and open source. Join us! https://mdwiki.org/wiki/WikiProjectMed:VideoWiki`,
                     videoPath: filePath
                   })
                 })

@@ -33,11 +33,10 @@ const updateTitleOnAllModels = function (oldTitle, newTitle, callback = () => { 
     const M = Models[modelKey]
     if (Object.keys(M.schema.obj).indexOf('title') !== -1) {
       updateFuncArray.push((cb) => {
-        M.updateMany({ oldTitle }, { $set: { title: newTitle } }, (err) => {
-          if (err) {
-            console.log('error updating model', modelKey, err);
-          }
-          cb();
+        M.updateMany({ oldTitle }, { $set: { title: newTitle } }).then(() => {
+          cb()
+        }).catch(err => {
+          console.log(err)
         })
       })
     }
