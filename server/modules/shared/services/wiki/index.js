@@ -8,7 +8,8 @@ import {
   SECTIONS_BLACKLIST,
   FILE_MATCH_REGEX,
   FILE_PREFIXES,
-  CUSTOM_VIDEOWIKI_LANG_PREFIXES
+  CUSTOM_VIDEOWIKI_LANG_PREFIXES,
+  VIDEO_LANG_TRANSLATIONS,
 } from '../../constants'
 import { getUrlMediaType } from '../../utils/helpers'
 import { isCustomVideowikiScript, isMDwikiScript } from '../article'
@@ -45,6 +46,16 @@ export const getLanguageFromWikisource = function (wikiSource) {
   }
   // Default to english
   return 'en'
+}
+
+export const replaceCustomPrefixWithVideo = function(title) { 
+  Object.keys(CUSTOM_VIDEOWIKI_LANG_PREFIXES).forEach(key => {
+    const re = new RegExp(CUSTOM_VIDEOWIKI_LANG_PREFIXES[key], 'ig')
+    if (title.match(re)) {
+      title = title.replace(re, VIDEO_LANG_TRANSLATIONS[key])
+    }
+  });
+  return title;
 }
 
 const getFileRegexFromWikisource = function (wikiSource) {

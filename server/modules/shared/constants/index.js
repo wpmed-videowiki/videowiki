@@ -19,6 +19,28 @@ export const VIDEOS_EXTESION = ['webm', 'mp4', 'ogg', 'ogv'];
 export const GIF_EXTESIONS = ['gif'];
 export const HEADING_TAGS = ['h6', 'h5', 'h4', 'h3', 'h2', 'h1'];
 
+export const VIDEO_LANG_TRANSLATIONS = {
+  en: 'Video:',
+  fr: 'Vidéo:',
+  hi: 'वीडियो:',
+  ar: 'فيديو:',
+  es: 'Video/ES:',
+  ja: 'ビデオ:',
+  uk: 'відео:',
+  or: 'ଭିଡିଓ:',
+  te: `వీడియో:`,
+  gu: `વિડિયો:`,
+  bn: `ভিডিও:`,
+  pa: `ਵੀਡੀਓ:`,
+  sat: `ᱵᱷᱤᱰᱤᱭᱳ:`,
+  sv: 'Video:',
+  it: 'Video:',
+  kn: 'ವೀಡಿಯೊ:',
+  ml: 'വീഡിയോ:',
+  ta: 'காணொளி:',
+  eu: 'Bideoa:'
+};
+
 export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
   en: 'Wikipedia:Videowiki/',
   fr: 'Wikipédia:Videowiki/',

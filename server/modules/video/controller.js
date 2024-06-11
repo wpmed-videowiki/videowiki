@@ -1,6 +1,6 @@
 import { Article, Video as VideoModel, UploadFormTemplate as UploadFormTemplateModel, Humanvoice as HumanVoiceModel } from '../shared/models';
 import { convertArticle, uploadConvertedToYoutube } from '../shared/services/exporter';
-import { fetchArticleContributors, getCustomVideowikiSubpageName, getLanguageFromWikisource } from '../shared/services/wiki';
+import { getLanguageFromWikisource, replaceCustomPrefixWithVideo } from '../shared/services/wiki';
 import moment from 'moment';
 
 const lang = process.argv.slice(2)[1];
@@ -77,13 +77,16 @@ const controller = {
     } else {
       const lang = getLanguageFromWikisource(wikiSource);
       if (lang) {
-        formValues.fileTitle = `${lang}.${title}`;
+        formValues.fileTitle = `${lang}.${replaceCustomPrefixWithVideo(title)}`;
       } else {
-        formValues.fileTitle = title;
+        formValues.fileTitle = replaceCustomPrefixWithVideo(title);
+      }
+      if (wikiSource.includes('mdwiki.org')) {
+        formValues.fileTitle = `${lang}.MD.${replaceCustomPrefixWithVideo(title)}`
       }
     }
 
-    console.log('form values are', formValues);
+    console.log('form values are', formValues, {humanvoiceId, title, wikiSource, fileTitle});
     const errors = [];
 
     if (!title || !wikiSource) {
