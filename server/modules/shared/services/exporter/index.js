@@ -186,20 +186,15 @@ function onUploadConvertedToYoutube (msg) {
                   ).then(() => {}).catch(err => {});
 
                   console.log('Uploading video to playlist', youtubePlaylistId)
+                  const articleLang = video.article.lang || video.article.langCode;
                   return uploadYoutubeVideo({
                     token,
                     playlistId: youtubePlaylistId,
                     title: `${video.article.title.replace(
                       'Video:',
                       ''
-                    )} - ${video.article.lang ||
-                      video.article.langCode} - Version ${video.version}`,
-                    description: `Video summary of ${video.article.title.replace(
-                      'Video:',
-                      ''
-                    )}. It is built from a collaboratively editable script whose text is under a CC BY SA 3.0/4.0 license. Join us! https://mdwiki.org/wiki/${
-                      video.article.title
-                    }`,
+                    )} - ${articleLang} - Version ${video.version}`,
+                    description: `Video of ${!video.article.wikiSource.includes('mdwiki.org') ? `${articleLang}:` : 'MD'}:${video.article.title}. Built collaboratively and open source. Join us! https://mdwiki.org/wiki/WikiProjectMed:VideoWiki`,
                     videoPath: filePath
                   })
                 })
