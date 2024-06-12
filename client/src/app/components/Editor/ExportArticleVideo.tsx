@@ -239,6 +239,14 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
   };
 
   const onExportVideoClick = () => {
+    if (article.slides.some(slide => !slide.text)) {
+      toast.info("Please add text to all slides before exporting.");
+      return;
+    }
+    if (article.slides.some(slide => !slide.media?.length)) {
+      toast.info("Please add media to all slides before exporting.");
+      return;
+    }
     if (
       !props.authenticated ||
       (article.uploadTarget === "nccommons" && !session.user.nccommonsId) ||
