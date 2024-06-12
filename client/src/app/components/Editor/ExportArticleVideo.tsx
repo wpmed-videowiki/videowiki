@@ -46,6 +46,7 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
   const video = useAppSelector((state) => state.video);
   const { article } = useAppSelector((state) => state.article);
   const { language } = useAppSelector((state) => state.ui);
+  const { session } = useAppSelector((state) => state.auth);
 
   const [state, updateState] = useState<any>({
     open: false,
@@ -238,7 +239,12 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
   };
 
   const onExportVideoClick = () => {
-    if (!props.authenticated) {
+    if (
+      !props.authenticated ||
+      (article.uploadTarget === "nccommons" && !session.user.nccommonsId) ||
+      ((!article.uploadTarget || article.uploadTarget === "commons") &&
+        !session.user.mediawikiId)
+    ) {
       setState({ isLoginModalVisible: true });
     } else if (props.isExportable) {
       setState({ addHumanVoiceModalVisible: true });
