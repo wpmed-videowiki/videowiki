@@ -22,6 +22,7 @@ const VideoSchema = new Schema({
   downloaded: { type: Boolean, default: false },
   version: String,
   status: { type: String, enum: ['queued', 'progress', 'converted', 'uploaded', 'failed'], default: 'queued' },
+  error: String,
   conversionProgress: { type: Number, default: 0 },
   textReferencesProgress: { type: Number, default: 0 },
   combiningVideosProgress: { type: Number, default: 0 },

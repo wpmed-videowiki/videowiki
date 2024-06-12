@@ -381,208 +381,216 @@ function uploadConvertedToCommons (msg) {
           if (formFields.fileTitle.indexOf(`.${fileExtension}`) === -1) {
             formFields.fileTitle = `${formFields.fileTitle}.${fileExtension}`
           }
-          wikiCommonsController.uploadFileToCommons(
-            filePath,
-            video.user,
-            {
-              ...formFields,
-              uploadTarget: video.article.uploadTarget || 'commons'
-            },
-            (err, result) => {
-              console.log('uploaded to commons ', err, result)
-              if (result && result.success) {
-                const uploadedFileName = getFileNameFromTitle(
-                  result.url.split('/').pop()
-                )
+          wikiCommonsController.fetchFileCategories(video.article.uploadTarget || 'commons', formFields.fileTitle, (err, categories) => {
+            if (categories && Array.isArray(categories)) {
+              console.log("======== got previous categories", categories)
+              formFields.categories = formFields.categories.concat(categories).filter((v, i, a) => a.indexOf(v) === i);
+              console.log('New categories', formFields.categories)
+            }
+            wikiCommonsController.uploadFileToCommons(
+              filePath,
+              video.user,
+              {
+                ...formFields,
+                uploadTarget: video.article.uploadTarget || 'commons'
+              },
+              (err, result) => {
+                console.log('uploaded to commons ', err, result)
+                if (result && result.success) {
+                  const uploadedFileName = getFileNameFromTitle(
+                    result.url.split('/').pop()
+                  )
 
-                const update = {
-                  $set: {
-                    status: 'uploaded',
-                    commonsUrl: result.url,
-                    commonsUploadUrl: result.url,
-                    conversionProgress: 100,
-                    wrapupVideoProgress: 100,
-                    commonsTimestamp: result.fileInfo.timestamp,
-                    commonsFileInfo: result.fileInfo,
-                    filename: result.filename
+                  const update = {
+                    $set: {
+                      status: 'uploaded',
+                      commonsUrl: result.url,
+                      commonsUploadUrl: result.url,
+                      conversionProgress: 100,
+                      wrapupVideoProgress: 100,
+                      commonsTimestamp: result.fileInfo.timestamp,
+                      commonsFileInfo: result.fileInfo,
+                      filename: result.filename
+                    }
                   }
-                }
-                // Set version to the number of successfully uploaded videos
-                VideoModel.countDocuments(
-                  {
-                    title: video.title,
-                    wikiSource: video.wikiSource,
-                    status: 'uploaded'
-                  })
-                  .then
-                  ((count) => {
-                    if (video.humanvoice) {
-                      onHumanVoiceExport(video._id)
-                    }
-                    if (count !== undefined && count !== null) {
-                      update.$set.version = count + 1
-                      updateArchivedVideoUrl(
-                        video.title,
-                        video.wikiSource,
-                        video.lang,
-                        count
-                      )
-                    } else {
-                      update.$set.version = 1
-                    }
-                    // If it's unsupported lang, upload audios to Commons
-                    if (
-                      SUPPORTED_TTS_LANGS.indexOf(video.article.lang) === -1 ||
-                      video.article.title.toLowerCase() ===
-                        'User:Hassan.m.amin/sandbox'.toLowerCase()
-                    ) {
-                      uploadArticleAudioSlides(
-                        video.article.title,
-                        video.article.wikiSource,
-                        video.user
-                      )
-                    }
-                    VideoModel.findByIdAndUpdate(
-                      videoId,
-                      update,
-                    ).then(
-                      (result) => {
-                        // Delete video from AWS since it's now on commons
-                        // converterChannel.sendToQueue(DELETE_AWS_VIDEO, new Buffer(JSON.stringify({ videoId })));
-                        // Upload video to youtube
-                        uploadConvertedToYoutube(videoId);
-                        if (uploadedFileName) {
-                          if (
-                            decodeURIComponent(uploadedFileName) !==
-                            decodeURIComponent(
-                              video.formTemplate.form.fileTitle
-                            )
-                          ) {
-                            try {
-                              onExportedVideoFileTitleChange(
-                                getFileTitleFromName(uploadedFileName),
-                                video.title,
-                                video.wikiSource,
-                                err => {
-                                  if (err) {
-                                    console.log(
-                                      'error updating exported file name',
-                                      err
-                                    )
-                                  }
-                                }
-                              )
-                            } catch (e) {
-                              console.log(
-                                'error onExportedVideoFileTitleChange',
-                                err
-                              )
-                            }
-                          }
-                        }
-                        // Clone the associated article and set it to the video
-                        // So if the published article got updated by the  autoupdate bot,
-                        // integrity among the article and the video will be still valid
-                        // cloneVideoArticle(video._id, (err, result) => {
-                        //   if (err) {
-                        //     console.log('error cloning video article ', err);
-                        //   }
-                        // });
-                        // Upload video subtitles to commons
-                        uploadVideoSubtitlesToCommons(
-                          video._id,
-                          (err, result) => {
-                            if (err) {
-                              console.log(
-                                'error uploading subtitles to commons',
-                                err
-                              )
-                              return
-                            }
-                            console.log('uploaded subtitles to commons', result)
-                          }
+                  // Set version to the number of successfully uploaded videos
+                  VideoModel.countDocuments(
+                    {
+                      title: video.title,
+                      wikiSource: video.wikiSource,
+                      status: 'uploaded'
+                    })
+                    .then
+                    ((count) => {
+                      if (video.humanvoice) {
+                        onHumanVoiceExport(video._id)
+                      }
+                      if (count !== undefined && count !== null) {
+                        update.$set.version = count + 1
+                        updateArchivedVideoUrl(
+                          video.title,
+                          video.wikiSource,
+                          video.lang,
+                          count
+                        )
+                      } else {
+                        update.$set.version = 1
+                      }
+                      // If it's unsupported lang, upload audios to Commons
+                      if (
+                        SUPPORTED_TTS_LANGS.indexOf(video.article.lang) === -1 ||
+                        video.article.title.toLowerCase() ===
+                          'User:Hassan.m.amin/sandbox'.toLowerCase()
+                      ) {
+                        uploadArticleAudioSlides(
+                          video.article.title,
+                          video.article.wikiSource,
+                          video.user
                         )
                       }
-                    )
-                    .catch(err => {
-                        console.log('error updating video after upload ', err)
-                    })
-                  }
-                ).catch(err => {
+                      VideoModel.findByIdAndUpdate(
+                        videoId,
+                        update,
+                      ).then(
+                        (result) => {
+                          // Delete video from AWS since it's now on commons
+                          // converterChannel.sendToQueue(DELETE_AWS_VIDEO, new Buffer(JSON.stringify({ videoId })));
+                          // Upload video to youtube
+                          uploadConvertedToYoutube(videoId);
+                          if (uploadedFileName) {
+                            if (
+                              decodeURIComponent(uploadedFileName) !==
+                              decodeURIComponent(
+                                video.formTemplate.form.fileTitle
+                              )
+                            ) {
+                              try {
+                                onExportedVideoFileTitleChange(
+                                  getFileTitleFromName(uploadedFileName),
+                                  video.title,
+                                  video.wikiSource,
+                                  err => {
+                                    if (err) {
+                                      console.log(
+                                        'error updating exported file name',
+                                        err
+                                      )
+                                    }
+                                  }
+                                )
+                              } catch (e) {
+                                console.log(
+                                  'error onExportedVideoFileTitleChange',
+                                  err
+                                )
+                              }
+                            }
+                          }
+                          // Clone the associated article and set it to the video
+                          // So if the published article got updated by the  autoupdate bot,
+                          // integrity among the article and the video will be still valid
+                          // cloneVideoArticle(video._id, (err, result) => {
+                          //   if (err) {
+                          //     console.log('error cloning video article ', err);
+                          //   }
+                          // });
+                          // Upload video subtitles to commons
+                          uploadVideoSubtitlesToCommons(
+                            video._id,
+                            (err, result) => {
+                              if (err) {
+                                console.log(
+                                  'error uploading subtitles to commons',
+                                  err
+                                )
+                                return
+                              }
+                              console.log('uploaded subtitles to commons', result)
+                            }
+                          )
+                        }
+                      )
+                      .catch(err => {
+                          console.log('error updating video after upload ', err)
+                      })
+                    }
+                  ).catch(err => {
+                      if (err) {
+                        console.log('error counting videos for version', err)
+                      }
+                  })
+                } else if (
+                  !video.uploadRetryCount ||
+                  video.uploadRetryCount < MAX_UPLOAD_RETRY_COUNT
+                ) {
+                  // Retry uploading to commons
+                  const nextRetryCount = (video.uploadRetryCount || 0) + 1
+                  VideoModel.findByIdAndUpdate(
+                    videoId,
+                    { $set: { uploadRetryCount: nextRetryCount } },
+                  ).then(err => {
+                      // wait for 10 seconds before retrying
+                      setTimeout(() => {
+                        console.log('Retrying to upload', videoId)
+                        converterChannel.sendToQueue(
+                          UPDLOAD_CONVERTED_TO_COMMONS_QUEUE,
+                          new Buffer(JSON.stringify({ videoId })),
+                          { persistent: true }
+                        )
+                      }, 10 * 1000)
+                    }
+                  ).catch(err => {
+                      if (err) {
+                        console.log('error updating retry upload count', err)
+                      }
+                  })
+                } else {
+                  // If it failed, just keep it in export history page
+                  VideoModel.countDocuments(
+                    {
+                      title: video.title,
+                      wikiSource: video.wikiSource,
+                      status: 'uploaded',
+                    }).then(
+                    ( count) => {
+                      const update = {
+                        $set: {
+                          status: 'failed',
+                          error: (err || '').toString(),
+                          conversionProgress: 100,
+                          wrapupVideoProgress: 100
+                        }
+                      }
+                      if (count !== undefined && count !== null) {
+                        update.$set.version = count + 1
+                      } else {
+                        update.$set.version = 1
+                      }
+
+                      VideoModel.findByIdAndUpdate(videoId, update).then(err => {
+                        console.log(
+                          'Video upload failed, but kept in history page'
+                        )
+                      })
+                      .catch(err => {
+                        if (err) {
+                          console.log('error updating failed video', err)
+                        }
+                      })
+                    }
+                  )
+                  .catch(err => {
                     if (err) {
                       console.log('error counting videos for version', err)
                     }
-                })
-              } else if (
-                !video.uploadRetryCount ||
-                video.uploadRetryCount < MAX_UPLOAD_RETRY_COUNT
-              ) {
-                // Retry uploading to commons
-                const nextRetryCount = (video.uploadRetryCount || 0) + 1
-                VideoModel.findByIdAndUpdate(
-                  videoId,
-                  { $set: { uploadRetryCount: nextRetryCount } },
-                ).then(err => {
-                    // wait for 10 seconds before retrying
-                    setTimeout(() => {
-                      console.log('Retrying to upload', videoId)
-                      converterChannel.sendToQueue(
-                        UPDLOAD_CONVERTED_TO_COMMONS_QUEUE,
-                        new Buffer(JSON.stringify({ videoId })),
-                        { persistent: true }
-                      )
-                    }, 10 * 1000)
-                  }
-                ).catch(err => {
-                    if (err) {
-                      console.log('error updating retry upload count', err)
-                    }
-                })
-              } else {
-                // If it failed, just keep it in export history page
-                VideoModel.countDocuments(
-                  {
-                    title: video.title,
-                    wikiSource: video.wikiSource,
-                    status: 'uploaded'
-                  }).then(
-                  ( count) => {
-                    const update = {
-                      $set: {
-                        status: 'uploaded',
-                        conversionProgress: 100,
-                        wrapupVideoProgress: 100
-                      }
-                    }
-                    if (count !== undefined && count !== null) {
-                      update.$set.version = count + 1
-                    } else {
-                      update.$set.version = 1
-                    }
+                  })
+                }
 
-                    VideoModel.findByIdAndUpdate(videoId, update).then(err => {
-                      console.log(
-                        'Video upload failed, but kept in history page'
-                      )
-                    })
-                    .catch(err => {
-                      if (err) {
-                        console.log('error updating failed video', err)
-                      }
-                    })
-                  }
-                )
-                .catch(err => {
-                  if (err) {
-                    console.log('error counting videos for version', err)
-                  }
-                })
+                fs.unlink(filePath, () => {})
+                converterChannel.ack(msg)
               }
-
-              fs.unlink(filePath, () => {})
-              converterChannel.ack(msg)
-            }
-          )
+            )
+          });
           // callback(null, filePath)
         })
       console.log('recieved a request to uplaod video', video, filePath)

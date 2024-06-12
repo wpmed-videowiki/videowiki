@@ -4,7 +4,8 @@ const cheerio = require('cheerio');
 const wikiUpload = require('../../utils/wikiUploadUtils');
 const async = require('async');
 const User = require('../../models/User');
-const baseUrl = 'https://commons.wikimedia.org/w/api.php';
+const COMMONS_BASE_URL = 'https://commons.wikimedia.org/w/api.php'
+const NCCOMMONS_BASE_URL = 'https://nccommons.org/w/api.php'
 const ALLOWED_IMAGE_FORMATS = ['jpg', 'jpeg', 'png', 'svg', 'svg+xml'];
 
 const ALLOWED_VIDEOS_FORMATS = ['ogv', 'webm'];
@@ -22,8 +23,8 @@ const VIDEOS_TRANSCODE_FORMATS = [
 ]
 
 const fetchImagesFromCommons = function (searchTerm, callback) {
-  const url = `${baseUrl}?action=query&generator=search&gsrnamespace=0|6&gsrsearch="${searchTerm}"&gsrlimit=50&prop=imageinfo&iiprop=url|mime|thumbmime&iiurlwidth=400px&format=json`
-  // const url = `${baseUrl}?action=query&list=allimages&ailimit=20&aifrom="${searchTerm}"&aiprop=url&format=json&formatversion=2`
+  const url = `${COMMONS_BASE_URL}?action=query&generator=search&gsrnamespace=0|6&gsrsearch="${searchTerm}"&gsrlimit=50&prop=imageinfo&iiprop=url|mime|thumbmime&iiurlwidth=400px&format=json`
+  // const url = `${COMMONS_BASE_URL}?action=query&list=allimages&ailimit=20&aifrom="${searchTerm}"&aiprop=url&format=json&formatversion=2`
 
   request.get(url)
     .then((response) => {
@@ -59,7 +60,7 @@ const fetchImagesFromCommons = function (searchTerm, callback) {
 }
 
 const fetchGifsFromCommons = function (searchTerm, callback) {
-  const url = `${baseUrl}?action=query&generator=search&gsrnamespace=0|6&gsrsearch=/^${searchTerm} .*gif$/&gsrlimit=50&prop=imageinfo&iiprop=url|mime&iiurlwidth=400px&format=json`;
+  const url = `${COMMONS_BASE_URL}?action=query&generator=search&gsrnamespace=0|6&gsrsearch=/^${searchTerm} .*gif$/&gsrlimit=50&prop=imageinfo&iiprop=url|mime&iiurlwidth=400px&format=json`;
 
   request.get(url)
     .then((response) => {
@@ -94,7 +95,7 @@ const fetchVideosFromCommons = function (searchTerm, callback) {
 
   ALLOWED_VIDEOS_FORMATS.forEach((fileFormat) => {
     const formatSearch = new Promise((resolve) => {
-      const url = `${baseUrl}?action=query&generator=search&gsrnamespace=0|6&gsrsearch=/^${searchTerm} .*${fileFormat}$/&gsrlimit=20&prop=imageinfo&iiprop=url|mime&format=json`;
+      const url = `${COMMONS_BASE_URL}?action=query&generator=search&gsrnamespace=0|6&gsrsearch=/^${searchTerm} .*${fileFormat}$/&gsrlimit=20&prop=imageinfo&iiprop=url|mime&format=json`;
 
       request.get(url)
         .then((response) => {
@@ -143,7 +144,7 @@ const fetchVideosFromCommons = function (searchTerm, callback) {
 }
 
 const fetchCategoriesFromCommons = function (searchTerm, callback) {
-  const url = `${baseUrl}?action=query&generator=allcategories&gacprefix=${searchTerm}&format=json`;
+  const url = `${COMMONS_BASE_URL}?action=query&generator=allcategories&gacprefix=${searchTerm}&format=json`;
 
   request.get(url)
     .then((response) => {
@@ -164,6 +165,39 @@ const fetchCategoriesFromCommons = function (searchTerm, callback) {
         })
       }
 
+      callback(null, categories);
+    })
+    .catch((err) => callback(err));
+}
+
+function fetchFileCategories(uploadTarget, fileTitle, callback) {
+  const url =
+    uploadTarget === "nccommons"
+      ? `${NCCOMMONS_BASE_URL}?action=query&titles=${fileTitle}&prop=categories&format=json`
+      : `${COMMONS_BASE_URL}?action=query&titles=${fileTitle}&prop=categories&format=json`;
+  request
+    .get(url)
+    .then((response) => {
+      let responseBody;
+      try {
+        responseBody = JSON.parse(response.text);
+      } catch (e) {
+        console.log(e);
+      }
+
+      const categories = [];
+
+      // parse response content
+      if (responseBody && responseBody.query && responseBody.query.pages) {
+        Object.keys(responseBody.query.pages).forEach((pageId) => {
+          const page = responseBody.query.pages[pageId.toString()];
+          if (page.categories && page.categories.length > 0) {
+            page.categories.forEach((category) => {
+              categories.push(category.title);
+            });
+          }
+        });
+      }
       callback(null, categories);
     })
     .catch((err) => callback(err));
@@ -455,6 +489,7 @@ export {
   convertCommonsUploadPathToPage,
   fetchFileArchiveName,
   fetchLatestFileTitle,
+  fetchFileCategories,
 }
 
 // wikiUpload.updateWikiArticleText( '5835644bb76645fe206f32cb3cb4b377', '34a0f7ff45db46d1cfbb4e47717554f9938ba085',
