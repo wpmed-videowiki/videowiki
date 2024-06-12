@@ -108,6 +108,22 @@ const VideoConvertProgress = () => {
           Something went wrong while exporting the article. please try again
           <br />
           <br />
+          {videoConvertProgress.video.error && (
+            <>
+              Error:
+              <span
+                style={{
+                  color: "red",
+                  display: "inline-block",
+                  marginLeft: 10,
+                }}
+              >
+                {videoConvertProgress.video.error}
+              </span>
+              <br />
+              <br />
+            </>
+          )}
           <Link
             to={`/${language}/videowiki/${videoConvertProgress.video.title}?wikiSource=${videoConvertProgress.video.wikiSource}`}
           >
