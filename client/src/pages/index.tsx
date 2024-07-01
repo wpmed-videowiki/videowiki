@@ -1,41 +1,9 @@
 import { Icon, Button, Popup, Input } from "semantic-ui-react";
 import TopArticles from "../app/components/Articles/TopArticles";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
-
-const links = [
-  {
-    icon: "book",
-    text: "Script-writing",
-    link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Script-Writing",
-  },
-  {
-    icon: "microphone",
-    text: "Voice-over",
-    link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Voice-Over",
-  },
-  {
-    icon: "file video outline",
-    text: "Video Editing",
-    link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Video_Editing",
-  },
-  {
-    icon: "star",
-    text: (
-      <p>
-        Full Stack <br />
-        Content Creator
-      </p>
-    ),
-    link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Full_Stack_Content_Creator",
-  },
-  {
-    icon: "translate",
-    text: "Translator",
-    link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Translators",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 function RenderBox({ icon, text, key, link }) {
   return (
@@ -49,6 +17,38 @@ function RenderBox({ icon, text, key, link }) {
 const Home = () => {
   const [newVideoTitle, setNewVideoTitle] = useState("");
   const params = useParams();
+  const { t } = useTranslation();
+
+  const links = useMemo(
+    () => [
+      {
+        icon: "book",
+        text: t("Home.script-writing"),
+        link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Script-Writing",
+      },
+      {
+        icon: "microphone",
+        text: t("Home.voice-over"),
+        link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Voice-Over",
+      },
+      {
+        icon: "file video outline",
+        text: t("Home.video-editing"),
+        link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Video_Editing",
+      },
+      {
+        icon: "star",
+        text: t("Home.full-stack-content-creator"),
+        link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Full_Stack_Content_Creator",
+      },
+      {
+        icon: "translate",
+        text: t("Home.translator"),
+        link: "https://mdwiki.org/wiki/WikiProjectMed:VideoWiki/Translators",
+      },
+    ],
+    [t]
+  );
 
   const onCreateNewVideo = () => {
     if (newVideoTitle && newVideoTitle.trim().length > 0) {
@@ -72,14 +72,11 @@ const Home = () => {
         <title>VideoWiki</title>
         <meta
           name="description"
-          content="We are building collaborative wiki-based videos in local languages. Join Us."
+          content={t("Home.building-collaborative-wiki-videos")}
         />
       </Helmet>
       <div className="joinUsLogo">
-        <p>
-          We are building collaborative wiki-based videos in local languages.
-          Join Us.
-        </p>
+        <p>{t("Home.building-collaborative-wiki-videos")}</p>
         <div style={{ display: "flex", justifyContent: "space-around" }}>
           <div style={{ flex: 1 }}></div>
           {links.map((link) =>
@@ -106,7 +103,7 @@ const Home = () => {
                 }}
                 size="huge"
               >
-                Create a New Video
+                {t("Home.create-new-video")}
               </Button>
             }
             content={
@@ -117,10 +114,10 @@ const Home = () => {
                 style={{ width: "400px" }}
                 action={
                   <Button color="blue" onClick={onCreateNewVideo}>
-                    Go
+                    {t("Home.go")}
                   </Button>
                 }
-                placeholder="Enter title of the video"
+                placeholder={t("Home.enter-video-title")}
               />
             }
             on="click"
@@ -128,7 +125,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <TopArticles />
+      {/* <TopArticles /> */}
     </div>
   );
 };
