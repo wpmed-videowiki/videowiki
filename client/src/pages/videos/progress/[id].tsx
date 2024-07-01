@@ -34,6 +34,12 @@ const VideoConvertProgress = () => {
       _sessionPoller.current
     ) {
       _stopPoller();
+      if (videoConvertProgress.video.status === "uploaded") {
+        setUploadProgress(100);
+        setTimeout(() => {
+          _navigateToHistory();
+        }, 1000);
+      }
     } else if (
       !["failed", "uploaded"].includes(videoConvertProgress.video.status) &&
       !_sessionPoller.current
