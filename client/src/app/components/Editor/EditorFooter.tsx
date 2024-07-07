@@ -3,6 +3,7 @@ import moment from "moment";
 
 import VoiceSpeedController from "./VoiceSpeedController";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface IEditorFooterProps {
   currentSlideIndex: number;
@@ -21,6 +22,8 @@ interface IEditorFooterProps {
 }
 
 const EditorFooter = (props: IEditorFooterProps) => {
+  const { t } = useTranslation();
+
   const _renderPlayIcon = () => {
     const { isPlaying } = props;
 
@@ -76,9 +79,7 @@ const EditorFooter = (props: IEditorFooterProps) => {
           onClick={() =>
             uploadState !== "loading"
               ? onSlideBack()
-              : toast.info(
-                  "An upload is already in progress, please hold"
-                )
+              : toast.info("An upload is already in progress, please hold")
           }
           disabled={currentSlideIndex === 0}
         >
@@ -99,9 +100,7 @@ const EditorFooter = (props: IEditorFooterProps) => {
           onClick={() =>
             uploadState !== "loading"
               ? onSlideForward()
-              : toast.info(
-                  "An upload is already in progress, please hold"
-                )
+              : toast.info("An upload is already in progress, please hold")
           }
           disabled={currentSlideIndex + 1 === totalSlideCount}
         >
@@ -109,9 +108,9 @@ const EditorFooter = (props: IEditorFooterProps) => {
         </Button>
       </span>
       <span className="c-editor__last-updated">
-        {`Last Updated: ${date.format("DD MMMM YYYY")}, at ${date.format(
-          "hh:mm"
-        )}`}
+        {`${t("Editor.last_updated")}: ${date.format(
+          "DD MMMM YYYY"
+        )} ${date.format("hh:mm")}`}
       </span>
     </div>
   );

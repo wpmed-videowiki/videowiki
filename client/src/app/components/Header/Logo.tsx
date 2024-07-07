@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const logo = "/img/logo.png";
 
 const Logo = () => {
+  const {t} = useTranslation();
   return (
     <Link to="/" className="c-logo-wrapper u-center">
       <div>
@@ -10,7 +12,7 @@ const Logo = () => {
           <img className="c-logo__img" src={logo} />
         </div>
         <p id="logoText">
-          <b>The Free Multi-Media Encyclopedia that anyone can edit.</b>
+          <b>{t('Header.logo_description')}</b>
         </p>
       </div>
     </Link>

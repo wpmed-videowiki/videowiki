@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Icon, Popup, Modal, Progress } from "semantic-ui-react";
 import request from "../../../utils/requestAgent";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface IUpdateArticleModalProps {
   title: string;
@@ -16,6 +17,8 @@ const UpdateArticleModal = (props: IUpdateArticleModalProps) => {
     updating: false,
     submitLoadingPercentage: 0,
   });
+
+  const { t } = useTranslation();
 
   const setState = (data) => {
     updateState((state) => ({ ...state, ...data }));
@@ -43,7 +46,7 @@ const UpdateArticleModal = (props: IUpdateArticleModalProps) => {
       .then(() => {
         setState({ updating: false, submitLoadingPercentage: 0 });
         clearInterval(updateInterval);
-        toast.success("Article updated successfully");
+        toast.success(t('Editor.article_updated'));
         onClose();
         setTimeout(() => {
           window.location.reload();
@@ -51,7 +54,7 @@ const UpdateArticleModal = (props: IUpdateArticleModalProps) => {
       })
       .catch(() => {
         setState({ updating: false, submitLoadingPercentage: 0 });
-        toast.error("Error updating article");
+        toast.error(t('Editor.article_update_error'));
       });
   };
 
@@ -65,15 +68,18 @@ const UpdateArticleModal = (props: IUpdateArticleModalProps) => {
         trigger={<Icon name="refresh" inverted color="grey" />}
         onClick={() => setState({ open: true })}
       >
-        Update article
+        {t("Editor.update_article")}
       </Popup>
       <Modal size="small" open={state.open} onClose={() => onClose()}>
-        <Modal.Header>Update {title.split("_").join(" ")}</Modal.Header>
+        <Modal.Header>
+          {t("Editor.update")} {title.split("_").join(" ")}
+        </Modal.Header>
         <Modal.Content>
           <Modal.Description>
             <p>
-              Do you want to update the article "{title.split("_").join(" ")}"
-              now?
+              {t("Editor.update_article_confirmation", {
+                title: `"${title.split("_").join(" ")}"`,
+              })}
             </p>
           </Modal.Description>
         </Modal.Content>
@@ -86,14 +92,14 @@ const UpdateArticleModal = (props: IUpdateArticleModalProps) => {
                 progress
                 indicating
               >
-                Hold on tight! We are updating the article for you
+                {t("Editor.update_article_loading")}
               </Progress>
             </div>
           ) : (
             <div>
-              <Button onClick={() => onClose()}>Cancel</Button>
+              <Button onClick={() => onClose()}>{t("Common.cancel")}</Button>
               <Button primary onClick={() => onUpdate()}>
-                Yes
+                {t("Common.yes")}
               </Button>
             </div>
           )}

@@ -35,6 +35,7 @@ import {
 } from "../../slices/articleSlice";
 import { LoadingStateEnum } from "../../../types/types";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const uploadFormFields = {
   fileType: "",
@@ -85,17 +86,6 @@ const styles = {
 
 const stringTextLimit = 5;
 
-const sourceOptions = [
-  {
-    text: "Own Work",
-    value: "own",
-  },
-  {
-    text: "I did not create this media file",
-    value: "others",
-  },
-];
-
 interface IUploadFileInfoModalProps {
   articleForms?: any[];
   standalone?: boolean;
@@ -145,6 +135,18 @@ const UploadFileInfoModal = ({
     (state) => state.article
   );
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
+
+  const sourceOptions = [
+    {
+      text: t("UploadFileInfoModal.source_option_own_work"),
+      value: "own",
+    },
+    {
+      text: t("UploadFileInfoModal.source_option_others"),
+      value: "others",
+    },
+  ];
 
   const getFormFields = () => {
     return (
@@ -230,9 +232,7 @@ const UploadFileInfoModal = ({
 
     uploadRequest.end((err, { text, body }) => {
       if (!err) {
-        toast.success(
-          "File Upload Successful! Don't forget to click on the publish icon to save your changes"
-        );
+        toast.success(t("UploadFileInfoModal.upload_succes"));
         updateField({
           submitLoading: false,
           submitLoadingPercentage: 100,
@@ -245,7 +245,7 @@ const UploadFileInfoModal = ({
           );
         }, 100);
       } else if (err) {
-        const reason = text || "Something went wrong, please try again!";
+        const reason = text || t("UploadFileInfoModal.upload_error");
         toast.error(reason);
         updateField({
           submitLoading: false,
@@ -396,8 +396,7 @@ const UploadFileInfoModal = ({
             }
 
             if (!isValid) {
-              const titleError =
-                "A file with this name exists already. please try another title";
+              const titleError = t("UploadFileInfoModal.file_already_exists");
               updateField({ titleError, titleLoading: false });
             } else {
               updateField({ titleError: "", titleLoading: false });
@@ -454,11 +453,8 @@ const UploadFileInfoModal = ({
   const _renderSourceInfo = () => {
     return (
       <div style={{ marginTop: "1rem" }}>
-        <h4>Source</h4>
-        <p>
-          Where this digital file came from — could be a URL, or a book or
-          publication.
-        </p>
+        <h4>{t("UploadFileInfoModal.source")}</h4>
+        <p>{t("UploadFileInfoModal.source_description")}</p>
         <Grid>
           <Grid.Row>
             <Grid.Column width={14}>
@@ -490,11 +486,8 @@ const UploadFileInfoModal = ({
             </Grid.Column>
           </Grid.Row>
         </Grid>
-        <h4>Author(s)</h4>
-        <p>
-          The name of the person who took the photo, or painted the picture,
-          drew the drawing, etc.
-        </p>
+        <h4>{t("UploadFileInfoModal.author")}</h4>
+        <p>{t("UploadFileInfoModal.author_description")}</p>
         <Grid>
           <Grid.Row>
             <Grid.Column width={14}>
@@ -533,7 +526,7 @@ const UploadFileInfoModal = ({
   const _renderTitleField = () => {
     return (
       <Grid.Row>
-        <Grid.Column width={3}>Title</Grid.Column>
+        <Grid.Column width={3}>{t("UploadFileInfoModal.title")}</Grid.Column>
         <Grid.Column width={11}>
           <Input
             type="text"
@@ -578,14 +571,8 @@ const UploadFileInfoModal = ({
             trigger={<Icon name="info circle" />}
             content={
               <div>
-                <div>
-                  A unique descriptive title for the file which will server as a
-                  filename.
-                </div>
-                <div>
-                  You may use plain language with spaces. Do not include the
-                  file extension
-                </div>
+                <div>{t("UploadFileInfoModal.title_description_1")}</div>
+                <div>{t("UploadFileInfoModal.title_description_2")}</div>
               </div>
             }
           />
@@ -597,7 +584,9 @@ const UploadFileInfoModal = ({
   const _renderDescriptionField = () => {
     return (
       <Grid.Row>
-        <Grid.Column width={3}>Description</Grid.Column>
+        <Grid.Column width={3}>
+          {t("UploadFileInfoModal.description")}
+        </Grid.Column>
         <Grid.Column width={11}>
           <TextArea
             rows={4}
@@ -633,17 +622,11 @@ const UploadFileInfoModal = ({
             trigger={<Icon name="info circle" />}
             content={
               <div>
-                <div>Please describe the media as much as possible.</div>
-                <p></p>
-                <div>Where was it taken?</div>
-                <div>What does it show?</div>
-                <div>What is the context?</div>
-                <div>Please describe the object or persons?</div>
-                <p></p>
-                <div>
-                  If the media shows something unusual, please explain what
-                  makes it unusual
-                </div>
+                {t("description_description")
+                  ?.split("\n")
+                  .map((item, key) => {
+                    return <div key={key}>{item}</div>;
+                  })}
               </div>
             }
           />
@@ -655,7 +638,7 @@ const UploadFileInfoModal = ({
   const _renderLicenceField = () => {
     return (
       <Grid.Row>
-        <Grid.Column width={3}>Licence</Grid.Column>
+        <Grid.Column width={3}>{t("UploadFileInfoModal.licence")}</Grid.Column>
         <Grid.Column width={12}>
           <Form.Field>{_renderLicenceDropdown()}</Form.Field>
         </Grid.Column>
@@ -759,7 +742,7 @@ const UploadFileInfoModal = ({
   const _renderSourceField = () => {
     return (
       <Grid.Row>
-        <Grid.Column width={3}>Source</Grid.Column>
+        <Grid.Column width={3}>{t("UploadFileInfoModal.source")}</Grid.Column>
         <Grid.Column width={13}>
           <Form.Field>
             <Dropdown
@@ -779,7 +762,9 @@ const UploadFileInfoModal = ({
   const _renderCategoriesField = () => {
     return (
       <Grid.Row>
-        <Grid.Column width={3}>Categories</Grid.Column>
+        <Grid.Column width={3}>
+          {t("UploadFileInfoModal.categories")}
+        </Grid.Column>
         <Grid.Column width={5}>
           <Search
             loading={
@@ -833,7 +818,7 @@ const UploadFileInfoModal = ({
   const _renderDateField = () => {
     return (
       <Grid.Row>
-        <Grid.Column width={3}>Date</Grid.Column>
+        <Grid.Column width={3}>{t("UploadFileInfoModal.date")}</Grid.Column>
         <Grid.Column width={11}>
           <Input
             fluid
@@ -866,7 +851,7 @@ const UploadFileInfoModal = ({
         <Grid.Column width={3} />
         <Grid.Column width={12}>
           <Checkbox
-            label={"Save this form as a template"}
+            label={t("UploadFileInfoModal.save_template_label")}
             checked={getFormFields().saveTemplate}
             onChange={(e, { checked }) =>
               updateField({ saveTemplate: checked })
@@ -877,10 +862,7 @@ const UploadFileInfoModal = ({
           <Popup
             trigger={<Icon name="info circle" />}
             content={
-              <div>
-                By selecting this field, you'll be able to import this form
-                values directly into other forms using the import button above
-              </div>
+              <div>{t("UploadFileInfoModal.save_template_description")}</div>
             }
           />
         </Grid.Column>
@@ -894,7 +876,7 @@ const UploadFileInfoModal = ({
         <Grid.Column width={3} />
         <Grid.Column width={12}>
           <Checkbox
-            label="Auto download the video after it's exported"
+            label={t("UploadFileInfoModal.auto_download_label")}
             checked={getFormFields().autoDownload}
             onChange={(e, { checked }) =>
               updateField({ autoDownload: checked })
@@ -905,10 +887,7 @@ const UploadFileInfoModal = ({
           <Popup
             trigger={<Icon name="info circle" />}
             content={
-              <div>
-                By selecting this field, the video will downloaded once it's
-                exported
-              </div>
+              <div>{t("UploadFileInfoModal.auto_download_description")}</div>
             }
           />
         </Grid.Column>
@@ -922,7 +901,7 @@ const UploadFileInfoModal = ({
         <Grid.Column width={3} />
         <Grid.Column width={12}>
           <Checkbox
-            label="Add more user's credits"
+            label={t("UploadFileInfoModal.add_extra_users_label")}
             checked={getFormFields().addExtraUsers}
             onChange={(e, { checked }) => {
               updateField({
@@ -962,10 +941,10 @@ const UploadFileInfoModal = ({
                       _onAddExtraUser(getFormFields().extraUsersInput.trim())
                     }
                   >
-                    Add
+                    {t("Common.add")}
                   </Button>
                 }
-                placeholder="User's name"
+                placeholder={t("UploadFileInfoModal.user_name")}
                 value={getFormFields().extraUsersInput}
                 onChange={(e) =>
                   updateField({ extraUsersInput: e.target.value })
@@ -1042,7 +1021,7 @@ const UploadFileInfoModal = ({
               disabled={!_isFormValid()}
               onClick={(e) => _onSubmit(e)}
             >
-              Upload To Commons
+              {t("UploadFileInfoModal.upload_to_commons")}
             </Button>
           )}
           {getFormFields().submitLoading &&
@@ -1116,7 +1095,7 @@ const UploadFileInfoModal = ({
     dispatch(getArticleForms({ title }));
   }, []);
 
-  if (!getFormFields()) return <div>Loading...</div>;
+  if (!getFormFields()) return <div>{t("Common.loading")}</div>;
 
   return (
     <Modal
@@ -1136,7 +1115,7 @@ const UploadFileInfoModal = ({
           color: "white",
         }}
       >
-        Wikimedia Commons Upload Wizard
+        {t("UploadFileInfoModal.header")}
         {subTitle && <small style={{ display: "block" }}>{subTitle}</small>}
         <div style={{ position: "absolute", top: 20, right: 10 }}>
           <Popup
@@ -1202,7 +1181,7 @@ const UploadFileInfoModal = ({
                   }))
                 : [
                     {
-                      text: "Nothing here to show yet",
+                      text: t("UploadFileInfoModal.nothing_to_show"),
                       value: "",
                     },
                   ]
@@ -1211,7 +1190,9 @@ const UploadFileInfoModal = ({
               <Popup
                 position="bottom right"
                 trigger={<Icon name="share" />}
-                content={<p>Import previous form details</p>}
+                content={
+                  <p>{t("UploadFileInfoModal.import_previous_form_details")}</p>
+                }
               />
             }
           />

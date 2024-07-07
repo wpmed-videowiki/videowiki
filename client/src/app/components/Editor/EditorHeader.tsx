@@ -18,6 +18,7 @@ import ExportArticleVideo from "./ExportArticleVideo";
 import AddHumanVoiceModal from "./modals/AddHumanVoiceModal";
 import AuthModal from "../common/AuthModal";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 interface IEditorHeaderProps {
   article: any;
@@ -69,6 +70,7 @@ const EditorHeader = (data: IEditorHeaderProps) => {
   });
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const setState = (data) => {
     updateState((prevState) => ({
@@ -97,7 +99,7 @@ const EditorHeader = (data: IEditorHeaderProps) => {
 
   const onCopy = () => {
     copy(location.href);
-    toast.success("Link copied to clipboard");
+    toast.success(t("Editor.link_copied"));
   };
 
   const onAddHumanVoice = (lang) => {
@@ -117,9 +119,7 @@ const EditorHeader = (data: IEditorHeaderProps) => {
       return setState({ addHumanVoiceModalVisible: true });
     }
 
-    return toast.info(
-      "Only custom articles and articles with less than 50 slides can be exported."
-    );
+    return toast.info(t("Editor.max_slides_error"));
   };
 
   const _renderUpdateButton = () => {
@@ -156,9 +156,9 @@ const EditorHeader = (data: IEditorHeaderProps) => {
     return (
       <AuthModal
         open={state.isLoginModalVisible}
-        heading="Only logged in users can export videos to Commons"
+        heading={t("Editor.only_logged_in_user_can_upload_commons")}
         onClose={() => setState({ isLoginModalVisible: false })}
-        target=""
+        target={article.uploadTarget}
       />
     );
   };
@@ -364,8 +364,8 @@ const EditorHeader = (data: IEditorHeaderProps) => {
         style={{ paddingTop: "1rem", paddingLeft: "1rem" }}
         value={props.viewerMode}
         options={[
-          { key: 1, text: "Player Mode", value: "player" },
-          { key: 2, text: "Editor Mode", value: "editor" },
+          { key: 1, text: t("Editor.player_mode"), value: "player" },
+          { key: 2, text: t("Editor.editor_mode"), value: "editor" },
         ]}
         onChange={props.onViewerModeChange}
       />
@@ -382,7 +382,7 @@ const EditorHeader = (data: IEditorHeaderProps) => {
         onClick={onTranslateButtonClick}
       >
         <Popup trigger={<Icon name="translate" inverted color="grey" />}>
-          Translate and export
+          {t("Editor.translate_and_export")}
         </Popup>
       </a>
     );

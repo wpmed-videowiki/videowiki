@@ -15,6 +15,7 @@ import StateRenderer from "../../app/components/common/StateRenderer";
 import InfoBox from "../../app/components/common/InfoBox";
 import Contributors from "../../app/components/common/Contributors";
 import { SUPPORTED_TTS_LANGS } from "../../app/utils/config";
+import { useTranslation } from "react-i18next";
 
 const VideowikiArticlePage = () => {
   const { wikiSource, viewerMode } = queryString.parse(location.search);
@@ -31,6 +32,7 @@ const VideowikiArticlePage = () => {
     articleLastVideo,
   } = useAppSelector((state) => state.article);
   const { language } = useAppSelector((state) => state.ui);
+  const { t } = useTranslation();
   const params = useParams();
   const paramsTitle = params["*"] as string;
 
@@ -120,7 +122,7 @@ const VideowikiArticlePage = () => {
   };
 
   const _render = () => {
-    if (!article) return <div>Loading...</div>;
+    if (!article) return <div>{t("Common.loading")}</div>;
 
     return (
       <div>
@@ -179,8 +181,8 @@ const VideowikiArticlePage = () => {
     <StateRenderer
       componentState={fetchArticleState}
       loaderImage="/img/view-loader.gif"
-      loaderMessage="Loading your article from the sum of all human knowledge!"
-      errorMessage="Error while loading article! Please try again later!"
+      loaderMessage={t("Common.loading_article")}
+      errorMessage={t("Common.loading_article_error")}
       onRender={() => _render()}
     />
   );

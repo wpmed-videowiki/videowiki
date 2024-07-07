@@ -7,6 +7,7 @@ import ProgressSoundPlayer from "../common/ProgressSoundPlayer";
 import { getUrlMediaType } from "../../utils/helpers";
 import { VIDEO_PLAYER_THUMBNAIL_IMAGE } from "../../../constants";
 import { useDebounce } from "use-debounce";
+import { useTranslation } from "react-i18next";
 
 let SoundPlayerRef: any = null;
 
@@ -82,6 +83,7 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
   const [durationChangeData, setDurationChangeData] = useState<any>(null);
 
   const [debouncedDurationChange] = useDebounce(durationChangeData, 2000);
+  const { t } = useTranslation();
 
   const [state, updateState] = useState({
     value: [],
@@ -103,7 +105,10 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
 
   useEffect(() => {
     if (debouncedDurationChange && debouncedDurationChange.length > 0) {
-      props.onDurationsChange(debouncedDurationChange[0], debouncedDurationChange[1]);
+      props.onDurationsChange(
+        debouncedDurationChange[0],
+        debouncedDurationChange[1]
+      );
     }
   }, [debouncedDurationChange]);
 
@@ -201,16 +206,12 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
       <Grid verticalAlign="middle" centered>
         <Grid.Row>
           <Grid.Column computer={4} mobile={4}>
-            Timing
+            {t("Editor.timing")}
             <Popup
               trigger={<Icon name="info circle" className="pl1" />}
               content={
                 <div>
-                  <div>
-                    Control the Timing of the slide's media by adjusting the
-                    drag bar on the right to match the required position in the
-                    bottom audio player
-                  </div>
+                  <div>{t("Editor.timing_description")}</div>
                 </div>
               }
             />

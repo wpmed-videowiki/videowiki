@@ -22,6 +22,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { toast } from "react-toastify";
 import { exportArticleToVideo } from "../../slices/videoSlice";
 import { clearSlideForm } from "../../slices/wikiSlice";
+import { useTranslation } from "react-i18next";
 
 const UPLOAD_FORM_INITIAL_VALUES = {
   licence: othersworkLicenceOptions[2].value,
@@ -75,6 +76,7 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const setState = (newState) => {
     updateState(Object.assign({}, state, newState));
@@ -98,7 +100,7 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
       state.exportArticleToVideoState === "loading" &&
       props.video.exportArticleToVideoState === "done"
     ) {
-      toast.success("Article has been queued to be exported successfully!");
+      toast.success(t("Editor.export_queued_success"));
       dispatch(
         clearSlideForm({
           articleId: props.articleId,
@@ -239,12 +241,12 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
   };
 
   const onExportVideoClick = () => {
-    if (article.slides.some(slide => !slide.text)) {
-      toast.info("Please add text to all slides before exporting.");
+    if (article.slides.some((slide) => !slide.text)) {
+      toast.info(t("Editor.export_slides_text_warning"));
       return;
     }
-    if (article.slides.some(slide => !slide.media?.length)) {
-      toast.info("Please add media to all slides before exporting.");
+    if (article.slides.some((slide) => !slide.media?.length)) {
+      toast.info(t("Editor.export_slides_media_warning"));
       return;
     }
     if (
@@ -257,9 +259,7 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
     } else if (props.isExportable) {
       setState({ addHumanVoiceModalVisible: true });
     } else if (!props.isExportable) {
-      toast.info(
-        "Only custom articles and articles with less than 50 slides can be exported."
-      );
+      toast.info(t("Editor.max_slides_error"));
     }
     props.onOpen();
   };
@@ -306,7 +306,11 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
 
   const options = [
     {
-      text: <p onClick={() => onOptionSelect("history")}>Export History</p>,
+      text: (
+        <p onClick={() => onOptionSelect("history")}>
+          {t("Editor.export_history")}
+        </p>
+      ),
       value: "history",
     },
   ];
@@ -334,14 +338,16 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
             }
             target="_blank"
           >
-            Download video
+            {t("Editor.download_video")}
           </a>
         ),
         value: "export",
       });
     } else if (!articleVideo.exported) {
       options.push({
-        text: <p onClick={() => onExportVideoClick()}>Export Video</p>,
+        text: (
+          <p onClick={() => onExportVideoClick()}>{t("Editor.export_video")}</p>
+        ),
         value: "export",
       });
     }
@@ -375,7 +381,7 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
           <Popup
             position="top right"
             trigger={<Icon inverted color="grey" name="video" />}
-            content={<p>Export Video</p>}
+            content={<p>{t("Editor.export_video")}</p>}
           />
         }
       />
@@ -396,7 +402,7 @@ const ExportArticleVideo = (data: IExportArticleVideoProps) => {
       />
       <AuthModal
         open={state.isLoginModalVisible}
-        heading="Only logged in users can export videos to Commons"
+        heading={t("Editor.only_logged_in_user_can_upload_commons")}
         target={article.uploadTarget}
         onClose={() => setState({ isLoginModalVisible: false })}
       />

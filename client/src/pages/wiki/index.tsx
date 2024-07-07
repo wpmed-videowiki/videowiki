@@ -8,6 +8,7 @@ import { convertWiki, fetchWikiPage } from "../../app/slices/wikiSlice";
 import { LoadingStateEnum } from "../../types/types";
 import { toast } from "react-toastify";
 import StateRenderer from "../../app/components/common/StateRenderer";
+import { useTranslation } from "react-i18next";
 
 const WikiPage = () => {
   const [state, updateState] = useState({
@@ -20,6 +21,7 @@ const WikiPage = () => {
   const params = useParams();
   const paramsTitle = params["*"] as string;
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const {
     wikiContentState,
@@ -115,7 +117,7 @@ const WikiPage = () => {
         </Modal.Content>
         <Modal.Actions>
           <Button color="green" onClick={handleClose} inverted>
-            <Icon name="checkmark" /> Got it
+            <Icon name="checkmark" /> {t("Common.ok")}
           </Button>
         </Modal.Actions>
       </Modal>
@@ -162,8 +164,8 @@ const WikiPage = () => {
     <StateRenderer
       componentState={convertState}
       loaderImage="/img/view-loader.gif"
-      loaderMessage="Loading your article from the sum of all human knowledge!"
-      errorMessage="Error while loading wiki content! Please try again later!"
+      loaderMessage={t("Common.loading_article")}
+      errorMessage={t("Common.loading_article_error")}
       onRender={() => _render()}
     />
   );

@@ -7,6 +7,7 @@ import StateRenderer from "../common/StateRenderer";
 import { categories } from "./HardCodedArticles";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchTopArticles } from "../../slices/articleSlice";
+import { useTranslation } from "react-i18next";
 
 const TopArticles = () => {
   const dispatch = useAppDispatch();
@@ -14,6 +15,8 @@ const TopArticles = () => {
   const { topArticles, topArticlesState } = useAppSelector(
     (state) => state.article
   );
+  const { t } = useTranslation();
+
   useEffect(() => {
     dispatch(fetchTopArticles());
   }, []);
@@ -69,8 +72,8 @@ const TopArticles = () => {
       loaderDisabled={true}
       componentState={topArticlesState}
       loaderImage="/img/view-loader.gif"
-      loaderMessage="Loading your article from the sum of all human knowledge!"
-      errorMessage="Error while loading articles! Please try again later!"
+      loaderMessage={t("Common.loading_article")}
+      errorMessage={t("Common.loading_article_error")}
       onRender={() => _render()}
     />
   );

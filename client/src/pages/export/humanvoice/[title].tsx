@@ -26,6 +26,7 @@ import TranslateBoxV2 from "../../../app/components/HumanVoice/TranslateBoxV2";
 import AudioRecorderV2 from "../../../app/components/common/AudioRecorder/v2";
 import InvalidPublishModal from "../../../app/components/HumanVoice/InvalidPublishModal";
 import SlidesListV2 from "../../../app/components/HumanVoice/SlidesListV2";
+import { useTranslation } from "react-i18next";
 
 function mapTranslatedSlidesArray(slides) {
   const obj = {};
@@ -67,6 +68,7 @@ const ExportHumanVoice = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const params = useParams();
   const paramsTitle = params["*"] as string;
 
@@ -129,9 +131,7 @@ const ExportHumanVoice = () => {
                 uploadAudioLoading: false,
                 uploadAudioInputValue: null,
               });
-              toast.info(
-                "Something went wrong while processing the audio, we kept you original recording though."
-              );
+              toast.info(t("HumanVoice.processing_voice_error"));
             }
           }
         } else {
@@ -245,7 +245,7 @@ const ExportHumanVoice = () => {
             uploadAudioInputValue: null,
           };
         });
-        toast.success("Audio Uploaded");
+        toast.success(t("HumanVoice.audio_uploaded"));
       }
     }
   }, [humanvoice.uploadAudioToSlideState, humanvoice.uploadedSlideAudio]);
@@ -291,9 +291,7 @@ const ExportHumanVoice = () => {
           }, 500);
         }
       } else if (humanvoice.saveTranslatedTextState === "failed") {
-        toast.error(
-          "Something went wrong while updating the text, please try again"
-        );
+        toast.error(t("HumanVoice.text_update_error"));
       }
       setState({ saveTranslatedTextLoading: false });
     }
@@ -303,9 +301,7 @@ const ExportHumanVoice = () => {
   useEffect(() => {
     if (humanvoice.uploadAudioToSlideState === "failed") {
       setState({ uploadAudioLoading: false });
-      toast.error(
-        "Something went wrong while uploading audio, please try again"
-      );
+      toast.error(t("HumanVoice.audio_update_error"));
     }
   }, [humanvoice.uploadAudioToSlideState]);
 
@@ -366,7 +362,7 @@ const ExportHumanVoice = () => {
       video.video &&
       video.video._id
     ) {
-      toast.success("Article has been queued to be exported successfully!");
+      toast.success(t('Editor.export_queued_success'));
       setState({ isUploadFormVisible: false });
       dispatch(
         clearSlideForm({ articleId: article._id, slideIndex: "exportvideo" })
@@ -452,7 +448,7 @@ const ExportHumanVoice = () => {
     setTimeout(() => {
       if (state.inPreview) {
         setState({ isPlaying: true });
-        toast.info("Click on the publish icon when you are done previewing");
+        toast.info(t('HumanVoice.click_on_publish_after_review'));
       } else {
         setState({ isPlaying: false });
       }
@@ -596,7 +592,7 @@ const ExportHumanVoice = () => {
       );
       setState({ uploadAudioLoading: true });
     } else {
-      toast.error("Unable to upload audio, please try again.");
+      toast.error(t('HumanVoice.audio_update_error'));
     }
   };
 
@@ -914,7 +910,7 @@ const ExportHumanVoice = () => {
         <Grid.Row>
           <Grid.Column width={10}>
             <h5>
-              ALL SLIDES (
+              {t("HumanVoice.all_slides")} (
               {article && article.slides ? article.slides.length : 0})
               <Button
                 basic
@@ -964,7 +960,7 @@ const ExportHumanVoice = () => {
       inPreview,
     } = state;
     const { lang } = queryString.parse(location.search);
-    if (!article) return <div>loading...</div>;
+    if (!article) return <div>{t("Common.loading")}</div>;
 
     return (
       <div>
@@ -1019,8 +1015,8 @@ const ExportHumanVoice = () => {
     <StateRenderer
       componentState={fetchArticleState}
       loaderImage="/img/view-loader.gif"
-      loaderMessage="Loading your article from the sum of all human knowledge!"
-      errorMessage="Error while loading article! Please try again later!"
+      loaderMessage={t("Common.loading_article")}
+      errorMessage={t("Common.loading_article_error")}
       onRender={() => _render()}
     />
   );
