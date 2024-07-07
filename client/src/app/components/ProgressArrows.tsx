@@ -1,3 +1,5 @@
+import { useTranslation } from "react-i18next";
+
 interface IProgressArrowsProps {
   stage1: number;
   stage2: number;
@@ -6,6 +8,7 @@ interface IProgressArrowsProps {
 }
 
 const ProgressArrows = (props: IProgressArrowsProps) => {
+  const { t } = useTranslation();
   const calculateWhite = (percentage) => {
     if (parseInt(percentage) === 100) return -5;
     return 100 - parseInt(percentage);
@@ -20,11 +23,8 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
     <div className="c-app-arrows-container">
       <div className="c-app-arrow">
         <div className="c-app-arrow-text">
-          <h3>Stage 1</h3>
-          <p>
-            Converting individual slides into
-            <br /> videos
-          </p>
+          <h3>{t("ExportProgress.stage_1")}</h3>
+          <p>{t("ExportProgress.stage_1_description")}</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="320px" height="350px">
           <defs>
@@ -39,7 +39,7 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
             </linearGradient>
           </defs>
           <g>
-            <title>Stage 1</title>
+            <title>{t("ExportProgress.stage_1")}</title>
             <path
               stroke="green"
               transform="rotate(90 156.99749755859378,94.00320434570314) "
@@ -53,8 +53,8 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
 
       <div className="c-app-arrow">
         <div className="c-app-arrow-text">
-          <h3>Stage 2</h3>
-          <p>Adding Text References to videos</p>
+          <h3>{t("ExportProgress.stage_2")}</h3>
+          <p>{t("ExportProgress.stage_2_description")}</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="320px" height="350px">
           <defs>
@@ -69,7 +69,7 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
             </linearGradient>
           </defs>
           <g>
-            <title>Stage 2</title>
+            <title>{t("ExportProgress.stage_2")}</title>
             <path
               stroke="green"
               transform="rotate(90 156.99749755859378,94.00320434570314) "
@@ -82,11 +82,8 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
       </div>
       <div className="c-app-arrow">
         <div className="c-app-arrow-text">
-          <h3>Stage 3</h3>
-          <p>
-            Combining all video files into one
-            <br /> file
-          </p>
+          <h3>{t("ExportProgress.stage_3")}</h3>
+          <p>{t("ExportProgress.stage_3_description")}</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="320px" height="350px">
           <defs>
@@ -101,7 +98,7 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
             </linearGradient>
           </defs>
           <g>
-            <title>Stage 3</title>
+            <title>{t("ExportProgress.stage_3")}</title>
             <path
               stroke="green"
               transform="rotate(90 156.99749755859378,94.00320434570314) "
@@ -114,8 +111,8 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
       </div>
       <div className="c-app-arrow">
         <div className="c-app-arrow-text">
-          <h3>Stage 4</h3>
-          <p>Wrapping up and uploading final video</p>
+          <h3>{t("ExportProgress.stage_4")}</h3>
+          <p>{t("ExportProgress.stage_4_description")}</p>
         </div>
         <svg xmlns="http://www.w3.org/2000/svg" width="320px" height="350px">
           <defs>
@@ -130,7 +127,7 @@ const ProgressArrows = (props: IProgressArrowsProps) => {
             </linearGradient>
           </defs>
           <g>
-            <title>Stage 4</title>
+            <title>{t("ExportProgress.stage_4")}</title>
             <path
               stroke="green"
               transform="rotate(90 156.99749755859378,94.00320434570314) "

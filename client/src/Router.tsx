@@ -72,14 +72,16 @@ const RootLayout = () => {
 
   return (
     <div className="c-app">
-      <Header />
-      <div className="c-app__main">
-        <Suspense fallback={<div className="u-center">Loading...</div>}>
-          <Outlet />
-        </Suspense>
-      </div>
-      <Footer />
-      <ToastContainer />
+      <Suspense>
+        <Header />
+        <div className="c-app__main">
+          <Suspense fallback={<div className="u-center">Loading...</div>}>
+            <Outlet />
+          </Suspense>
+        </div>
+        <Footer />
+        <ToastContainer />
+      </Suspense>
     </div>
   );
 };

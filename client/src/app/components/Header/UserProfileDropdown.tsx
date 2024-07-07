@@ -2,16 +2,21 @@ import { Dropdown, Image } from "semantic-ui-react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setToken, setUser, validateSession } from "../../slices/authSlice";
+import { useTranslation } from "react-i18next";
 
 const UserProfileDropdown = () => {
   const { session } = useAppSelector((state) => state.auth);
   const { user } = session;
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const _handleOptionSelect = (e) => {
     const selection = e.target.getAttribute("name");
 
-    if (selection === "signout" || e.target.innerText === "Sign Out") {
+    if (
+      selection === "signout" ||
+      e.target.innerText === t("Header.sign_out")
+    ) {
       dispatch(setUser({ user: null }));
       dispatch(setToken({ token: "" }));
       dispatch(validateSession());
@@ -44,11 +49,20 @@ const UserProfileDropdown = () => {
   const options = [
     {
       key: "edited",
-      text: `Articles Edited - ${articlesEditCount}`,
+      text: t("Header.articles_edited", { count: articlesEditCount }),
       name: "edited",
     },
-    { key: "total", text: `Total Edits - ${totalEditCount}`, name: "total" },
-    { key: "sign-out", text: "Sign Out", icon: "sign out", name: "signout" },
+    {
+      key: "total",
+      text: t("Header.total_edits", { count: totalEditCount }),
+      name: "total",
+    },
+    {
+      key: "sign-out",
+      text: t("Header.sign_out"),
+      icon: "sign out",
+      name: "signout",
+    },
   ];
   return (
     <div style={{ position: "relative", top: "-20px" }}>

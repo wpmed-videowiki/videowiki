@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { Popup } from "semantic-ui-react";
 import { httpPost } from "../../apis/Common";
 import { useAppSelector } from "../../hooks";
+import { Trans, useTranslation } from "react-i18next";
 
 const Footer = () => {
   const [term, setTerm] = useState("");
@@ -10,9 +11,10 @@ const Footer = () => {
   const pathname = location.pathname;
 
   const { language } = useAppSelector((state) => state.ui);
+  const { t } = useTranslation();
 
   const _renderContactUs = () => {
-    return <span className="c-app-footer__contact">Contact Us</span>;
+    return <span className="c-app-footer__contact">{t('Footer.contact_us')}</span>;
   };
 
   const _renderSubmitEmail = (email) => {
@@ -37,28 +39,10 @@ const Footer = () => {
     pathname === "/signup" ? (
     <footer className="c-app-footer">
       <p className="c-app-footer__top-line">
-        Text and audio are available under the
-        <a
-          style={{ fontWeight: "bold", color: "black" }}
-          href="https://creativecommons.org/licenses/by-sa/3.0/"
-          target="_blank"
-        >
-          {" "}
-          Creative Commons Attribution-ShareAlike License 3.0 or later.
-        </a>{" "}
-        Images including those within videos are under various Open and Creative
-        Common Licenses.
+        <Trans i18nKey="Footer.text_audio_license" components={[<a />]} />
       </p>
       <p className="c-app-footer__top-line">
-        The VideoWiki software is available under the GNU General Public License
-        3.0 and is on{" "}
-        <a
-          style={{ color: "white" }}
-          href="https://github.com/videowikips/videowiki"
-          target="_blank"
-        >
-          https://github.com/videowikips/videowiki
-        </a>
+        <Trans i18nKey="Footer.software_license" components={[<a />]} />
       </p>
       <div style={{ position: "absolute", right: 10, top: 30 }}>
         <a
@@ -75,13 +59,13 @@ const Footer = () => {
             className="c-app-footer__link"
             target="_blank"
           >
-            About Us
+            {t("Footer.about_us")}
           </a>
         </span>
 
         <Popup trigger={_renderContactUs()} hoverable>
           <span>
-            Email -{"\u00A0"}
+            {t("Footer.email")} -{"\u00A0"}
             <a
               className="c-app-footer__link"
               href="mailto:wikiprojectmed@gmail.com"
@@ -97,7 +81,7 @@ const Footer = () => {
             className="c-app-footer__link"
             target="_blank"
           >
-            Terms of Use
+            {t("Footer.terms_of_use")}
           </a>
         </span>
         <span className="c-app-footer__about">
@@ -106,7 +90,7 @@ const Footer = () => {
             className="c-app-footer__link"
             target="_blank"
           >
-            Privacy Policy
+            {t("Footer.privacy_policy")}
           </a>
         </span>
         <span className="c-app-footer__about">
@@ -115,7 +99,7 @@ const Footer = () => {
             className="c-app-footer__link"
             target="_blank"
           >
-            Blog
+            {t("Footer.blog")}
           </a>
         </span>
         <span className="c-app-footer__about">
@@ -124,7 +108,7 @@ const Footer = () => {
             className="c-app-footer__link"
             target="_blank"
           >
-            Report Bugs
+            {t("Footer.report_bugs")}
           </a>
         </span>
       </div>

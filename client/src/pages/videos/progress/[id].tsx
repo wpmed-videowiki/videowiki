@@ -5,6 +5,7 @@ import { Progress } from "semantic-ui-react";
 import { fetchVideo, onClearVideo } from "../../../app/slices/videoSlice";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import ProgressArrows from "../../../app/components/ProgressArrows";
+import { useTranslation } from "react-i18next";
 
 const VideoConvertProgress = () => {
   const _sessionPoller = useRef<any>(null);
@@ -15,6 +16,7 @@ const VideoConvertProgress = () => {
   const navigate = useNavigate();
   const params = useParams();
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(onClearVideo());
@@ -105,18 +107,19 @@ const VideoConvertProgress = () => {
   return (
     <div className="u-page-center" style={{ marginTop: "7em" }}>
       {title && status !== "failed" && (
-        <h2>{`Exporting Videowiki Article for ${title
-          .split("_")
-          .join(" ")} to Video`}</h2>
+        <h2>
+          {t("ExportProgress.exporting_videowiki_article", {
+            title: title.split("_").join(" "),
+          })}
+        </h2>
       )}
       {status === "failed" && (
         <h2>
-          Something went wrong while exporting the article. please try again
+          {t("ExportProgress.export_error")}
           <br />
           <br />
           {videoConvertProgress.video.error && (
             <>
-              Error:
               <span
                 style={{
                   color: "red",
@@ -133,7 +136,7 @@ const VideoConvertProgress = () => {
           <Link
             to={`/${language}/videowiki/${videoConvertProgress.video.title}?wikiSource=${videoConvertProgress.video.wikiSource}`}
           >
-            Back to article
+            {t("ExportProgress.back_to_article")}
           </Link>
         </h2>
       )}
@@ -155,17 +158,17 @@ const VideoConvertProgress = () => {
       )}
       <div>
         {status === "queued" && (
-          <span>
-            Your video is currently queued to be exported. please wait
-          </span>
+          <span>{t("ExportProgress.export_queued")}</span>
         )}
         {/* {status === 'progress' && (
             <span>{`Exporting - ${progress}% exported`}</span>
           )} */}
         {status === "converted" && (
-          <span>Exported Successfully! Uploading to Commons...</span>
+          <span>{t("ExportProgress.export_converted")}</span>
         )}
-        {status === "uploaded" && <span>Uploaded Successfully!</span>}
+        {status === "uploaded" && (
+          <span>{t("ExportProgress.export_uploaded")}</span>
+        )}
       </div>
       {status === "converted" && (
         <div

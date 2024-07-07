@@ -11,6 +11,7 @@ import {
   fetchDeltaArticles,
 } from "../../slices/articleSlice";
 import { LoadingStateEnum } from "../../../types/types";
+import { useTranslation } from "react-i18next";
 
 const AllArticles = () => {
   const [offset, setOffset] = useState(0);
@@ -22,6 +23,7 @@ const AllArticles = () => {
     fetchDeltaArticlesState,
   } = useAppSelector((state) => state.article);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const _hasMore = useCallback(() => {
     return deltaArticles.length === 10;
@@ -75,7 +77,7 @@ const AllArticles = () => {
   const _render = () => {
     return (
       <div className="c-app-card-layout">
-        <h2 className="u-text-center">All Articles</h2>
+        <h2 className="u-text-center">{t("Header.all_articles")}</h2>
         <Grid>
           {_renderArticles()}
           {_renderLoader()}
@@ -98,8 +100,8 @@ const AllArticles = () => {
   return (
     <StateRenderer
       componentState={fetchAllArticlesState}
-      loaderMessage="Hold Tight! Loading all articles..."
-      errorMessage="Error while loading articles! Please try again later!"
+      loaderMessage={t("Common.loading_all_articles")}
+      errorMessage={t("Common.loading_all_articles_error")}
       onRender={() => _render()}
     />
   );

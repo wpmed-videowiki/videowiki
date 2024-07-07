@@ -6,6 +6,7 @@ import { getLanguageFromWikisource } from "../../utils/wikiUtils";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { resetSearchBar, searchWiki } from "../../slices/wikiSlice";
 import { useDebounce } from "use-debounce";
+import { useTranslation } from "react-i18next";
 
 const WikiSearch = () => {
   const [searchText, setSearchText] = useState("");
@@ -15,12 +16,13 @@ const WikiSearch = () => {
   );
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const _resetSearchBar = () => {
     dispatch(resetSearchBar());
   };
 
-  const _handleResultSelect = (e, {result}) => {
+  const _handleResultSelect = (e, { result }) => {
     let { title } = result;
     const { description } = result;
 
@@ -31,8 +33,8 @@ const WikiSearch = () => {
       getLanguageFromWikisource(description)
     );
     window.location.href = `/${getLanguageFromWikisource(
-        description
-      )}/videowiki/${title}?wikiSource=${description}`
+      description
+    )}/videowiki/${title}?wikiSource=${description}`;
   };
 
   const _handleSearchChange = (e, { value }) => {
@@ -77,7 +79,8 @@ const WikiSearch = () => {
         onSearchChange={(e, { value }) => _handleSearchChange(e, { value })}
         results={searchResults}
         value={searchText}
-        placeholder="Search a Topic or Paste a URL"
+        placeholder={t("Header.search_placeholder")}
+        noResultsMessage={t("Header.search_no_results")}
         fluid
       />
     </div>

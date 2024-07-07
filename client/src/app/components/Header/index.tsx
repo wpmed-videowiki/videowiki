@@ -15,6 +15,7 @@ import {
   setLanguage,
   setWiki,
 } from "../../slices/uiSlice";
+import { useTranslation } from "react-i18next";
 
 const LANG_OPTIONS = [
   {
@@ -118,10 +119,10 @@ const LANG_OPTIONS = [
     key: "eu",
   },
   {
-    text: 'HA ( Hausa )',
-    value: 'ha',
-    key: 'ha'
-  }
+    text: "HA ( Hausa )",
+    value: "ha",
+    key: "ha",
+  },
 ];
 
 let _sessionPoller: any = null;
@@ -137,6 +138,7 @@ const Header = () => {
   const location = useLocation();
 
   const dispatch = useAppDispatch();
+  const { t, i18n } = useTranslation();
 
   const _startPoller = () => {
     _sessionPoller = setInterval(() => {
@@ -191,7 +193,7 @@ const Header = () => {
                 textDecoration: "underline",
               }}
             >
-              Read the Beta Disclaimer
+              {t("Header.read_beta_disclaimer")}
             </a>
           }
           content={
@@ -201,20 +203,8 @@ const Header = () => {
                 fontSize: 16,
               }}
             >
-              <p>
-                <strong>VideoWiki</strong> is a proof of concept for a tool that
-                allows you to collaboratively create and edit videos by dragging
-                and dropping images and videos from Wikimedia Commons to
-                relevant Wikipedia text.
-              </p>
-              <p>
-                VideoWiki is currently in Beta stage and despite our progress,
-                we have only scratched the surface. We are actively working
-                towards adding many more features and additional functionality.
-                Anyone, including yourself, can edit a VideoWiki article even
-                without logging in. Your user name (if you use one) or IP
-                address will be associated with your edits.
-              </p>
+              <p>{t("Header.beta_disclaimer_1")}</p>
+              <p>{t("Header.beta_disclaimer_2")}</p>
             </div>
           }
         />
@@ -254,7 +244,7 @@ const Header = () => {
       }
 
       setTimeout(() => {
-        window.location.href = `/${value}`
+        window.location.href = `/${value}`;
       }, 500);
     }
   };
@@ -263,7 +253,7 @@ const Header = () => {
     return (
       <Dropdown
         inline
-        placeholder="Language"
+        placeholder={t("Header.language")}
         className={"select-lang-dropdown"}
         value={wiki === "mdwiki" ? "md-en" : language}
         options={LANG_OPTIONS}
@@ -283,15 +273,13 @@ const Header = () => {
   };
 
   const _renderArticleCount = () => {
-    return (
-      <div>{`( ${articleCount || '-'} articles )`}</div>
-    );
+    return <div>{`( ${articleCount || "-"} ${t("Header.articles")} )`}</div>;
   };
 
   const _renderAllArticle = () => {
     return (
       <Link to={`/${language}/articles`} className="c-app-header__link">
-        <div>All Articles</div>
+        <div>{t("Header.all_articles")}</div>
         {_renderArticleCount()}
       </Link>
     );
@@ -309,7 +297,7 @@ const Header = () => {
 
     return (
       <a href={href} target="_blank" className="c-app-header__link">
-        Video Scripts
+        {t("Header.video_scripts")}
       </a>
     );
   };

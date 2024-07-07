@@ -11,6 +11,7 @@ import { getWikiFileExtension } from "../../utils/wikiUtils";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setShowReopenFormNotification } from "../../slices/uiSlice";
+import { useTranslation } from "react-i18next";
 
 let videoPlayer: any = null;
 const ALLOWED_VIDEO_FORMATS = ["webm", "ogv"];
@@ -43,6 +44,7 @@ const EditorSlide = (data: IEditorSlideProps) => {
   const { uploadToCommonsForms } = useAppSelector((state) => state.wiki);
   const { showReopenFormNotification } = useAppSelector((state) => state.ui);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const props = {
     ...data,
@@ -264,9 +266,7 @@ const EditorSlide = (data: IEditorSlideProps) => {
 
   const _handleFileUploadModalClose = () => {
     if (props.showReopenFormNotification) {
-      toast.info(
-        "you can re-open the form by clicking on the icon on the top right of the slide"
-      );
+      toast.info(t("Edior.reopen_form"));
       dispatch(setShowReopenFormNotification(false));
     }
     setState({ isFileUploadModalVisible: false, isUploadResume: false });

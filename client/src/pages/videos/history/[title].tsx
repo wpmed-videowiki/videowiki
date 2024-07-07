@@ -14,6 +14,7 @@ import websockets from "../../../app/websockets";
 import fileUtils from "../../../app/utils/fileUtils";
 import Editor from "../../../app/components/Editor";
 import StateRenderer from "../../../app/components/common/StateRenderer";
+import { useTranslation } from "react-i18next";
 
 const styles: any = {
   container: {
@@ -58,6 +59,7 @@ const styles: any = {
 const VideosHistory = () => {
   const { language } = useAppSelector((state) => state.ui);
   const videosHistory = useAppSelector((state) => state.video.videosHistory);
+  const { t } = useTranslation();
 
   const params = useParams();
   const paramsTitle = params["*"] as string;
@@ -119,7 +121,9 @@ const VideosHistory = () => {
         <div style={styles.separator}></div>
         {commonsUrl && (
           <div style={{ ...styles.container, height: 50 }}>
-            <div style={{ ...styles.title, height: "120%" }}>Commons URL</div>
+            <div style={{ ...styles.title, height: "120%" }}>
+              {t("ExportHistory.commons_url")}
+            </div>
             <div style={styles.description}>
               <a target="_blank" href={commonsUrl}>
                 {commonsUrl}
@@ -129,7 +133,9 @@ const VideosHistory = () => {
         )}
         <div style={{ content: "", clear: "both" }}></div>
         <div style={{ ...styles.container, height: 50 }}>
-          <div style={{ ...styles.title, height: "120%" }}>Youtube URL</div>
+          <div style={{ ...styles.title, height: "120%" }}>
+            {t("ExportHistory.youtube_url")}
+          </div>
           <div style={styles.description}>
             {videoInfo.youtubeVideoId ? (
               <a
@@ -147,7 +153,7 @@ const VideosHistory = () => {
                 )}
                 onClick={() => onRetryYoutubeUpload(videoInfo)}
               >
-                Retry Upload
+                {t("ExportHistory.retry_upload")}
               </Button>
             )}
           </div>
@@ -155,7 +161,7 @@ const VideosHistory = () => {
         <div style={{ content: "", clear: "both" }}></div>
 
         <div style={{ ...styles.container }}>
-          <div style={{ ...styles.title }}>Download</div>
+          <div style={{ ...styles.title }}>{t("ExportHistory.download")}</div>
           <div style={styles.description}>
             <a
               href="javascript:void(0)"
@@ -167,7 +173,7 @@ const VideosHistory = () => {
                 )
               }
             >
-              Click here
+              {t("ExportHistory.click_here")}
             </a>
           </div>
         </div>
@@ -175,7 +181,7 @@ const VideosHistory = () => {
 
         {videoInfo && videoInfo.user && (
           <div style={{ ...styles.container }}>
-            <div style={{ ...styles.title }}>User</div>
+            <div style={{ ...styles.title }}>{t("ExportHistory.user")}</div>
             <div style={styles.description}>
               <a
                 target="_blank"
@@ -190,31 +196,33 @@ const VideosHistory = () => {
 
         {videoInfo.vlcSubtitles && (
           <div style={{ ...styles.container }}>
-            <div style={{ ...styles.title }}>Subtitles</div>
+            <div style={{ ...styles.title }}>
+              {t("ExportHistory.subtitles")}
+            </div>
             <div style={styles.description}>
               <a
                 href="javascript:void(0)"
                 onClick={() => fileUtils.downloadFile(videoInfo.vlcSubtitles)}
               >
-                Click here
+                {t("ExportHistory.click_here")}
               </a>
             </div>
           </div>
         )}
         <div style={{ content: "", clear: "both" }}></div>
         <div style={styles.container}>
-          <div style={styles.title}>Authors</div>
+          <div style={styles.title}>{t("ExportHistory.authors")}</div>
           <div style={styles.description}>
-            VideoWiki Foundation,{" "}
+            {t("ExportHistory.videowiki_foundation")},{" "}
             <a target="_blank" href={authorsSource}>
-              Authors of the Article
+              {t("ExportHistory.authors_of_the_article")}
             </a>
           </div>
         </div>
         <div style={{ content: "", clear: "both" }}></div>
 
         <div style={styles.container}>
-          <div style={styles.title}>Licence</div>
+          <div style={styles.title}>{t("ExportHistory.licence")}</div>
           <div style={styles.description}>
             <a
               target="_blank"
@@ -233,14 +241,14 @@ const VideosHistory = () => {
         <div style={{ content: "", clear: "both" }}></div>
 
         <div style={styles.container}>
-          <div style={styles.title}>Version</div>
+          <div style={styles.title}>{t("ExportHistory.version")}</div>
           <div style={styles.description}>{videoInfo.version}</div>
         </div>
         <div style={{ content: "", clear: "both" }}></div>
 
         {videoInfo.lang && (
           <div style={styles.container}>
-            <div style={styles.title}>Language</div>
+            <div style={styles.title}>{t("ExportHistory.language")}</div>
             <div style={styles.description}>
               {isoLangs[videoInfo.lang].name}
             </div>
@@ -270,7 +278,7 @@ const VideosHistory = () => {
               <Link
                 to={`/${language}/videowiki/${paramsTitle}?wikiSource=${wikiSource}`}
               >
-                Back to article
+                {t("ExportProgress.back_to_article")}
               </Link>
             </h3>
             <h3
@@ -281,13 +289,13 @@ const VideosHistory = () => {
                 wordBreak: "break-all",
               }}
             >
-              Export History: {paramsTitle}
+              {t("Editor.export_history")}: {paramsTitle}
             </h3>
           </div>
         </div>
         {videosHistory && videosHistory.videos.length === 0 && (
           <h1 style={{ textAlign: "center", marginTop: 120, marginLeft: -50 }}>
-            No vidoes are currently exported for this article
+            {t("ExportHistory.no_videos_found")}
           </h1>
         )}
         <Grid>
@@ -401,8 +409,8 @@ const VideosHistory = () => {
     <StateRenderer
       componentState={fetchVideosHistoryState}
       loaderImage="/img/view-loader.gif"
-      loaderMessage="Loading your article videos from the sum of all human knowledge!"
-      errorMessage="Error while loading videos! Please try again later!"
+      loaderMessage={t("ExportHistory.loading_videos")}
+      errorMessage={t("ExportHistory.loading_videos_error")}
       onRender={() => _render()}
     />
   );

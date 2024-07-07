@@ -9,6 +9,7 @@ import {
 } from "semantic-ui-react";
 import { filter, startsWith, lowerCase } from "lodash";
 import { isoLangsArray, isoLangs } from "../../../utils/langs";
+import { useTranslation } from "react-i18next";
 
 const languagesOptions = isoLangsArray.map((lang) => ({
   key: lang.code,
@@ -48,6 +49,7 @@ const AddHumanVoiceModal = (data: IAddHumanVoiceModalProps) => {
     dropdownOptions: languagesOptions.slice(),
     searchValue: "",
   });
+  const { t } = useTranslation();
 
   const setState = (data) => {
     updateState((state) => ({ ...state, ...data }));
@@ -95,13 +97,13 @@ const AddHumanVoiceModal = (data: IAddHumanVoiceModalProps) => {
       onClose={props.onClose}
     >
       <ModalContent className="c-add-human-voice-modal__content">
-        <h3>Add Human Voice Over In:</h3>
+        <h3>{t("Editor.add_human_voice_over_in")}:</h3>
         <Dropdown
           fluid
           text={`${
             state.language && isoLangs[state.language]
               ? isoLangs[state.language].name
-              : "Select Language"
+              : t("Editor.select_language")
           }`}
           disabled={props.disabled}
           className="icon"
@@ -136,13 +138,13 @@ const AddHumanVoiceModal = (data: IAddHumanVoiceModalProps) => {
       <ModalActions>
         {props.skippable ? (
           <Button color="blue" onClick={() => props.onSkip()}>
-            Use machine voice
+            {t("Editor.use_machine_voice")}
           </Button>
         ) : (
-          <Button onClick={props.onClose}>Cancel</Button>
+          <Button onClick={props.onClose}>{t("Common.cancel")}</Button>
         )}
         <Button onClick={() => props.onSubmit(state.language)}>
-          Use your own voice
+          {t("Editor.use_your_own_voice")}
         </Button>
       </ModalActions>
     </Modal>

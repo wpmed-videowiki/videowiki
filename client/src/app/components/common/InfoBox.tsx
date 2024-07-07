@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import StateRenderer from "./StateRenderer";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { getInfoBox } from "../../slices/wikiSlice";
+import { useTranslation } from "react-i18next";
 
 interface IInofBoxProps {
   title: string;
@@ -11,6 +12,7 @@ interface IInofBoxProps {
 const InfoBox = (props: IInofBoxProps) => {
   const { infobox, infoboxState } = useAppSelector((state) => state.wiki);
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const _render = () => {
     return (
@@ -38,8 +40,8 @@ const InfoBox = (props: IInofBoxProps) => {
     <StateRenderer
       componentState={infoboxState}
       loaderDisabled={true}
-      loaderMessage="Loading Infobox..."
-      errorMessage="Error while loading infobox! Please try again later!"
+      loaderMessage={t("InfoBox.loading")}
+      errorMessage={t("InfoBox.loading_error")}
       onRender={() => _render()}
     />
   );

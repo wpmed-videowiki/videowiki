@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Radio, Grid } from "semantic-ui-react";
 
 function getUniqueSortedRefs(refs) {
@@ -29,6 +30,7 @@ const EditorReferences = (props: IEditorReferencesProps) => {
   const [referencesVisible, setReferencesVisible] = useState(
     props.defaultVisible
   );
+  const { t } = useTranslation();
 
   const getDecriptionUrl = () => {
     const { currentSlide, currentSubmediaIndex } = props;
@@ -95,7 +97,7 @@ const EditorReferences = (props: IEditorReferencesProps) => {
       <Grid verticalAlign="middle" centered>
         <Grid.Row>
           <Grid.Column computer={2} mobile={4}>
-            References
+            {t("Editor.references")}
           </Grid.Column>
 
           <Grid.Column computer={2} mobile={12}>
@@ -119,7 +121,7 @@ const EditorReferences = (props: IEditorReferencesProps) => {
                     }}
                   >
                     <span style={{ display: "inline-block", width: "12%" }}>
-                      Visual -{" "}
+                      {t("Editor.visual")} -{" "}
                     </span>
                     <a
                       style={{
@@ -143,7 +145,7 @@ const EditorReferences = (props: IEditorReferencesProps) => {
                   }}
                 >
                   <span style={{ display: "inline-block", width: "12%" }}>
-                    Audio -{" "}
+                    {t("Editor.audio")} -{" "}
                   </span>
                   <a
                     style={{
@@ -169,7 +171,7 @@ const EditorReferences = (props: IEditorReferencesProps) => {
                     }}
                   >
                     <span style={{ display: "inline-block", width: "12%" }}>
-                      Text -{" "}
+                      {t("Editor.text")} -{" "}
                     </span>
                     {textRefs.map((ref, index) => (
                       <p

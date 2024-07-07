@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "semantic-ui-react";
 
 interface IVoiceSpeedControllerProps {
@@ -6,6 +7,7 @@ interface IVoiceSpeedControllerProps {
 }
 const VoiceSpeedController = (props: IVoiceSpeedControllerProps) => {
   const [showOptions, setShowOptions] = useState(false);
+  const { t } = useTranslation();
 
   const _showOptions = () => {
     setShowOptions(true);
@@ -23,7 +25,7 @@ const VoiceSpeedController = (props: IVoiceSpeedControllerProps) => {
         className="c-editor__toolbar-publish"
         onClick={_showOptions}
       >
-        Voice Speed
+        {t("Editor.voice_speed")}
       </Button>
     ) : null;
   };

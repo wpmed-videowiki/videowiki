@@ -4,15 +4,18 @@ import { Message, Grid, Icon, Card, Popup } from "semantic-ui-react";
 
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { fetchContributors } from "../../slices/articleSlice";
+import { useTranslation } from "react-i18next";
 
 interface IContributorsProps {
   title: string;
 }
+
 const Contributors = (props: IContributorsProps) => {
   const { fetchContributorsState, contributors } = useAppSelector(
     (state) => state.article
   );
   const dispatch = useAppDispatch();
+  const { t } = useTranslation();
 
   const _renderLoading = () => {
     return null;
@@ -21,7 +24,7 @@ const Contributors = (props: IContributorsProps) => {
   const _renderFailure = () => {
     return (
       <Message negative>
-        <p>Failed to load contributors!</p>
+        <p>{t("Editor.failed_to_load_contributors")}</p>
       </Message>
     );
   };
@@ -48,7 +51,7 @@ const Contributors = (props: IContributorsProps) => {
     return (
       <Card className="c-contributors">
         <Card.Content
-          header="Contributors"
+          header={t("Editor.contributors")}
           className="c-contributors__header"
         />
         <Card.Content className="c-contributors__description">

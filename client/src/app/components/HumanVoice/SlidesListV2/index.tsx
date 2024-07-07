@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 import { Grid, Icon } from "semantic-ui-react";
 
 interface SlidesListV2Props {
@@ -9,6 +10,7 @@ interface SlidesListV2Props {
 }
 
 const SlidesListV2 = (props: SlidesListV2Props) => {
+  const { t } = useTranslation();
   const getsubSlideBorderColor = (subslide) => {
     if (subslide.text && subslide.audio) {
       return "green";
@@ -31,7 +33,7 @@ const SlidesListV2 = (props: SlidesListV2Props) => {
               active: index === props.currentSlideIndex,
             })}
           >
-            <span>Slide {index + 1}</span>
+            <span>{t("HumanVoice.slide", { slideNumber: index + 1 })}</span>
             <div>
               <span className="timing">
                 {/* {formatTime(subslide.startTime * 1000)} - {formatTime(subslide.endTime * 1000)} */}

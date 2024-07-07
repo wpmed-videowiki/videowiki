@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks";
 import { setToken, setUser, validateSession } from "../../slices/authSlice";
 import { toast } from "react-toastify";
 import { LANG_API_MAP } from "../../utils/config";
+import { useTranslation } from "react-i18next";
 
 interface IAuthButtonsProps {
   fluid?: boolean;
@@ -28,6 +29,7 @@ const getUrlBase = (url, lang) => {
 const AuthButtons = (props: IAuthButtonsProps) => {
   const dispatch = useAppDispatch();
   const { language } = useAppSelector((state) => state.ui);
+  const { t } = useTranslation();
 
   const onLogin = () => {
     PopupTools.popup(
@@ -36,13 +38,10 @@ const AuthButtons = (props: IAuthButtonsProps) => {
       { width: 1000, height: 600 },
       (err, data) => {
         if (!err) {
-          console.log(" login response ", err, data);
           dispatch(setToken({ token: data.token }));
           dispatch(setUser({ user: data.user }));
           dispatch(validateSession());
-          toast.success(
-            "Awesome! You can now upload files to VideoWiki directly from your computer."
-          );
+          toast.success(t("Header.login_success"));
           setTimeout(() => {
             window.location.reload();
           }, 3000);
@@ -61,13 +60,10 @@ const AuthButtons = (props: IAuthButtonsProps) => {
       { width: 1000, height: 600 },
       (err, data) => {
         if (!err) {
-          console.log(" login response ", err, data);
           dispatch(setToken({ token: data.token }));
           dispatch(setUser({ user: data.user }));
           dispatch(validateSession());
-          toast.success(
-            "Awesome! You can now upload files to VideoWiki directly from your computer."
-          );
+          toast.success(t("Header.login_success"));
           setTimeout(() => {
             window.location.reload();
           }, 3000);
@@ -89,7 +85,7 @@ const AuthButtons = (props: IAuthButtonsProps) => {
           className="c-auth-buttons__signup"
           onClick={onLoginNCCommons}
         >
-          Register / Login with NC Commons
+          {t("Header.register_login_with_nccommons")}
         </Button>
       ) : (
         <Button
@@ -98,7 +94,7 @@ const AuthButtons = (props: IAuthButtonsProps) => {
           className="c-auth-buttons__signup"
           onClick={onLogin}
         >
-          Register / Login with Wikipedia
+          {t("Header.register_login_with_wikipedia")}
         </Button>
       )}
     </div>

@@ -4,6 +4,7 @@ import { Button, Icon } from "semantic-ui-react";
 import moment from "moment";
 import RecordRTC from "recordrtc";
 import { formatTime } from "../../../utils/helpers";
+import { useTranslation } from "react-i18next";
 
 // shim for AudioContext when it's not avb.
 const anyWindow = window as any;
@@ -73,6 +74,7 @@ const AudioRecorderV2 = (data: IAudioRecorderV2Props) => {
     startTime: null,
     remainingMS: null,
   });
+  const { t } = useTranslation();
 
   useEffect(() => {
     return () => {
@@ -160,9 +162,7 @@ const AudioRecorderV2 = (data: IAudioRecorderV2Props) => {
         })
         .catch((err) => {
           console.log(err);
-          alert(
-            "Something went wrong, Please make sure you're using the latest version of your browser"
-          );
+          alert(t("Editor.record_audio_error"));
           props.onStop();
         });
     } else {
@@ -221,12 +221,12 @@ const AudioRecorderV2 = (data: IAudioRecorderV2Props) => {
         color={state.recording ? "red" : "green"}
       >
         {!state.recording ? <Icon name="microphone" /> : <Icon name="stop" />}
-        {props.showLabel && !state.recording ? "Record" : ""}
+        {props.showLabel && !state.recording ? t("Editor.record") : ""}
         {/* {!this.state.recording ? ' Record' : ' Stop'} */}
       </Button>
       {state.recording && (
         <Button primary basic onClick={cancelRecording.bind(this)}>
-          Cancel
+          {t("Common.cancel")}
         </Button>
       )}
       {props.maxDuration && state.startTime && state.remainingMS !== null ? (

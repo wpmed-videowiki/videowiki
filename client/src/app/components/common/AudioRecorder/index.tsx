@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 // import WaveStream from "react-wave-stream";
 import Recorder from "recorder-js";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 // shim for AudioContext when it's not avb.
 const anyWindow = window as any;
 window.URL =
@@ -46,6 +47,8 @@ const AudioRecorder = (props: IAudioRecorderProps) => {
     waveData: { data: [], lineTo: 0 },
   });
 
+  const { t } = useTranslation();
+
   const startRecording = () => {
     console.log("starting record");
 
@@ -77,13 +80,11 @@ const AudioRecorder = (props: IAudioRecorderProps) => {
           rec.start();
         })
         .catch((err) => {
-          alert(
-            "Something went wrong, Please make sure you're using the latest version of your browser"
-          );
+          alert(t("Editor.record_audio_error"));
           props.onStop();
         });
     } else {
-      toast.info("Your browser doesn't support audio recording");
+      toast.info(t("Editor.record_audio_not_supported"));
     }
   };
 
@@ -116,7 +117,7 @@ const AudioRecorder = (props: IAudioRecorderProps) => {
           strokeColor="#000000"
         />
       )} */}
-      TOOD: Find replacement for wave stream
+      {/* TOOD: Find replacement for wave stream */}
     </div>
   );
 };

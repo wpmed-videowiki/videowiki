@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Grid, Icon, Button } from "semantic-ui-react";
 import AudioRecorder from "../common/AudioRecorder";
 import AuthModal from "../common/AuthModal";
+import { useTranslation } from "react-i18next";
 
 interface IEditorAudioRecorderProps {
   recording?: boolean;
@@ -16,7 +17,7 @@ interface IEditorAudioRecorderProps {
 
 const EditorAudioRecorder = (data: IEditorAudioRecorderProps) => {
   const uploadRef = useRef<HTMLInputElement>(null);
-
+  const { t } = useTranslation();      
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
   const props = {
     recording: false,
@@ -76,7 +77,7 @@ const EditorAudioRecorder = (data: IEditorAudioRecorderProps) => {
       <Grid verticalAlign="middle" centered>
         <Grid.Row style={{ display: "flex", alignItems: "center" }}>
           <Grid.Column computer={4} mobile={4}>
-            Audio
+            {t('Editor.audio')}
             {/* <Popup trigger={<Icon name="info circle" className="pl1" />} content={
                 <div>
                   <div>
@@ -134,7 +135,7 @@ const EditorAudioRecorder = (data: IEditorAudioRecorderProps) => {
                           ) : (
                             <Icon name="stop" />
                           )}
-                          Upload File
+                          {t("Editor.upload_file")}
                         </Button>
                         <input
                           onChange={(e) => {

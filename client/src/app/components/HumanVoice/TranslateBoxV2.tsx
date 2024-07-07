@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { TextArea, Button, Card } from "semantic-ui-react";
 
 interface ITranslateBoxV2Props {
@@ -12,6 +13,7 @@ interface ITranslateBoxV2Props {
 
 const TranslateBoxV2 = (props: ITranslateBoxV2Props) => {
   const [value, setValue] = useState("");
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (props.value !== value) {
@@ -38,7 +40,9 @@ const TranslateBoxV2 = (props: ITranslateBoxV2Props) => {
           }}
         >
           <h4 style={{ color: "#333333", margin: 0, padding: "1rem" }}>
-            Slide {props.currentSlideIndex + 1}
+            {t("HumanVoice.slide", {
+              slideNumber: props.currentSlideIndex + 1,
+            })}
           </h4>
           <Button
             basic
@@ -74,7 +78,7 @@ const TranslateBoxV2 = (props: ITranslateBoxV2Props) => {
             border: "none",
           }}
           rows={6}
-          placeholder="Translate slide text"
+          placeholder={t("HumanVoice.translate_placeholder")}
           value={value}
           onChange={(e, { value }) => {
             onValueChange(value);
