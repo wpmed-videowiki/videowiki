@@ -139,7 +139,7 @@ const controller = {
         }
       })
     } else {
-      if (false) {
+      if (true) {
         Article.findOne({ title, wikiSource, published: true }, (err, article) => {
           if (err) return res.send('Error while fetching data');
           if (!article) return res.json(null);
