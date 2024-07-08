@@ -140,10 +140,13 @@ const controller = {
       })
     } else {
       if (true) {
-        Article.findOne({ title, wikiSource, published: true }, (err, article) => {
-          if (err) return res.send('Error while fetching data');
+        Article.findOne({ title, wikiSource, published: true }).then((article) => {
           if (!article) return res.json(null);
           return res.json(article);
+        })
+        .catch(err => {
+          if (err) return res.send('Error while fetching data');
+          return res.json(null);
         })
       } else {
         fetchTitleRedirect(title, wikiSource, (err, redirectInfo) => {
