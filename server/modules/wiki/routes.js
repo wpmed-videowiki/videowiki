@@ -8,13 +8,13 @@ import uploadLocal from '../shared/middlewares/uploadLocal';
 
 const searchRateLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 12, // limit each IP to 10 requests per windowMs
+  max: 50,
   standardHeaders: 'draft-7',
 })
 
 const summaryRateLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
-  max: 12, // limit each IP to 10 requests per windowMs
+  max: 50,
   standardHeaders: 'draft-7',
 })
 
