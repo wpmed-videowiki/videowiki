@@ -1,6 +1,6 @@
 
 const fs = require('fs');
-const request = require('request');
+const request = require('../utils/requester');
 const mm = require('music-metadata');
 
 export function getRemoteFileDuration(url, callback) {

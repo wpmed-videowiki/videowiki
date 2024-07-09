@@ -1,4 +1,4 @@
-const request = require('request');
+const request = require('../../utils/requester');
 
 function getParameterByName(name, url) {
   name = name.replace(/[\[\]]/g, "\\$&")

@@ -17,7 +17,7 @@ import * as websocketsService from '../../vendors/websockets';
 import { UPLOAD_YOUTUBE_FINISH } from '../../vendors/websockets/events'
 
 const fs = require('fs')
-const request = require('request')
+const request = require('../../utils/requester')
 const wikiCommonsController = require('../wikiCommons')
 // const wikiUpload = require('../../utils/wikiUploadUtils');
 const wikiUpload = require('../../utils/wikiUploadUtils')

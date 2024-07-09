@@ -1,6 +1,6 @@
 import Queue from 'bull'
 import wiki from 'wikijs'
-import request from 'request'
+import request from '../shared/utils/requester'
 import async from 'async'
 import slug from 'slug'
 import striptags from 'striptags';
@@ -126,6 +126,9 @@ const search = function (wikiSource, searchTerm, limit = 7, callback) {
   const wikiSearch = wiki({
     apiUrl: `${wikiSource}/w/api.php`,
     origin: null,
+    headers: {
+      "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+    }
   }).search(searchTerm, limit)
     .then((res) =>
       new Promise((resolve) => {
@@ -136,6 +139,9 @@ const search = function (wikiSource, searchTerm, limit = 7, callback) {
   const metawikiSearch = wiki({
     apiUrl: `${METAWIKI_SOURCE}/w/api.php`,
     origin: null,
+    headers: {
+      "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+    }
   }).search(searchTerm, limit)
     .then((res) =>
       new Promise((resolve) => {
@@ -158,6 +164,9 @@ const getPageContentHtml = function (proposedSource, title, callback) {
       wiki({
         apiUrl: `${wikiSource}/w/api.php`,
         origin: false,
+        headers: {
+          "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+        }
       })
         .page(title)
         .then((page) => page.html())
@@ -826,7 +835,10 @@ const fetchArticleHyperlinks = function (wikiSource, title, callback) {
     }
     wiki({
       apiUrl: wikiSource + '/w/api.php',
-      origin: null
+      origin: null,
+      headers: {
+        "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+      }
     }).page(title)
       .then(page => page.html())
       .then(pageHtml => {
@@ -900,7 +912,10 @@ const getArticleWikiSource = function (proposedSource, title, callback) {
   return new Promise((resolve, reject) => {
     wiki({
       apiUrl: proposedSource + '/w/api.php/',
-      origin: null
+      origin: null,
+      headers: {
+        "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+      }
     })
       .page(title)
       .then(page => {
@@ -916,7 +931,10 @@ const getArticleWikiSource = function (proposedSource, title, callback) {
         return new Promise(function (resolve, reject) {
           wiki({
             apiUrl: METAWIKI_SOURCE + '/w/api.php',
-            origin: null
+            origin: null,
+            headers: {
+              "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+            }
           })
             .page(title)
             .then(page => {
@@ -1031,6 +1049,9 @@ const getArticleRefs = function (title, wikiSource, callback) {
   wiki({
     apiUrl: `${wikiSource}/w/api.php/`,
     origin: null,
+    headers: {
+      "User-Agent": process.env.VIDEOWIKI_USER_AGENT
+    }
   })
     .page(title)
     .then((page) => page.html())

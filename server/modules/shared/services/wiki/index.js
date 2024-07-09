@@ -1,5 +1,5 @@
 import cheerio from 'cheerio'
-import request from 'request'
+import request from '../../utils/requester'
 import wiki from 'wikijs'
 import lodash from 'lodash'
 import async from 'async'

@@ -1,4 +1,4 @@
-const request = require('request')
+const request = require('./requester')
 const OAuth = require('oauth-1.0a')
 const crypto = require('crypto')
 const { exec } = require('child_process')

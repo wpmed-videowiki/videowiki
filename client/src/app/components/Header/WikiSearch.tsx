@@ -15,7 +15,6 @@ const WikiSearch = () => {
     (state) => state.wiki
   );
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
   const _resetSearchBar = () => {

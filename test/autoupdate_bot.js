@@ -4,7 +4,7 @@ const config = require('../server/config');
 const Article = require('../server/models/Article');
 
 const expect = require('chai').expect; 
-const request = require('request');
+const request = require('../server/modules/shared/utils/requester');
 const title = 'Ankur_Warikoo';
 const botTestURL = `http://localhost:4000/api/wiki/bottest/${title}`;
 

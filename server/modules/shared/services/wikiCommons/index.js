@@ -27,6 +27,7 @@ const fetchImagesFromCommons = function (searchTerm, callback) {
   // const url = `${COMMONS_BASE_URL}?action=query&list=allimages&ailimit=20&aifrom="${searchTerm}"&aiprop=url&format=json&formatversion=2`
 
   request.get(url)
+    .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
     .then((response) => {
       let responseBody;
       try {
@@ -63,6 +64,7 @@ const fetchGifsFromCommons = function (searchTerm, callback) {
   const url = `${COMMONS_BASE_URL}?action=query&generator=search&gsrnamespace=0|6&gsrsearch=/^${searchTerm} .*gif$/&gsrlimit=50&prop=imageinfo&iiprop=url|mime&iiurlwidth=400px&format=json`;
 
   request.get(url)
+    .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
     .then((response) => {
       let responseBody;
       try {
@@ -98,6 +100,7 @@ const fetchVideosFromCommons = function (searchTerm, callback) {
       const url = `${COMMONS_BASE_URL}?action=query&generator=search&gsrnamespace=0|6&gsrsearch=/^${searchTerm} .*${fileFormat}$/&gsrlimit=20&prop=imageinfo&iiprop=url|mime&format=json`;
 
       request.get(url)
+        .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
         .then((response) => {
           let responseBody;
           try {
@@ -147,6 +150,7 @@ const fetchCategoriesFromCommons = function (searchTerm, callback) {
   const url = `${COMMONS_BASE_URL}?action=query&generator=allcategories&gacprefix=${searchTerm}&format=json`;
 
   request.get(url)
+    .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
     .then((response) => {
       let responseBody;
       try {
@@ -176,6 +180,7 @@ function fetchFileCategories(uploadTarget, fileTitle, callback) {
       ? `${NCCOMMONS_BASE_URL}?action=query&titles=${fileTitle}&prop=categories&format=json`
       : `${COMMONS_BASE_URL}?action=query&titles=${fileTitle}&prop=categories&format=json`;
   request
+    .set("User-Agent", process.env.VIDEOWIKI_USER_AGENT)
     .get(url)
     .then((response) => {
       let responseBody;
@@ -388,6 +393,7 @@ const fetchCommonsVideoUrlByName = function(videoUrl, callback) {
   async.detectLimit(urls, 2, (url, cb) => {
     console.log(url)
     request.get(url)
+    .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
     .then((res) => cb(null, Buffer.isBuffer(res.body)))
     .catch(() => cb(null, null))
   }, (err, url) => {
@@ -421,6 +427,7 @@ const convertCommonsUploadPathToPage = function(url) {
 
 const fetchFilePrevVersionUrl = function(fileUrl, callback = () => {}) {
   request.get(fileUrl)
+  .set('User-Agent', process.env.VIDEOWIKI_USER_AGEN)
   .then((res) => {
     if (res && res.text) {
       const $ = cheerio.load(res.text);
@@ -436,6 +443,7 @@ const fetchFilePrevVersionUrl = function(fileUrl, callback = () => {}) {
 const fetchFileArchiveName = function(title, wikiSource, timestamp, callback = () => {}) {
   const url = `${wikiSource}/w/api.php?action=query&prop=videoinfo&viprop=archivename|url&vistart=${timestamp}&titles=${title}&format=json`;
   request.get(url)
+  .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
   .then((res) => {
     if (res.body && res.body.query && res.body.query.pages && Object.keys(res.body.query.pages).length > 0) {
       const { pages } = res.body.query;
@@ -458,6 +466,7 @@ const fetchLatestFileTitle = function(oldTitle, callback = () => {}) {
   const url = `https://commons.wikimedia.org/w/api.php?action=query&prop=info&titles=${oldTitle}&redirects&format=json&formatversion=2`;
 
   request.get(url)
+  .set('User-Agent', process.env.VIDEOWIKI_USER_AGENT)
   .then((res) => {
     if (res.body.query) {
       const { pages, redirects } = res.body.query;
