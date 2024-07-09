@@ -21,6 +21,7 @@ const app = express()
 const server = require('http').Server(app);
 
 
+app.enable('trust proxy')
 
 const formDataOptions = {
   uploadDir: os.tmpdir(),
