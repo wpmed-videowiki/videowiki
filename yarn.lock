@@ -2114,6 +2114,11 @@ express-form-data@^2.0.23:
     fs-extra "^9.1.0"
     signal-exit "^3.0.7"
 
+express-rate-limit@^7.3.1:
+  version "7.3.1"
+  resolved "https://registry.npmjs.org/express-rate-limit/-/express-rate-limit-7.3.1.tgz"
+  integrity sha512-BbaryvkY4wEgDqLgD18/NSy2lDO2jTuT9Y8c1Mpx0X63Yz0sYd5zN6KPe7UvpuSVvV33T6RaE1o1IVZQjHMYgw==
+
 express-session@^1.18.0:
   version "1.18.0"
   resolved "https://registry.npmjs.org/express-session/-/express-session-1.18.0.tgz"
@@ -2128,7 +2133,7 @@ express-session@^1.18.0:
     safe-buffer "5.2.1"
     uid-safe "~2.1.5"
 
-express@^4.19.2:
+express@^4.19.2, "express@4 || 5 || ^5.0.0-beta.1":
   version "4.19.2"
   resolved "https://registry.npmjs.org/express/-/express-4.19.2.tgz"
   integrity sha512-5T6nhjsT+EOMzuck8JjBHARTHfMht0POzlA60WV2pMD3gyXw2LZnZ+ueGdNxG+0calOJcWKbpFcuzLZ91YWq9Q==
