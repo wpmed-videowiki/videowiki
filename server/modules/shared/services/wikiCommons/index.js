@@ -180,8 +180,8 @@ function fetchFileCategories(uploadTarget, fileTitle, callback) {
       ? `${NCCOMMONS_BASE_URL}?action=query&titles=${fileTitle}&prop=categories&format=json`
       : `${COMMONS_BASE_URL}?action=query&titles=${fileTitle}&prop=categories&format=json`;
   request
-    .set("User-Agent", process.env.VIDEOWIKI_USER_AGENT)
     .get(url)
+    .set("User-Agent", process.env.VIDEOWIKI_USER_AGENT)
     .then((response) => {
       let responseBody;
       try {
