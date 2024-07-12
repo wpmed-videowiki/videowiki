@@ -6,11 +6,11 @@ import { uploadFileToWikiCommons } from '../shared/middlewares/wikiUpload';
 import { checkEditableArticle } from '../shared/middlewares/checkEditableArticle';
 import uploadLocal from '../shared/middlewares/uploadLocal';
 
-const searchRateLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
-  max: 50,
-  standardHeaders: 'draft-7',
-})
+// const searchRateLimiter = rateLimit({
+//   windowMs: 60 * 1000, // 1 minute
+//   max: 50,
+//   standardHeaders: 'draft-7',
+// })
 
 const summaryRateLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
@@ -20,12 +20,12 @@ const summaryRateLimiter = rateLimit({
 
 const mount = function(router) {
   // ========== Search
-  router.get('/search', searchRateLimiter, controller.searchWikiArticles);
+  // router.get('/search', searchRateLimiter, controller.searchWikiArticles);
 
-  router.get('/wikimediaCommons/images', searchRateLimiter, controller.searchWikiCommonsImages);
-  router.get('/wikimediaCommons/gifs', searchRateLimiter, controller.searchWikiCommonsGifs);
-  router.get('/wikimediaCommons/videos', searchRateLimiter, controller.searchWikiCommonsVideos)
-  router.get('/wikimediaCommons/categories', searchRateLimiter, controller.searchWikiCommonsCategories);
+  // router.get('/wikimediaCommons/images', searchRateLimiter, controller.searchWikiCommonsImages);
+  // router.get('/wikimediaCommons/gifs', searchRateLimiter, controller.searchWikiCommonsGifs);
+  // router.get('/wikimediaCommons/videos', searchRateLimiter, controller.searchWikiCommonsVideos)
+  // router.get('/wikimediaCommons/categories', searchRateLimiter, controller.searchWikiCommonsCategories);
 
   // ============== upload image url to slide
   router.post('/article/imageUpload', checkEditableArticle, controller.uploadImageURLToSlide);

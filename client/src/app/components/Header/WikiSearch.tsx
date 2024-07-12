@@ -1,16 +1,25 @@
 import { useEffect, useState } from "react";
 import { Search } from "semantic-ui-react";
-import { useNavigate } from "react-router-dom";
 
 import { getLanguageFromWikisource } from "../../utils/wikiUtils";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { resetSearchBar, searchWiki } from "../../slices/wikiSlice";
+import {
+  onSearchWikiFailure,
+  onSearchWikiLoading,
+  onSearchWikiSuccess,
+  resetSearchBar,
+} from "../../slices/wikiSlice";
 import { useDebounce } from "use-debounce";
 import { useTranslation } from "react-i18next";
+
+const METAWIKI_SOURCE = "https://meta.wikimedia.org";
 
 const WikiSearch = () => {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearch] = useDebounce(searchText, 500);
+  const { language } = useAppSelector((state) => state.ui);
+  const DEFAULT_WIKISOURCE = `https://${language}.wikipedia.org`;
+
   const { searchResults, isSearchResultLoading } = useAppSelector(
     (state) => state.wiki
   );
@@ -19,6 +28,47 @@ const WikiSearch = () => {
 
   const _resetSearchBar = () => {
     dispatch(resetSearchBar());
+  };
+
+  const search = async (searchText: string, wikiSource: string) => {
+    dispatch(onSearchWikiLoading());
+
+    try {
+      if (wikiSource === "https://mdwiki.org") {
+        searchText = searchText.replace(/_/g, " ");
+      }
+      if (!wikiSource && searchText.toLowerCase().startsWith("video:")) {
+        wikiSource = "https://mdwiki.org";
+        searchText = searchText.replace(/_/g, " ");
+      } else {
+        wikiSource = DEFAULT_WIKISOURCE;
+      }
+      const query = `/w/api.php?action=query&list=search&srsearch=${searchText}&format=json&redirects=1&origin=*&limit=7`;
+
+      const wikiSearch = fetch(`${wikiSource}${query}`)
+        .then((response) => response.json())
+        .then((data) =>
+          data.query.search.map((result) => ({
+            title: result.title,
+            description: wikiSource,
+          }))
+        );
+
+      const metawikiSearch = fetch(`${METAWIKI_SOURCE}${query}`)
+        .then((response) => response.json())
+        .then((data) =>
+          data.query.search.map((result) => ({
+            title: result.title,
+            description: METAWIKI_SOURCE,
+          }))
+        );
+
+      const result = await Promise.all([wikiSearch, metawikiSearch]);
+      console.log("result", result);
+      dispatch(onSearchWikiSuccess(result.flat()));
+    } catch (err) {
+      dispatch(onSearchWikiFailure());
+    }
   };
 
   const _handleResultSelect = (e, { result }) => {
@@ -66,7 +116,7 @@ const WikiSearch = () => {
       action["wikiSource"] = wikiSource;
     }
 
-    dispatch(searchWiki(action));
+    search(searchText, wikiSource);
   }, [debouncedSearch]);
 
   return (
