@@ -16,6 +16,7 @@ import {
   setWiki,
 } from "../../slices/uiSlice";
 import { useTranslation } from "react-i18next";
+import OtherTools from "./OtherTools";
 
 const LANG_OPTIONS = [
   {
@@ -306,6 +307,7 @@ const Header = () => {
       {_renderBetaDisclaimer()}
       <header className="c-app__header">
         <Logo />
+        <OtherTools />
         <WikiSearch />
         {_renderAllArticle()}
         {_renderLanguages()}
