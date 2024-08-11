@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Grid } from "semantic-ui-react";
+import { Card, CardContent, Grid } from "semantic-ui-react";
 import queryString from "query-string";
 
 import Editor from "../../app/components/Editor";
@@ -121,6 +121,20 @@ const VideowikiArticlePage = () => {
     setState((state) => ({ ...state, ...update }));
   };
 
+  const totalDuration = useMemo(() => {
+    if (!article || !article._id) return 0;
+    const durationInSec =
+      article.slides.reduce((acc, slide) => acc + (slide.duration || 0), 0) /
+      1000;
+
+    const hours = Math.floor(durationInSec / 3600);
+    const minutes = Math.floor((durationInSec % 3600) / 60);
+    const seconds = Math.floor(durationInSec % 60);
+    return `${hours < 10 ? `0${hours}` : hours}:${
+      minutes < 10 ? `0${minutes}` : minutes
+    }:${seconds < 10 ? `0${seconds}` : seconds}`;
+  }, [article]);
+
   const _render = () => {
     if (!article) return <div>{t("Common.loading")}</div>;
 
@@ -169,6 +183,12 @@ const VideowikiArticlePage = () => {
                     titleWikiSource={state.wikiSource as string}
                   />
                 )}
+                <Card className="c-contributors">
+                  <Card.Content header="Total Duration" />
+                  <Card.Content className="c-contributors__description">
+                    {totalDuration}
+                  </Card.Content>
+                </Card>
               </div>
             </Grid.Column>
           </Grid.Row>
