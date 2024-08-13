@@ -38,9 +38,11 @@ interface IEditorSlideProps {
   editable: boolean;
   showTextTransition: boolean;
   muted: boolean;
+  currentTime: number;
 }
 
 const EditorSlide = (data: IEditorSlideProps) => {
+  const [currentTime, setCurrentTime] = useState(0);
   const { uploadToCommonsForms } = useAppSelector((state) => state.wiki);
   const { showReopenFormNotification } = useAppSelector((state) => state.ui);
   const dispatch = useAppDispatch();
@@ -484,6 +486,7 @@ const EditorSlide = (data: IEditorSlideProps) => {
         onSlidePlayComplete={onSlidePlayComplete}
         isPlaying={isPlaying}
         playbackSpeed={playbackSpeed}
+        onTimeUpdate={setCurrentTime}
       />
       {_renderFileUploadModal()}
       {_renderLoginModal()}

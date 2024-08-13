@@ -17,6 +17,7 @@ interface IProgressSoundPlayerProps {
   onAudioLoad: () => void;
   currentTime: number;
   onSeekEnd: (currentTime: number) => void;
+  onTimeUpdated: (currentTime: number) => void;
 }
 
 const ProgressSoundPlayer = (props: IProgressSoundPlayerProps) => {
@@ -39,6 +40,9 @@ const ProgressSoundPlayer = (props: IProgressSoundPlayerProps) => {
         if (mounted) {
           props.onSeekEnd(props.currentTime);
         }
+      });
+      props.soundCloudAudio.on("timeupdate", () => {
+        props.onTimeUpdated?.(props.soundCloudAudio.audio.currentTime);
       });
       props.soundCloudAudio.on("loadedmetadata", () => {
         props.onAudioLoad();

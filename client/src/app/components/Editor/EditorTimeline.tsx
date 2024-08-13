@@ -77,6 +77,7 @@ interface IEditorTimelineProps {
   onAudioLoad: () => void;
   onPlayComplete: () => void;
   onSeekEnd: (data: any) => void;
+  onTimeUpdate?: (time: number) => void;
 }
 
 const EditorTimeline = (props: IEditorTimelineProps) => {
@@ -92,6 +93,7 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
     trackStyles: [],
     handleStyles: [],
     currentSlideIndex: props.currentSlideIndex,
+    currentSlide: props.currentSlide,
   });
   const setState = (data) => {
     updateState((state) => ({ ...state, ...data }));
@@ -114,10 +116,11 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
 
   useEffect(() => {
     if (state.currentSlideIndex !== props.currentSlideIndex) {
-      props.onDurationsChange(props.currentSlide, state.mappedValues);
+      props.onDurationsChange(state.currentSlide, state.mappedValues);
       setCurrentSlideTimeline(props.currentSlide);
+      setState({ currentSlideIndex: props.currentSlideIndex, currentSlide: props.currentSlide });
     }
-  }, [props.currentSlideIndex]);
+  }, [props.currentSlideIndex, state.currentSlideIndex]);
 
   const setCurrentSlideTimeline = (slide) => {
     const { duration } = slide;
@@ -230,6 +233,9 @@ const EditorTimeline = (props: IEditorTimelineProps) => {
                     onAudioLoad={props.onAudioLoad}
                     onStopTrack={props.onPlayComplete}
                     onSeekEnd={props.onSeekEnd}
+                    onTimeUpdated={(time) => {
+                      props.onTimeUpdate?.(time);
+                    }}
                   />
                 )}
               </Grid.Column>

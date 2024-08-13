@@ -13,6 +13,7 @@ interface IAudioPlayerProps {
   muted: boolean;
   onAudioLoad?: (d?: any) => void;
   showDescription?: boolean;
+  onTimeUpdate?: (d: number) => void;
 }
 const AudioPlayer = (data: IAudioPlayerProps) => {
   const audioPlayer = useRef<HTMLAudioElement>(null);
@@ -127,6 +128,18 @@ const AudioPlayer = (data: IAudioPlayerProps) => {
   ) {
     audio = `https:${audio}`;
   }
+
+  useEffect(() => {
+    if (audioPlayer.current) {
+      const onTimeUpdate = () => {
+        console.log("Time updated", audioPlayer.current?.currentTime);
+        props.onTimeUpdate?.(audioPlayer.current?.currentTime || 0)
+      }
+      audioPlayer.current.addEventListener('timeupdate', onTimeUpdate)
+      return () => audioPlayer.current?.removeEventListener('timeupdate', onTimeUpdate)
+    }
+    return () => {};
+  }, [audioPlayer, props.onTimeUpdate]);
 
   return (
     <div className="c-editor__content--container">

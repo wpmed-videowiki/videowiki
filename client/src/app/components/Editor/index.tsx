@@ -84,6 +84,7 @@ const Editor = (data: IEditorProps) => {
     uploadSlideAudioError,
   } = useAppSelector((state) => state.article);
   const { language } = useAppSelector((state) => state.ui);
+  const [currentTime, setCurrentTime] = useState(0);
   const props = {
     isLoggedIn: false,
     autoPlay: false,
@@ -511,7 +512,9 @@ const Editor = (data: IEditorProps) => {
   const handleClose = () => {
     const { wikiSource } = queryString.parse(location.search);
 
-    return navigate(`/${language}/videowiki/${props.title}?wikiSource=${wikiSource}`);
+    return navigate(
+      `/${language}/videowiki/${props.title}?wikiSource=${wikiSource}`
+    );
   };
 
   const _handleTimelineSeekEnd = (defaultSlideStartTime) => {
@@ -602,6 +605,7 @@ const Editor = (data: IEditorProps) => {
         resetUploadState={resetUploadState}
         playbackSpeed={props.playbackSpeed}
         isLoggedIn={(auth.session && auth.session.user) || false}
+        currentTime={currentTime}
       />
     );
   };
@@ -638,6 +642,8 @@ const Editor = (data: IEditorProps) => {
         onSubMediaSlideChange={(currentSubmediaIndex) =>
           setState((state) => ({ ...state, currentSubmediaIndex }))
         }
+        currentTime={currentTime}
+        onTimeUpdate={(time) => setCurrentTime(time)}
       />
     );
   };
@@ -815,6 +821,7 @@ const Editor = (data: IEditorProps) => {
               }
               onPlayComplete={() => _handleSlideForward()}
               onSeekEnd={_handleTimelineSeekEnd}
+              onTimeUpdate={setCurrentTime}
             />
           )}
         {props.showReferences && (

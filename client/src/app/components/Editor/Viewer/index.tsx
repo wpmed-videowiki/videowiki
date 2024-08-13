@@ -8,7 +8,8 @@ import Four from "./Four";
 import Five from "./Five";
 
 import AudioPlayer from "../AudioPlayer";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
+import SlideshowV2 from "../../common/SlideShowV2";
 
 let media: any[] = [];
 let playingMedia = null;
@@ -45,6 +46,8 @@ interface IViewerProps {
   muted: boolean;
   defaultSlideStartTime: number;
   layout: string | number;
+  currentTime: number;
+  onTimeUpdate: (d: number) => void;
 }
 const Viewer = (props: IViewerProps) => {
   /*
@@ -110,13 +113,13 @@ const Viewer = (props: IViewerProps) => {
 
         component = (
           <div style={{ position: "relative", width: "100%", height: "100%" }}>
-            <SlideShow
+            <SlideshowV2
               slides={mediaArray}
               playing={props.isPlaying && isActive}
               isActive={isActive}
               key={`slideshow-${props.currentSlideIndex}`}
-              defaultStartTime={props.defaultSlideStartTime}
               onSlideChange={props.onSubMediaSlideChange}
+              currentTime={props.currentTime * 1000}
             />
           </div>
         );
@@ -135,7 +138,7 @@ const Viewer = (props: IViewerProps) => {
         </div>
       );
     },
-    [props.currentSlideIndex, props.isPlaying, props.currentSubmediaIndex]
+    [props.currentSlideIndex, props.isPlaying, props.currentSubmediaIndex, props.currentTime]
   );
 
   const renderItems = useMemo(() => {
@@ -264,6 +267,7 @@ const Viewer = (props: IViewerProps) => {
         onAudioLoad={props.onAudioLoad}
         showTextTransition={true}
         playbackSpeed={playbackSpeed}
+        onTimeUpdate={(d) => props.onTimeUpdate(d || 0)}
       />
     </div>
   );
