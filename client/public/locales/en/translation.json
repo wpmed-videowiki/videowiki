@@ -168,5 +168,12 @@
     "loading_article_error": "Error while loading article! Please try again later!",
     "loading_all_articles": "Hold Tight! Loading all articles...",
     "loading_all_articles_error": "Error while loading all articles! Please try again later!"
+  },
+  "Exporter": {
+    "licence": "You're free to share and adopt this video under <strong>CC-BY-SA 4.0</strong>",
+    "references": "References",
+    "text_credits": "Text Credits",
+    "voice_by": "Voice by",
+    "visual_content_by": "Visual Content by"
   }
 }

@@ -168,5 +168,12 @@
     "loading_article_error": "General loading article error message",
     "loading_all_articles": "General loading all articles message",
     "loading_all_articles_error": "General loading all articles error message"
+  },
+  "Exporter": {
+    "licence": "Displayed in the generated video file. Licence information for the video file. Please keep the licence name intact.",
+    "references": "Displayed in the generated video file. Header for the references slide.",
+    "text_credits": "Displayed in the generated video file. Header Text credits slide of the article.",
+    "voice_by": "Displayed in the generated video file. Label for the voice-over credits.",
+    "visual_content_by": "Displayed in the generated video file. Label for the visual content credits."
   }
 }

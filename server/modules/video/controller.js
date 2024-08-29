@@ -2,6 +2,21 @@ import { Article, Video as VideoModel, UploadFormTemplate as UploadFormTemplateM
 import { convertArticle, uploadConvertedToYoutube } from '../shared/services/exporter';
 import { getLanguageFromWikisource, replaceCustomPrefixWithVideo } from '../shared/services/wiki';
 import moment from 'moment';
+import path from 'path';
+import * as fs from 'fs';
+const translationsDirPath = path.join(__dirname, '../../../client/public/locales');
+const translationDirs = fs.readdirSync(translationsDirPath);
+console.log({translationDirs});
+
+const translationsMap = {};
+translationDirs.forEach((dir) => {
+  try {
+    const lang = dir.split('-')[0];
+    translationsMap[lang] = JSON.parse(fs.readFileSync(path.join(translationsDirPath, dir, 'translation.json'), 'utf-8'));
+  } catch(err) {
+
+  }
+});
 
 const lang = process.argv.slice(2)[1];
 
@@ -123,6 +138,7 @@ const controller = {
           user: req.user._id,
           article: article._id,
           articleVersion: article.version,
+          translationText: translationsMap[article.lang] ? translationsMap[article.lang]['Exporter'] : {},
         };
 
         // Check if there's a video already being converted for this article

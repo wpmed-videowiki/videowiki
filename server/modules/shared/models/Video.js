@@ -20,6 +20,7 @@ const VideoSchema = new Schema({
   extraUsers: [String],
   autoDownload: { type: Boolean, default: false },
   downloaded: { type: Boolean, default: false },
+  translationText: { type: mongoose.SchemaTypes.Mixed, default: {} },
   version: String,
   status: { type: String, enum: ['queued', 'progress', 'converted', 'uploaded', 'failed'], default: 'queued' },
   error: String,
