@@ -1,0 +1,68 @@
+{
+	"@metadata": {
+		"authors": [
+			"Saraiki"
+		]
+	},
+	"Home": {
+		"translator": "مترجم",
+		"go": "ڄلو"
+	},
+	"Header": {
+		"search_no_results": "کوئی نتیجے نھیں لبھے۔",
+		"language": "زبان",
+		"articles": "مضمون",
+		"all_articles": "سارے مضمون",
+		"sign_out": "سائن آؤٹ"
+	},
+	"Footer": {
+		"contact_us": "ساکوں ملو",
+		"blog": "بلاگ",
+		"email": "ای میل"
+	},
+	"Editor": {
+		"update": "اپ ڈیٹ",
+		"visual": "بصری",
+		"audio": "آڈیو",
+		"text": "عبارت",
+		"upload_file": "فائل اپ لوڈ کرو",
+		"contributors": "ونگارو"
+	},
+	"ExportProgress": {
+		"stage_1": "مرحلہ ١",
+		"stage_2": "مرحلہ ٢",
+		"stage_3": "مرحلہ ٣",
+		"stage_4": "مرحلہ ٤"
+	},
+	"ExportHistory": {
+		"click_here": "اِتھ کلک کرو",
+		"user": "ورتݨ آلا",
+		"authors": "مصنفین",
+		"licence": "لائسنس",
+		"version": "ورژن"
+	},
+	"UploadFileInfoModal": {
+		"source_option_own_work": "آپݨاں کم",
+		"author": "مصنف(اں)",
+		"title": "عنوان",
+		"licence": "لائسنس",
+		"categories": "ونکیاں",
+		"date": "تریخ",
+		"user_name": "ورتݨ آلا ناں"
+	},
+	"HumanVoice": {
+		"slide": "سلائیڈ {{slideNumber}}",
+		"audio_uploaded": "آڈیو اپ لوڈ تھی ڳئی"
+	},
+	"Common": {
+		"cancel": "منسوخ",
+		"yes": "جیا",
+		"add": "شامل کرو",
+		"loading": "لوڈ تھیندا پئے۔۔۔",
+		"update": "اپ ݙیٹ",
+		"ok": "ٹھیک ہے"
+	},
+	"Exporter": {
+		"references": "حوالے"
+	}
+}

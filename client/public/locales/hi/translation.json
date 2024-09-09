@@ -1,0 +1,62 @@
+{
+	"@metadata": {
+		"authors": [
+			"Abijeet Patro"
+		]
+	},
+	"Home": {
+		"translator": "अनुवादक",
+		"go": "जाएँ",
+		"custom": "अनुकूलित"
+	},
+	"Header": {
+		"language": "भाषा",
+		"articles": "लेख",
+		"all_articles": "सभी लेख",
+		"sign_out": "साइन-आउट करें"
+	},
+	"Footer": {
+		"about_us": "हमारे बारे में",
+		"contact_us": "संपर्क करें",
+		"terms_of_use": "उपयोग की शर्तें",
+		"blog": "ब्लॉग",
+		"email": "ईमेल"
+	},
+	"Editor": {
+		"update": "अद्यतनित करें",
+		"last_updated": "आखरी अपडेट",
+		"references": "सन्दर्भ",
+		"visual": "यथादृश्य",
+		"audio": "ऑडियो",
+		"text": "टेक्स्ट",
+		"select_language": "भाषा चुनें",
+		"record": "रिकॉर्ड करें"
+	},
+	"ExportProgress": {
+		"back_to_article": "लेख पर वापस जाएँ"
+	},
+	"ExportHistory": {
+		"download": "डाउनलोड",
+		"user": "सदस्य",
+		"authors": "लेखक",
+		"licence": "लाइसेंस",
+		"version": "संस्करण",
+		"language": "भाषा"
+	},
+	"UploadFileInfoModal": {
+		"source": "स्रोत",
+		"title": "शीर्षक",
+		"description": "विवरण",
+		"licence": "लाइसेंस",
+		"categories": "श्रेणियाँ",
+		"date": "दिनांक"
+	},
+	"Common": {
+		"cancel": "रद्द करें",
+		"yes": "हाँ",
+		"add": "जोड़ें",
+		"loading": "लोड हो रहा है...",
+		"update": "अद्यतन",
+		"ok": "ठीक है"
+	}
+}
