@@ -10,6 +10,7 @@
 		"custom": "अनुकूलित"
 	},
 	"Header": {
+		"search_no_results": "कोई परिणाम नहीं मिला",
 		"language": "भाषा",
 		"articles": "लेख",
 		"all_articles": "सभी लेख",
