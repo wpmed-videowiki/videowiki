@@ -132,7 +132,7 @@ export const SECTIONS_BLACKLIST = {
   sv: [],
   it: [],
   kn: [],
-  ml: [],
+  ml: ["കുറിപ്പുകൾ"],
   ta: [],
   eu: ['Erreferentziak'],
   ha: ['Manazarta']
