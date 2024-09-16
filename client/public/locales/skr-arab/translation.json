@@ -16,15 +16,22 @@
 		"sign_out": "سائن آؤٹ"
 	},
 	"Footer": {
+		"about_us": "ساݙے بارے",
 		"contact_us": "ساکوں ملو",
+		"terms_of_use": "ورتݨ شرطاں",
+		"privacy_policy": "رازداری پالیسی",
 		"blog": "بلاگ",
 		"email": "ای میل"
 	},
 	"Editor": {
+		"download_video": "وڈیو ڈاؤن لوڈ کرو",
 		"update": "اپ ڈیٹ",
+		"last_updated": "چھیکڑی تبدیلی",
+		"references": "حوالے",
 		"visual": "بصری",
 		"audio": "آڈیو",
 		"text": "عبارت",
+		"select_language": "زبان چݨو",
 		"upload_file": "فائل اپ لوڈ کرو",
 		"contributors": "ونگارو"
 	},
@@ -35,23 +42,28 @@
 		"stage_4": "مرحلہ ٤"
 	},
 	"ExportHistory": {
+		"commons_url": "کامنز یوآرایل",
 		"download": "ڈاؤن لوڈ",
 		"click_here": "اِتھ کلک کرو",
 		"user": "ورتݨ آلا",
 		"authors": "مصنفین",
 		"licence": "لائسنس",
-		"version": "ورژن"
+		"version": "ورژن",
+		"language": "زبان"
 	},
 	"UploadFileInfoModal": {
+		"source": "ماخذ",
 		"source_option_own_work": "آپݨاں کم",
 		"author": "مصنف(اں)",
 		"title": "عنوان",
+		"description": "تفصیل",
 		"licence": "لائسنس",
 		"categories": "ونکیاں",
 		"date": "تریخ",
 		"user_name": "ورتݨ آلا ناں"
 	},
 	"HumanVoice": {
+		"all_slides": "ساریاں سلائیڈاں",
 		"slide": "سلائیڈ {{slideNumber}}",
 		"audio_uploaded": "آڈیو اپ لوڈ تھی ڳئی"
 	},

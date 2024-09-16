@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Kareyac",
 			"Lutece398"
 		]
 	},
@@ -9,6 +10,7 @@
 		"script-writing": "Написание сценария",
 		"voice-over": "Голос за кадром",
 		"video-editing": "Редактирование видео",
+		"translator": "Переводчик",
 		"create-new-video": "Создать новое видео",
 		"enter-video-title": "Введите название видео",
 		"go": "Перейти",
