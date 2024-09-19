@@ -13,6 +13,7 @@
 		"language": "زبان",
 		"articles": "مضمون",
 		"all_articles": "سارے مضمون",
+		"total_edits": "کل تبدیلیاں ــ {{count}}",
 		"sign_out": "سائن آؤٹ"
 	},
 	"Footer": {
@@ -43,10 +44,12 @@
 	},
 	"ExportHistory": {
 		"commons_url": "کامنز یوآرایل",
+		"youtube_url": "تہاݙی یوٹیوب یوآرایل",
 		"download": "ڈاؤن لوڈ",
 		"click_here": "اِتھ کلک کرو",
 		"user": "ورتݨ آلا",
 		"authors": "مصنفین",
+		"videowiki_foundation": "وڈیو وکی فاؤنڈیشن",
 		"licence": "لائسنس",
 		"version": "ورژن",
 		"language": "زبان"
