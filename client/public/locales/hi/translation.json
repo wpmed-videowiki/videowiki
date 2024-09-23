@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Abijeet Patro"
+			"Abijeet Patro",
+			"AnupamM"
 		]
 	},
 	"Home": {
@@ -10,7 +11,7 @@
 		"custom": "अनुकूलित"
 	},
 	"Header": {
-		"search_no_results": "कोई परिणाम नहीं मिला",
+		"search_no_results": "कोई परिणाम नहीं मिला।",
 		"language": "भाषा",
 		"articles": "लेख",
 		"all_articles": "सभी लेख",
@@ -56,7 +57,7 @@
 		"cancel": "रद्द करें",
 		"yes": "हाँ",
 		"add": "जोड़ें",
-		"loading": "लोड हो रहा है...",
+		"loading": "लोड हो रहा है....",
 		"update": "अद्यतन",
 		"ok": "ठीक है"
 	}

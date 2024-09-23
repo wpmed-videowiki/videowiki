@@ -34,6 +34,7 @@
 		"text": "عبارت",
 		"select_language": "زبان چݨو",
 		"upload_file": "فائل اپ لوڈ کرو",
+		"record": "ریکارڈ",
 		"contributors": "ونگارو"
 	},
 	"ExportProgress": {
@@ -63,7 +64,8 @@
 		"licence": "لائسنس",
 		"categories": "ونکیاں",
 		"date": "تریخ",
-		"user_name": "ورتݨ آلا ناں"
+		"user_name": "ورتݨ آلا ناں",
+		"upload_to_commons": "کامنز تے اپ لوڈ کرو"
 	},
 	"HumanVoice": {
 		"all_slides": "ساریاں سلائیڈاں",
