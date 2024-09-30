@@ -1,0 +1,93 @@
+{
+	"@metadata": {
+		"authors": [
+			"Tofeiku"
+		]
+	},
+	"Home": {
+		"video-editing": "Penyuntingan Video",
+		"translator": "Penterjemah",
+		"create-new-video": "Buat Video Baharu",
+		"enter-video-title": "Masukkan tajuk video",
+		"go": "Pergi"
+	},
+	"Header": {
+		"language": "Bahasa",
+		"articles": "Rencana",
+		"all_articles": "Semua Rencana",
+		"articles_edited": "Rencana Disunting - {{count}}",
+		"total_edits": "Jumlah Suntingan - {{count}}"
+	},
+	"Footer": {
+		"contact_us": "Hubungi Kami",
+		"terms_of_use": "Syarat Penggunaan",
+		"privacy_policy": "Dasar Privasi",
+		"blog": "Blog",
+		"report_bugs": "Laporkan Pepijat",
+		"email": "E-mel"
+	},
+	"Editor": {
+		"editor_mode": "Mod Penyunting",
+		"export_video": "Eksport Video",
+		"export_history": "Sejarah Eksport",
+		"download_video": "Muat Turun Video",
+		"update_article": "Kemas Kini Rencana",
+		"update": "Kemas kini",
+		"voice_speed": "Kelajuan Suara",
+		"last_updated": "Kali Terakhir Dikemas Kini",
+		"references": "Rujukan",
+		"visual": "Visual",
+		"audio": "Audio",
+		"text": "Teks",
+		"select_language": "Pilih Bahasa",
+		"use_your_own_voice": "Gunakan Suara Anda Sendiri",
+		"use_machine_voice": "Gunakan Suara Mesin",
+		"upload_file": "Muat Naik Fail",
+		"record": "Rakam",
+		"contributors": "Penyumbang",
+		"article_updated": "Rencana Berjaya Dikemas Kini!"
+	},
+	"ExportProgress": {
+		"back_to_article": "Kembali ke Rencana",
+		"export_uploaded": "Berjaya Dimuat Naik!"
+	},
+	"ExportHistory": {
+		"youtube_url": "URL YouTube",
+		"download": "Muat turun",
+		"click_here": "Klik di sini",
+		"user": "Pengguna",
+		"subtitles": "Sari kata",
+		"authors": "Pengarang",
+		"licence": "Lesen",
+		"version": "Versi",
+		"language": "Bahasa"
+	},
+	"UploadFileInfoModal": {
+		"nothing_to_show": "Tiada apa-apa di sini untuk ditunjukkan lagi",
+		"source": "Sumber",
+		"source_option_own_work": "Karya sendiri",
+		"source_option_others": "Saya tidak mencipta fail media ini",
+		"author": "Pengarang",
+		"title": "Tajuk",
+		"description": "Keterangan",
+		"licence": "Lesen",
+		"categories": "Kategori",
+		"date": "Tarikh",
+		"user_name": "Nama pengguna",
+		"upload_to_commons": "Muat Naik Ke Commons"
+	},
+	"HumanVoice": {
+		"audio_uploaded": "Audio Dimuat Naik"
+	},
+	"Common": {
+		"cancel": "Batalkan",
+		"yes": "Ya",
+		"add": "Tambahkan",
+		"update": "Kemas kini"
+	},
+	"Exporter": {
+		"references": "Rujukan",
+		"voice_by": "Suara oleh",
+		"visual_content_by": "Kandungan Visual oleh"
+	}
+}

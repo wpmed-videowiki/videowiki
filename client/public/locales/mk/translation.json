@@ -1,0 +1,57 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bjankuloski06"
+		]
+	},
+	"Home": {
+		"building-collaborative-wiki-videos": "Градиме соработни видеа за вики на месни јазици. Приклучете ни се.",
+		"script-writing": "Пишување сценарија",
+		"voice-over": "Натсинхронизација",
+		"video-editing": "Видеомонтажа",
+		"translator": "Преведувач",
+		"create-new-video": "Создај ново видео",
+		"enter-video-title": "Внесете наслов на видеото",
+		"go": "Оди",
+		"custom": "Прилагодено"
+	},
+	"Header": {
+		"read_beta_disclaimer": "Прочитајте ја напомената за бета",
+		"language": "Јазик",
+		"articles": "Статии",
+		"all_articles": "Сите статии",
+		"video_scripts": "Сценарија",
+		"articles_edited": "Уредени статии — {{count}}",
+		"total_edits": "Вкупно уредувања — {{count}}",
+		"sign_out": "Одјава",
+		"logo_description": "Слободната мултимедијална енциклопедија што може секој да ја уредува."
+	},
+	"Footer": {
+		"about_us": "За нас",
+		"contact_us": "Контактирајте нè",
+		"terms_of_use": "Услови на употреба",
+		"privacy_policy": "Заштита на личните податоци",
+		"blog": "Блог",
+		"report_bugs": "Пријави грешки",
+		"email": "Е-пошта"
+	},
+	"Editor": {
+		"editor_mode": "Уредувачки режим",
+		"player_mode": "Гледачки режим",
+		"translate_and_export": "Преведи и извези",
+		"export_video": "Извези видео",
+		"export_history": "Историја на извезување",
+		"download_video": "Преземи видео",
+		"update_article": "Поднови статија",
+		"update": "Поднови",
+		"voice_speed": "Брзина на гласот",
+		"last_updated": "Последна поднова",
+		"visual": "Нагледно",
+		"audio": "Звук",
+		"text": "Текст",
+		"only_logged_in_user_can_upload_commons": "Само најавени корисници може да извезуваат видеа во Ризницата",
+		"use_your_own_voice": "Користете ваш глас",
+		"use_machine_voice": "Користете машински глас",
+		"upload_file": "Подигање"
+	}
+}
