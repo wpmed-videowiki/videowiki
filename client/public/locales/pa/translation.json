@@ -1,0 +1,65 @@
+{
+	"@metadata": {
+		"authors": [
+			"Cabal"
+		]
+	},
+	"Home": {
+		"translator": "ਤਰਜਮੇਕਾਰ",
+		"go": "ਜਾਓ"
+	},
+	"Header": {
+		"search_no_results": "ਕੋਈ ਨਤੀਜੇ ਨਹੀਂ ਲੱਭੇ",
+		"language": "ਬੋਲੀ",
+		"articles": "ਲੇਖ",
+		"all_articles": "ਸਾਰੇ ਲੇਖ",
+		"total_edits": "ਕੁੱਲ ਸੋਧ - {{count}}",
+		"a_good_chance_to_login": "ਦਾਖਲ ਹੋਨ ਦਾ ਵਧੀਆ ਮੌਕਾ"
+	},
+	"Footer": {
+		"about_us": "ਸਾਡੇ ਬਾਰੇ",
+		"contact_us": "ਸਾਡੇ ਨਾਲ ਰਾਬਤਾ ਬਣਾਓ",
+		"email": "ਈਮੇਲ"
+	},
+	"Editor": {
+		"update_article": "ਲੇਖ ਨੂੰ ਨਵਿਆਓ",
+		"update": "ਨਵਿਆਓ",
+		"references": "ਹਵਾਲੇ",
+		"text": "ਲਿਖਤ",
+		"select_language": "ਭਾਸ਼ਾ ਚੁਣੋ",
+		"contributors": "ਯੋਗਦਾਨੀ"
+	},
+	"ExportProgress": {
+		"back_to_article": "ਲੇਖ 'ਤੇ ਵਾਪਸ ਜਾਓ"
+	},
+	"ExportHistory": {
+		"user": "ਵਰਤੋਂਕਾਰ",
+		"authors": "ਲਿਖਾਰੀ",
+		"videowiki_foundation": "ਵੀਡੀਓ ਵਿਕੀ ਫਾਊਂਡੇਸ਼ਨ",
+		"licence": "ਲਸੰਸ",
+		"language": "ਬੋਲੀ"
+	},
+	"UploadFileInfoModal": {
+		"nothing_to_show": "ਅਜੇ ਇੱਥੇ ਦਿਖਾਉਣ ਲਈ ਕੁਝ ਵੀ ਨਹੀਂ ਹੈ",
+		"source": "ਸਰੋਤ",
+		"source_option_own_work": "ਆਪਣਾ ਕੰਮ",
+		"author": "ਲਿਖਾਰੀ",
+		"title": "ਸਿਰਲੇਖ",
+		"description": "ਵੇਰਵਾ",
+		"licence": "ਲਸੰਸ",
+		"categories": "ਸ਼੍ਰੇਣੀਆਂ",
+		"date": "ਮਿਤੀ",
+		"user_name": "ਵਰਤੋਂਕਾਰ ਦਾ ਨਾਂ"
+	},
+	"Common": {
+		"cancel": "ਰੱਦ ਕਰੋ",
+		"yes": "ਹਾਂ",
+		"add": "ਜੋੜੋ",
+		"loading": "ਲੱਦ ਰਿਹਾ ਹੈ...",
+		"update": "ਨਵਿਆਓ",
+		"ok": "ਠੀਕ ਏ"
+	},
+	"Exporter": {
+		"references": "ਹਵਾਲੇ"
+	}
+}
