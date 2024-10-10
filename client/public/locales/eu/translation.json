@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Atzerritik",
 			"Theklan"
 		]
 	},
@@ -120,7 +121,7 @@
 		"loading_videos_error": "Errore bat gertatu da bideoak kargatzean! Saiatu berriro geroago!"
 	},
 	"InfoBox": {
-		"loading": "InroTaula kargatzen...",
+		"loading": "InfoTaula kargatzen...",
 		"loading_error": "Errore bat gertatu da infotaula kargatzean! Saiatu berriro geroago!"
 	},
 	"UploadFileInfoModal": {
