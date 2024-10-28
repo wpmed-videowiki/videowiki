@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Mahabarata",
 			"Terio legale"
 		]
 	},
@@ -25,6 +26,7 @@
 		"language": "Langue",
 		"articles": "Articles",
 		"all_articles": "Tous les articles",
+		"video_scripts": "Scénarios de vidéo",
 		"articles_edited": "Articles édités - {{count}}",
 		"total_edits": "Nombre total de modifications - {{count}}",
 		"sign_out": "Se déconnecter",
@@ -35,16 +37,23 @@
 		"logo_description": "L'encyclopédie multimédia libre que tout le monde peut modifier"
 	},
 	"Footer": {
+		"text_audio_license": "Le texte et l'audio sont disponibles sous la <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'>licence Creative Commons Attribution-ShareAlike 3.0 ou ultérieure</0>. Les images, y compris celles contenues dans les vidéos, sont sous diverses licences libres Creative Commons.",
 		"software_license": "Le logiciel VideoWiki est disponible sous la licence publique générale GNU 3.0 et se trouve sur <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
+		"about_us": "À propos de Nous",
 		"contact_us": "Contactez-nous",
 		"terms_of_use": "Conditions d’utilisation",
 		"privacy_policy": "Politique de confidentialité",
+		"blog": "Blog",
+		"report_bugs": "Signaler des bugs",
 		"email": "Courriel"
 	},
 	"Editor": {
 		"editor_mode": "Mode éditeur",
 		"player_mode": "Mode joueur",
+		"translate_and_export": "Traduire et exporter",
+		"export_video": "Exporter la vidéo",
 		"export_history": "Historique des exportations",
+		"download_video": "Télécharger la vidéo",
 		"update_article": "Mettre à jour l'article",
 		"update_article_confirmation": "Voulez-vous mettre à jour l'article {{title}} maintenant ?",
 		"update_article_loading": "Tenez vous bien! Nous mettons à jour l'article pour vous.",
@@ -52,7 +61,9 @@
 		"voice_speed": "Vitesse de la voix",
 		"last_updated": "Dernière mise à jour",
 		"timing": "Durée",
+		"timing_description": "Contrôlez la synchronisation de la diapositive en ajustant la barre de déplacement à droite pour qu'elle corresponde à la position requise dans le lecteur audio inférieur",
 		"references": "Références",
+		"visual": "Visuel",
 		"audio": "Audio",
 		"text": "Texte",
 		"only_logged_in_user_can_upload_commons": "Seuls les utilisateurs connectés peuvent exportés les vidéos sur Commons",
@@ -70,14 +81,17 @@
 		"max_slides_error": "Seuls les articles personnalisés et ceux avec moins de 50 diapositives peuvent être exportés",
 		"reopen_form": "vous pouvez rouvrir le formulaire en cliquant sur l'icône en haut à droite de la diapositive",
 		"export_queued_success": "L'article a été mis en file d'attente afin d'être exporté avec succès !",
+		"export_slides_text_warning": "Veuillez ajouter du texte à toutes les diapositives avant d'exporter.",
 		"export_slides_media_warning": "Veuillez ajouter des médias à toutes les diapositives avant l'exportation.",
 		"article_updated": "Article mis à jour avec succès!",
 		"article_update_error": "Erreur lors de la mise à jour de l'article ! Veuillez réessayer plus tard"
 	},
 	"ExportProgress": {
+		"exporting_videowiki_article": "Exportation de l'article Videowiki pour {{title}} vers une vidéo",
 		"export_error": "Une erreur s'est produite lors de l'exportation de l'article. Veuillez réessayer plus tard",
 		"back_to_article": "Retour à l'article",
 		"export_queued": "Votre video est actuellement en train d'être exportée, veuillez patienter s'il vous plait.",
+		"export_converted": "Exporté avec succès ! Envoi vers Commons...",
 		"export_uploaded": "Téléchargé avec succès !",
 		"stage_1": "Étape 1",
 		"stage_1_description": "Conversion de diapositives individuelles en vidéos",
@@ -90,6 +104,7 @@
 	},
 	"ExportHistory": {
 		"no_videos_found": "Aucune vidéo n'est actuellement exportée pour cet article",
+		"commons_url": "Lien vers Commons",
 		"youtube_url": "L'URL de YouTube",
 		"retry_upload": "Reprends les téléchargement",
 		"download": "Télécharger",
@@ -100,15 +115,20 @@
 		"videowiki_foundation": "Fondation VideoWiki",
 		"authors_of_the_article": "Auteurs de l'article",
 		"licence": "Licence",
-		"version": "Version"
+		"version": "Version",
+		"language": "Langue",
+		"loading_videos": "Chargement de vos vidéos d'articles à partir de la somme de toutes les connaissances humaines !",
+		"loading_videos_error": "Erreur lors du chargement des vidéos ! Veuillez réessayer plus tard !"
 	},
 	"InfoBox": {
-		"loading": "Chargement de l'InfoBox..."
+		"loading": "Chargement de l'InfoBox...",
+		"loading_error": "Erreur lors du chargement de l'InfoBox ! Veuillez réessayer plus tard !"
 	},
 	"UploadFileInfoModal": {
 		"header": "Assistant de téléchargement Wikimedia Commons",
 		"nothing_to_show": "Rien à montrer ici pour l'instant",
 		"import_previous_form_details": "Importer les détails du formulaire précédent",
+		"source": "Source",
 		"source_description": "L’endroit d’où provient ce fichier numérique, peut être une URL, un livre ou une publication.",
 		"source_option_own_work": "Travail personnel",
 		"source_option_others": "Je n'ai pas créé ce fichier multimédia",
@@ -117,6 +137,8 @@
 		"title": "Titre",
 		"title_description_1": "Un titre descriptif unique pour le fichier qui servira de nom de fichier.",
 		"title_description_2": "Vous pouvez utiliser un langage simple avec des espaces. N'incluez pas l'extension de fichier",
+		"description": "Description",
+		"description_description": "Veuillez décrire le média aussi précisément que possible.\n\nOù a-t-il été pris ?\nQue montre-t-il ?\nQuel est le contexte ?\nQuel(s) objet(s) ou quelle(s) personne(s) ?\nSi le média montre quelque chose d'inhabituel, veuillez expliquer ce qui le rend inhabituel",
 		"licence": "Licence",
 		"categories": "Catégories",
 		"save_template_label": "Enregistrer ce formulaire comme un modèle",
@@ -128,9 +150,11 @@
 		"user_name": "Nom de l'utilisateur",
 		"upload_success": "Fichier téléversé avec succès! N'oubliez pas de cliquer sur publier pour enregistrer vos modifications",
 		"upload_error": "Le téléchargement du fichier a échoué ! Veuillez réessayer plus tard",
+		"file_already_exists": "Un fichier avec ce nom existe déjà. Veuillez en essayer un autre",
 		"upload_to_commons": "Téléverser sur Commons"
 	},
 	"HumanVoice": {
+		"all_slides": "Toutes les diapositives",
 		"slide": "Diapositive {{slideNumber}}",
 		"translate_placeholder": "Traduis le texte de la diapositive",
 		"processing_voice_error": "Une erreur s'est produite lors du traitement de l'audio, mais nous avons conservé votre enregistrement original.",
@@ -154,6 +178,7 @@
 	"Exporter": {
 		"licence": "Vous êtes libre de partager et d'adopter cette vidéo sous <strong>CC-BY-SA 4.0</strong>",
 		"references": "Références",
+		"text_credits": "Crédits du texte",
 		"voice_by": "Voix de",
 		"visual_content_by": "Contenu visuel par"
 	}
