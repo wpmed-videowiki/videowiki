@@ -20,6 +20,19 @@ import OtherTools from "./OtherTools";
 
 const LANG_OPTIONS = [
   {
+    text: "English",
+    key: "en",
+    value: "en",
+  },
+  {
+    text: "Chinese (zh-hant)",
+    key: "zh-hant",
+    value: "zh-hant",
+  },
+];
+
+const WIKI_LANG_OPTIONS = [
+  {
     text: "MDWiki ( English )",
     value: "md-en",
     key: "md-en",
@@ -225,6 +238,14 @@ const Header = () => {
   };
 
   const onLanguageSelect = (e, { value }) => {
+    console.log({ value });
+    i18n.changeLanguage(value, (err, t) => {
+      console.log(err, t);
+      // window.location.reload()
+    });
+  };
+
+  const onWikiLanguageSelect = (e, { value }) => {
     let isMDwiki = false;
 
     if (value === "md-en") {
@@ -250,16 +271,51 @@ const Header = () => {
     }
   };
 
+  const _renderWikiLanguages = () => {
+    return (
+      <div
+        style={{
+          minWidth: "7%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <span>Wiki</span>
+        <Dropdown
+          inline
+          placeholder={t("Header.language")}
+          className={"select-lang-dropdown"}
+          value={wiki === "mdwiki" ? "md-en" : language}
+          options={WIKI_LANG_OPTIONS}
+          onChange={(e, { value }) => onWikiLanguageSelect(e, { value })}
+        />
+      </div>
+    );
+  };
+
   const _renderLanguages = () => {
     return (
-      <Dropdown
-        inline
-        placeholder={t("Header.language")}
-        className={"select-lang-dropdown"}
-        value={wiki === "mdwiki" ? "md-en" : language}
-        options={LANG_OPTIONS}
-        onChange={(e, { value }) => onLanguageSelect(e, { value })}
-      />
+      <div
+        style={{
+          minWidth: "7%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <span>Language</span>
+        <Dropdown
+          inline
+          placeholder={t("Header.language")}
+          className={"select-lang-dropdown"}
+          value={i18n.language.toLowerCase()}
+          options={LANG_OPTIONS}
+          onChange={(e, { value }) => onLanguageSelect(e, { value })}
+        />
+      </div>
     );
   };
 
@@ -297,9 +353,11 @@ const Header = () => {
     }
 
     return (
-      <a href={href} target="_blank" className="c-app-header__link">
-        {t("Header.video_scripts")}
-      </a>
+      <div style={{ textAlign: "center" }} className="c-app-header__link">
+        <a href={href} target="_blank" >
+          {t("Header.video_scripts")}
+        </a>
+      </div>
     );
   };
   return (
@@ -310,6 +368,7 @@ const Header = () => {
         <OtherTools />
         <WikiSearch />
         {_renderAllArticle()}
+        {_renderWikiLanguages()}
         {_renderLanguages()}
         {_renderWikiScripts()}
         {_renderUser()}

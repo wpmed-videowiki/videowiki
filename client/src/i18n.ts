@@ -13,6 +13,23 @@ i18n
     interpolation: {
       escapeValue: false,
     },
+    backend: {
+      request: function (options, url, payload, callback) {
+        fetch(url.toLowerCase())
+          .then((res) => {
+            return res.text();
+          })
+          .then((res) => {
+            callback(null, {
+              status: "success",
+              data: res,
+            });
+          })
+          .catch((err) => {
+            callback(err, null);
+          });
+      },
+    },
   });
 
 export default i18n;
