@@ -137,6 +137,11 @@ const WIKI_LANG_OPTIONS = [
     value: "ha",
     key: "ha",
   },
+  {
+    text: "ZH ( 中文 )",
+    value: "zh",
+    key: "zh",
+  },
 ];
 
 let _sessionPoller: any = null;

@@ -82,6 +82,7 @@ export const LANG_CODES = {
   ta: 'ta-IN',
   eu: 'eu-ES',
   ha: 'ha-HA',
+  zh: 'cmn-CN',
 };
 
 const CODES_VOICES_MAP = {
@@ -101,7 +102,8 @@ const CODES_VOICES_MAP = {
   'kn-IN': 'kn-IN-Standard-B',
   'ml-IN': 'ml-IN-Standard-B',
   'ta-IN': 'ta-IN-Standard-B',
-  'eu-ES': 'eu-ES-Standard-A'
+  'eu-ES': 'eu-ES-Standard-A',
+  'cmn-CN': 'cmn-CN-Standard-C',
 };
 
 // export const AWS_LANGS = [

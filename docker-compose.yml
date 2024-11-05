@@ -225,4 +225,14 @@ services:
       - web_eu 
     command: ["node", "server/index.js", "4019", "ha"]
 
+  web_zh:
+    image: videowiki/app:latest
+    restart: unless-stopped
+    ports:
+      - "4020:4020"
+    depends_on:
+      - redis-server
+      - web_zh 
+    command: ["node", "server/index.js", "4020", "zh"]
+
 

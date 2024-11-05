@@ -27,7 +27,7 @@ const VIDEOWIKI_LANG = lang;
 const convertQueue = new Queue(`convert-articles-${lang}`, process.env.REDIS_SERVER)
 
 
-const updateTitleOnAllModels = function (oldTitle, newTitle, callback = () => { }) {
+const updateTitleOnAllModels = function(oldTitle, newTitle, callback = () => { }) {
   const updateFuncArray = [];
   Object.keys(Models).forEach((modelKey) => {
     const M = Models[modelKey]
@@ -47,7 +47,7 @@ const updateTitleOnAllModels = function (oldTitle, newTitle, callback = () => { 
   })
 }
 
-const getMainImage = function (wikiSource, title, callback) {
+const getMainImage = function(wikiSource, title, callback) {
   const url = `${wikiSource}/w/api.php?action=query&prop=pageimages&format=json&piprop=original&titles=${encodeURI(title)}&formatversion=2`
   request(url, (err, response, body) => {
     const defaultImage = '/img/default_profile.png'
@@ -73,7 +73,7 @@ const getMainImage = function (wikiSource, title, callback) {
   })
 }
 
-const getArticleNamespace = function (wikiSource, title, callback) {
+const getArticleNamespace = function(wikiSource, title, callback) {
   const url = `${wikiSource}/w/api.php?action=query&format=json&titles=${encodeURI(title)}&redirects&formatversion=2`;
   request(url, (err, response, body) => {
     if (err) {
@@ -94,7 +94,7 @@ const getArticleNamespace = function (wikiSource, title, callback) {
   })
 }
 
-const getSummaryImage = function (wikiSource, title, callback) {
+const getSummaryImage = function(wikiSource, title, callback) {
   const url = `${wikiSource}/w/api.php?action=query&format=json&formatversion=2&prop=pageimages&piprop=thumbnail&pithumbsize=600&titles=${encodeURI(title)}`
   request(url, (err, response, body) => {
     const defaultImage = '/img/default_profile.png'
@@ -120,7 +120,7 @@ const getSummaryImage = function (wikiSource, title, callback) {
   })
 }
 
-const search = function (wikiSource, searchTerm, limit = 7, callback) {
+const search = function(wikiSource, searchTerm, limit = 7, callback) {
   // Combine provided wikiSource with meta.wikimedia api to perform search
 
   const wikiSearch = wiki({
@@ -158,7 +158,7 @@ const search = function (wikiSource, searchTerm, limit = 7, callback) {
     .catch((err) => callback(err))
 }
 
-const getPageContentHtml = function (proposedSource, title, callback) {
+const getPageContentHtml = function(proposedSource, title, callback) {
   getArticleWikiSource(proposedSource, title)
     .then((wikiSource) => {
       wiki({
@@ -178,7 +178,7 @@ const getPageContentHtml = function (proposedSource, title, callback) {
     .catch((err) => callback(err));
 }
 
-const getInfobox = function (wikiSource, title, callback) {
+const getInfobox = function(wikiSource, title, callback) {
   getArticleWikiSource(wikiSource, title)
     .then((wikiSource) => {
       const url = `${wikiSource}/w/api.php?action=query&prop=revisions&rvprop=content&format=json&titles=${encodeURI(title)}&rvsection=0&rvparse&formatversion=2`
@@ -240,7 +240,7 @@ function escapeSpecialHtml(str) {
   return text
 }
 
-const getArticleSummary = function (wikiSource, title, callback) {
+const getArticleSummary = function(wikiSource, title, callback) {
   getArticleWikiSource(wikiSource, title)
     .then((wikiSource) => {
       getSummaryImage(wikiSource, title, (image) => {
@@ -259,7 +259,7 @@ const getArticleSummary = function (wikiSource, title, callback) {
     })
 }
 
-const breakTextIntoSlides = function (wikiSource, title, user, job, callback) {
+const breakTextIntoSlides = function(wikiSource, title, user, job, callback) {
   const article = {
     slug: slug(title),
     title,
@@ -409,23 +409,23 @@ const breakTextIntoSlides = function (wikiSource, title, user, job, callback) {
             Article.findOneAndUpdate({ title: article.title, wikiSource: article.wikiSource }, article, { upsert: true }).then(() => {
               callback(null, article)
             })
-            .catch(err => {
-              if (err) {
-                console.log(err)
-                return callback(err)
-              }
-            })
+              .catch(err => {
+                if (err) {
+                  console.log(err)
+                  return callback(err)
+                }
+              })
           })
         })
       })
     })
   })
-  .catch(err => {
-    if (err) {
-      console.log(err)
-      return callback(err)
-    }
-  })
+    .catch(err => {
+      if (err) {
+        console.log(err)
+        return callback(err)
+      }
+    })
 }
 
 convertQueue.process((job, done) => {
@@ -462,9 +462,9 @@ convertQueue.on('completed', (job, result) => {
       runBotOnArticle({ title, wikiSource }, () => {
         Article.findOneAndUpdate({ title }, { conversionProgress: 100 }, { upsert: true }).then(() => {
         })
-        .catch(err => {
-          console.log(err)
-        })
+          .catch(err => {
+            console.log(err)
+          })
         if (user) {
           // update total edits and articles edited
           User.findByIdAndUpdate(user._id, {
@@ -476,18 +476,18 @@ convertQueue.on('completed', (job, result) => {
                 articlesEditCount: article.articlesEdited.length,
               }).then((err) => {
               })
-              .catch(err => {
-                if (err) {
-                  console.log(err)
-                }
-              })
+                .catch(err => {
+                  if (err) {
+                    console.log(err)
+                  }
+                })
             }
           })
-          .catch(err => {
-            if (err) {
-              return console.log(err)
-            }
-          })
+            .catch(err => {
+              if (err) {
+                return console.log(err)
+              }
+            })
         }
         return cb();
       })
@@ -495,19 +495,19 @@ convertQueue.on('completed', (job, result) => {
 
     async.series(finalizeFuncArray, () => { });
   })
-  .catch(err => {
-    console.log(err)
-  })
+    .catch(err => {
+      console.log(err)
+    })
 })
 
 convertQueue.on('progress', (job, progress) => {
   const { title } = job.data
-  Article.findOneAndUpdate({ title }, { conversionProgress: progress }, { upsert: true }).then(() => {}).catch((err) => {
+  Article.findOneAndUpdate({ title }, { conversionProgress: progress }, { upsert: true }).then(() => { }).catch((err) => {
     console.log(err)
   })
 })
 
-const convertArticleToVideoWiki = function (wikiSource, title, user, userName, callback) {
+const convertArticleToVideoWiki = function(wikiSource, title, user, userName, callback) {
 
   convertQueue.count().then((count) => {
     if (count >= 5) {
@@ -524,16 +524,16 @@ const convertArticleToVideoWiki = function (wikiSource, title, user, userName, c
       console.log('queued successfully ')
       callback(null, 'Job queued successfully')
     })
-    .catch(err => {
-      if (err) {
-        console.log(err)
-        return callback('Error while converting article!')
-      }
-    })
+      .catch(err => {
+        if (err) {
+          console.log(err)
+          return callback('Error while converting article!')
+        }
+      })
   })
 }
 
-const applySlidesHtmlToAllPublishedArticle = function () {
+const applySlidesHtmlToAllPublishedArticle = function() {
 
   Article
     .countDocuments({ published: true })
@@ -549,7 +549,7 @@ const applySlidesHtmlToAllPublishedArticle = function () {
         q.push({ skip: i, limitPerOperation: limitPerOperation + 1 });
       }
 
-      q.drain = function () {
+      q.drain = function() {
         console.log("------------------- Successfully updated Links of all articles ----------------------");
       };
 
@@ -557,7 +557,7 @@ const applySlidesHtmlToAllPublishedArticle = function () {
     })
 }
 
-const publishedArticlesQueue = function () {
+const publishedArticlesQueue = function() {
   return async.queue((task, callback) => {
     console.log(' started for ', task);
     Article
@@ -598,9 +598,9 @@ const publishedArticlesQueue = function () {
   })
 }
 
-const applySlidesHtmlToArticle = function (wikiSource, title, callback) {
+const applySlidesHtmlToArticle = function(wikiSource, title, callback) {
   if (!callback) {
-    callback = function () { };
+    callback = function() { };
   }
   // console.log('starting to apply slides html', title)
   applyRefsOnArticle(title, wikiSource, (err, res) => {
@@ -660,23 +660,23 @@ const applySlidesHtmlToArticle = function (wikiSource, title, callback) {
         Article.findByIdAndUpdate(article._id, { slidesHtml }, { new: true }).then(() => {
           return callback(null, true);
         })
-        .catch(err => {
-          if (err) {
-            return callback('Error saving article slidesHtml');
-          }
-        })
+          .catch(err => {
+            if (err) {
+              return callback('Error saving article slidesHtml');
+            }
+          })
       });
     })
-    .catch(err => {
-      if (err) {
-        console.log(err);
-        return callback(err);
-      }
-    })
+      .catch(err => {
+        if (err) {
+          console.log(err);
+          return callback(err);
+        }
+      })
   })
 }
 
-const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
+const applyScriptMediaOnArticle = function(title, wikiSource, callback) {
   console.log('apply script media on article', title, wikiSource)
   Article.findOne({ title, wikiSource, published: true }).then((article) => {
     if (!article) return callback(new Error('Invalid article title or wikiSource'));
@@ -808,30 +808,30 @@ const applyScriptMediaOnArticle = function (title, wikiSource, callback) {
             return callback(null, true);
           })
         })
-        .catch(err => {
-          if (err) return callback(err);
-        })
+          .catch(err => {
+            if (err) return callback(err);
+          })
       });
     })
+      .catch(err => {
+        if (err) {
+          console.log('error clearing article media', err);
+        }
+      })
+  })
     .catch(err => {
-      if (err) {
-        console.log('error clearing article media', err);
-      }
+      if (err) return callback(err);
     })
-  })
-  .catch(err => {
-    if (err) return callback(err);
-  })
 }
 
 // applyScriptMediaOnArticle('Wikipedia:VideoWiki/Dengue_fever', 'https://en.wikipedia.org', (err) => {
 //   console.log(err);
 // })
 
-const fetchArticleHyperlinks = function (wikiSource, title, callback) {
+const fetchArticleHyperlinks = function(wikiSource, title, callback) {
   return new Promise((resolve, reject) => {
     if (!callback) {
-      callback = function () { };
+      callback = function() { };
     }
     wiki({
       apiUrl: wikiSource + '/w/api.php',
@@ -850,7 +850,7 @@ const fetchArticleHyperlinks = function (wikiSource, title, callback) {
 
           let linksArray = [];
           let linksTexts = [];
-          linksObj.each(function (index, el) {
+          linksObj.each(function(index, el) {
             // console.log(el.html());
             const text = $(this).text();
             const hrefMatch = $(this).attr('href').match(/(\/wiki\/.*)/);
@@ -908,7 +908,7 @@ const fetchArticleHyperlinks = function (wikiSource, title, callback) {
  * 
  */
 
-const getArticleWikiSource = function (proposedSource, title, callback) {
+const getArticleWikiSource = function(proposedSource, title, callback) {
   return new Promise((resolve, reject) => {
     wiki({
       apiUrl: proposedSource + '/w/api.php/',
@@ -927,8 +927,9 @@ const getArticleWikiSource = function (proposedSource, title, callback) {
         })
       })
       .catch(err => {
+        console.log("error", err)
         // try meta.mediawiki 
-        return new Promise(function (resolve, reject) {
+        return new Promise(function(resolve, reject) {
           wiki({
             apiUrl: METAWIKI_SOURCE + '/w/api.php',
             origin: null,
@@ -964,8 +965,8 @@ const getArticleWikiSource = function (proposedSource, title, callback) {
   })
 }
 
-const applyNamespacesOnArticles = function () {
-  const noNamespacesArticlesQueue = function () {
+const applyNamespacesOnArticles = function() {
+  const noNamespacesArticlesQueue = function() {
     return async.queue((task, callback) => {
       Article
         .find({ published: true, ns: { $exists: false } })
@@ -1023,13 +1024,13 @@ const applyNamespacesOnArticles = function () {
         q.push({ skip: i, limitPerOperation });
       }
 
-      q.drain = function () {
+      q.drain = function() {
         console.log('------------------- Successfully updated namespaces of all articles ----------------------');
       };
     })
 }
 
-const getLanguageFromWikisource = function (wikiSource) {
+const getLanguageFromWikisource = function(wikiSource) {
   const re = /^https:\/\/(.+)\.(.+)\.(.+)$/;
 
   const match = wikiSource.match(re);
@@ -1041,11 +1042,11 @@ const getLanguageFromWikisource = function (wikiSource) {
   return { langCode: LANG_CODES['en'], lang: 'en' };
 }
 
-const escapeWikiSpecialText = function (text) {
+const escapeWikiSpecialText = function(text) {
   return text.replace(/\[edit\]|\[update\]|\[citation needed\]|\[not in citation given\]/g, '')
 }
 
-const getArticleRefs = function (title, wikiSource, callback) {
+const getArticleRefs = function(title, wikiSource, callback) {
   wiki({
     apiUrl: `${wikiSource}/w/api.php/`,
     origin: null,
@@ -1064,10 +1065,10 @@ const getArticleRefs = function (title, wikiSource, callback) {
         // First check if there's any references in the Overview section
         $('div.mw-parser-output').prepend(`<p>${$('div.mw-parser-output').children('p').first().html()}</p>`)
           .children('p').first().nextUntil('h2')
-          .each(function (index, el) {
+          .each(function(index, el) {
             $(this).find('span.noexcerpt').remove()
             const paragraphText = $(this).text();
-            $(this).find('sup.reference').each(function (index, el) {
+            $(this).find('sup.reference').each(function(index, el) {
               let paragraph = $(this).closest('p');
               const refText = $(this).text();
               const refNumber = parseInt(refText.replace(/\[|\]/, ''));
@@ -1110,15 +1111,24 @@ const getArticleRefs = function (title, wikiSource, callback) {
         // Now we check for each section
         headingTags.forEach((tag) => {
           const tags = $(tag);
-          tags.each(function (index, el) {
-            const sectionTitle = $(this).find('span.mw-headline').text();
+          tags.each(function(index, el) {
+            let sectionTitle = $(this).find('span.mw-headline').text();
+            // for zh, the section title is not a span.mw-headline
+            if (!sectionTitle) {
+              sectionTitle = $(this).text();
+            }
             if (SECTIONS_BLACKLIST[VIDEOWIKI_LANG].some((s) => s.toLowerCase().trim() === sectionTitle.toLowerCase().trim())) return;
             // console.log('start of section ', sectionTitle)
             let next = $(this);
-            while (headingTags.every((t) => !next.next().is(t)) && next.length > 0) {
+            let headingVersion = 1;
+            if (next.parent().hasClass('mw-heading')) {
+              next = next.parent();
+              headingVersion = 2;
+            }
+            while ((headingVersion === 1 ? headingTags.every((t) => !next.next().is(t)) : !next.next().hasClass('mw-heading')) && next.length > 0) {
               next = next.next();
               const refs = next.find('sup.reference')
-              refs.each(function (index, el) {
+              refs.each(function(index, el) {
                 // console.log(sectionTitle, $(this).text());
                 let paragraph = $(this).closest('p');
                 const refText = $(this).text();
@@ -1183,9 +1193,9 @@ const getArticleRefs = function (title, wikiSource, callback) {
         });
         references = references.sort((a, b) => a.referenceNumber - b.referenceNumber);
         const referencesList = {};
-        $('ol.references li').each(function (index, el) {
+        $('ol.references li').each(function(index, el) {
           const listItem = $(this);
-          listItem.find('a').each(function (index, el) {
+          listItem.find('a').each(function(index, el) {
             const link = $(this);
             link.attr('target', '_blank');
             if (link.attr('href') && (link.attr('href').indexOf('https') === -1 && link.attr('href').indexOf('http') === -1)) {
@@ -1277,17 +1287,17 @@ function applyRefsOnArticle(title, wikiSource, callback = () => { }) {
       Article.findByIdAndUpdate(article._id, { $set: { slides: articleSlides, referencesList } }).then((article) => {
         return callback(null, { success: true });
       })
+        .catch(err => {
+          if (err) {
+            return callback(err);
+          }
+        })
+    })
       .catch(err => {
         if (err) {
           return callback(err);
         }
       })
-    })
-    .catch(err=> {
-      if (err) {
-        return callback(err);
-      }
-    })
   })
 }
 
