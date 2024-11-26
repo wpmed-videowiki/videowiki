@@ -22,7 +22,9 @@ export const LANG_API_MAP = {
   eu: `${PROTOCOL}//localhost:4018`,
   ha: `${PROTOCOL}//localhost:4019`,
   zh: `${PROTOCOL}//localhost:4020`,
+  ne: `${PROTOCOL}//localhost:4021`,
 };
+
 export const AVAILABLE_LANGUAGES = [
   "en",
   "hi",
@@ -45,7 +47,9 @@ export const AVAILABLE_LANGUAGES = [
   "eu",
   "ha",
   "zh",
+  "ne"
 ];
+
 export const SUPPORTED_TTS_LANGS = [
   "en",
   "hi",
@@ -68,7 +72,9 @@ export const SUPPORTED_TTS_LANGS = [
   "eu",
   "ha",
   "zh",
+  "ne"
 ];
+
 export const websocketConfig = {
   url: (routeLanguage) =>
     process.env.NODE_ENV === "production"

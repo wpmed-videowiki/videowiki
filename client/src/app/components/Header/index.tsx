@@ -142,6 +142,11 @@ const WIKI_LANG_OPTIONS = [
     value: "zh",
     key: "zh",
   },
+  {
+    text: "NE ( Nepali )",
+    value: "ne",
+    key: "ne",
+  },
 ];
 
 let _sessionPoller: any = null;

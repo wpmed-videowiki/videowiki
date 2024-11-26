@@ -22,10 +22,11 @@ const langs = [
   "eu",
   "ha",
   "zh",
+  "ne",
 ];
 const ports = [
   4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011, 4012,
-  4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020,
+  4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020, 4021
 ];
 
 // Write nginx config
@@ -125,7 +126,7 @@ services:
     restart: unless-stopped
     
 ${langs
-  .map((lang, index) =>
+    .map((lang, index) =>
       `
   web_${lang}:
     image: videowiki/app:latest
@@ -138,8 +139,8 @@ ${langs
     command: ["node", "server/index.js", "${ports[index]}", "${lang}"]
 
 `
-  )
-  .join("")}
+    )
+    .join("")}
 `;
 
 fs.writeFileSync("docker-compose.yml", composeFile);

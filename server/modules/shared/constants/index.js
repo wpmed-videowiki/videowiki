@@ -61,7 +61,8 @@ export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
   ml: 'വിക്കിപീഡിയ:വീഡിയോവിക്കി/',
   ta: 'விக்கிபீடியா:வீடியோவிக்கி/',
   eu: 'Wikipedia:Videowiki/',
-  zh: 'Wikipedia:Videowiki/'
+  zh: 'Wikipedia:Videowiki/',
+  ne: 'विकिपिडिया:भिडियोविकी/',
   // zh: 'Draft:VideoWiki'
 };
 
@@ -138,7 +139,8 @@ export const SECTIONS_BLACKLIST = {
   ta: [],
   eu: ['Erreferentziak'],
   ha: ['Manazarta'],
-  zh: ['References', '参考资料']
+  zh: ['References', '参考资料'],
+  ne: ['References']
 };
 
 export const CUSTOM_TEMPLATES = {
@@ -165,7 +167,9 @@ export const SLIDES_BLACKLIST = {
   ml: [],
   ta: [],
   eu: [],
-  ha: []
+  ha: [],
+  zh: [],
+  ne: []
 };
 
 export const FILE_MATCH_REGEX = {
@@ -188,6 +192,7 @@ export const FILE_MATCH_REGEX = {
   ta: /\[\[\s*File:(.*)\]\]/gim,
   eu: /\[\[\s*File:(.*)\]\]/gim,
   zh: /\[\[\s*File:(.*)\]\]/gim,
+  ne: /\[\[\s*File:(.*)\]\]/gim,
 };
 
 export const FILE_PREFIXES = {
@@ -211,6 +216,7 @@ export const FILE_PREFIXES = {
   eu: 'File:',
   ha: 'File:',
   zh: 'File:',
+  ne: 'File:',
 };
 
 export const SUPPORTED_TTS_LANGS = [
@@ -235,6 +241,7 @@ export const SUPPORTED_TTS_LANGS = [
   'eu',
   'ha',
   'zh',
+  'ne'
 ];
 
 export const TTS_CONCURRENT_REQUESTS = 5;
