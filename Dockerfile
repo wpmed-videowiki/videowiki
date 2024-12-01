@@ -13,8 +13,10 @@ WORKDIR /home/videowiki
 
 COPY . .
 RUN rm -rf client build
-COPY --from=builder /home/videowiki/dist /home/videowiki/build
+
 RUN npm install
+COPY --from=builder /home/videowiki/dist /home/videowiki/build
+COPY ./client/public ./client/public
 
 CMD ["npm", "start"]
 
