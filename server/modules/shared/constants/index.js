@@ -38,7 +38,9 @@ export const VIDEO_LANG_TRANSLATIONS = {
   kn: 'ವೀಡಿಯೊ:',
   ml: 'വീഡിയോ:',
   ta: 'காணொளி:',
-  eu: 'Bideoa:'
+  eu: 'Bideoa:',
+  zh: 'Video:',
+  ne: 'Video:',
 };
 
 export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
