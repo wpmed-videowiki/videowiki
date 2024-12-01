@@ -1,22 +1,12 @@
-FROM node:20.12.2-slim as base
-
-FROM base as builder
+FROM node:20.12.2-slim
 
 WORKDIR /home/videowiki
-COPY ./client ./
-
-RUN npm install
-RUN npm run build
-
-FROM base
-WORKDIR /home/videowiki
-
 COPY . .
-RUN rm -rf client build
-
 RUN npm install
-COPY --from=builder /home/videowiki/dist /home/videowiki/build
-COPY ./client/public ./client/public
+RUN cd client && npm install
+RUN npm run build
+RUN rm -rf build
+RUN mkdir build
+RUN mv client/dist/* build/
 
 CMD ["npm", "start"]
-
