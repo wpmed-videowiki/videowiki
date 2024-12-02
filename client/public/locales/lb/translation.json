@@ -1,0 +1,60 @@
+{
+	"@metadata": {
+		"authors": [
+			"Volvox"
+		]
+	},
+	"Home": {
+		"translator": "Iwwersetzer"
+	},
+	"Header": {
+		"search_no_results": "Keng Resultater fonnt.",
+		"language": "Sprooch",
+		"articles": "Artikelen",
+		"sign_out": "Ofmellen"
+	},
+	"Editor": {
+		"export_video": "Video exportéieren",
+		"download_video": "Video eroflueden",
+		"update_article": "Artikel aktualiséieren",
+		"update_article_confirmation": "Wëllt Dir den Artikel {{title}} elo aktualiséieren?",
+		"update": "Aktualiséieren",
+		"references": "Referenzen",
+		"audio": "Audio",
+		"text": "Text",
+		"select_language": "Sprooch eraussichen",
+		"upload_file": "Fichier eroplueden"
+	},
+	"ExportHistory": {
+		"commons_url": "Commons-URL",
+		"youtube_url": "YouTube-URL",
+		"download": "Eroflueden",
+		"user": "Benotzer",
+		"subtitles": "Ënnertitelen",
+		"authors": "Auteuren",
+		"authors_of_the_article": "Auteure vum Artikel",
+		"licence": "Lizenz",
+		"version": "Versioun",
+		"language": "Sprooch"
+	},
+	"UploadFileInfoModal": {
+		"author": "Auteur(en)",
+		"title": "Titel",
+		"description": "Beschreiwung",
+		"licence": "Lizenz",
+		"categories": "Kategorien",
+		"date": "Datum",
+		"user_name": "Benotzernumm",
+		"upload_to_commons": "Op Commons eroplueden"
+	},
+	"Common": {
+		"cancel": "Ofbriechen",
+		"yes": "Jo",
+		"add": "Derbäisetzen",
+		"loading": "Lueden…",
+		"update": "Aktualiséieren"
+	},
+	"Exporter": {
+		"references": "Referenzen"
+	}
+}
