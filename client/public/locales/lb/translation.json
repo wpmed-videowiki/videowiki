@@ -13,6 +13,9 @@
 		"articles": "Artikelen",
 		"sign_out": "Ofmellen"
 	},
+	"Footer": {
+		"email": "E-Mail"
+	},
 	"Editor": {
 		"export_video": "Video exportéieren",
 		"download_video": "Video eroflueden",
