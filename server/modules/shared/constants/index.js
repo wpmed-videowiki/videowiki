@@ -63,7 +63,7 @@ export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
   ml: 'വിക്കിപീഡിയ:വീഡിയോവിക്കി/',
   ta: 'விக்கிபீடியா:வீடியோவிக்கி/',
   eu: 'Wikipedia:Videowiki/',
-  zh: 'Wikipedia:Videowiki/',
+  zh: 'WikiProject:影片維基/',
   ne: 'विकिपिडिया:भिडियोविकी/',
   // zh: 'Draft:VideoWiki'
 };
