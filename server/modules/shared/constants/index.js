@@ -192,7 +192,7 @@ export const FILE_MATCH_REGEX = {
   kn: /\[\[\s*File:(.*)\]\]/gim,
   ml: /\[\[\s*File:(.*)\]\]/gim,
   ta: /\[\[\s*File:(.*)\]\]/gim,
-  eu: /\[\[\s*File:(.*)\]\]/gim,
+  eu: /\[\[Fitxategi:(.*)\]\]|\[\[File:(.*)\]\]/gim,
   zh: /\[\[\s*File:(.*)\]\]/gim,
   ne: /\[\[\s*File:(.*)\]\]/gim,
 };
@@ -215,7 +215,7 @@ export const FILE_PREFIXES = {
   kn: 'File:',
   ml: 'File:',
   ta: 'File:',
-  eu: 'File:',
+  eu: 'Fitxategi:',
   ha: 'File:',
   zh: 'File:',
   ne: 'File:',
