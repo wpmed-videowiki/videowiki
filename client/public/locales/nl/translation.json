@@ -1,0 +1,142 @@
+{
+	"@metadata": {
+		"authors": [
+			"ABPMAB"
+		]
+	},
+	"Home": {
+		"script-writing": "Scenarioschrijven",
+		"voice-over": "Voice-over",
+		"video-editing": "Videomontage",
+		"translator": "Vertaler",
+		"create-new-video": "Maak een nieuwe video",
+		"enter-video-title": "Voer de titel van de video in",
+		"go": "Start"
+	},
+	"Header": {
+		"read_beta_disclaimer": "Lees de Beta-disclaimer",
+		"search_placeholder": "Zoek een onderwerp of plak een URL",
+		"search_no_results": "Geen resultaten gevonden.",
+		"language": "Taal",
+		"articles": "Artikelen",
+		"all_articles": "Alle artikelen",
+		"articles_edited": "Bewerkte artikelen - {{count}}",
+		"total_edits": "Totaal aantal bewerkingen - {{count}}",
+		"sign_out": "Afmelden",
+		"register_login_with_wikipedia": "Registreren/Inloggen met Wikipedia",
+		"register_login_with_nccommons": "Registreren/Inloggen met NC Commons",
+		"login_success": "Geweldig! Je kunt nu bestanden rechtstreeks vanaf je computer uploaden naar VideoWiki.",
+		"logo_description": "De gratis multimedia-encyclopedie die iedereen kan bewerken."
+	},
+	"Footer": {
+		"about_us": "Over ons",
+		"contact_us": "Contact opnemen",
+		"terms_of_use": "Gebruiksvoorwaarden",
+		"privacy_policy": "Privacybeleid",
+		"blog": "Blog",
+		"report_bugs": "Rapporteer Bugs",
+		"email": "E-mail"
+	},
+	"Editor": {
+		"translate_and_export": "Vertalen en exporteren",
+		"export_video": "Video exporteren",
+		"export_history": "Geschiedenis exporteren",
+		"download_video": "Video downloaden",
+		"update_article": "Artikel bijwerken",
+		"update_article_confirmation": "Wilt u het artikel {{title}} nu bijwerken?",
+		"update": "Bijwerken",
+		"last_updated": "Laatst bijgewerkt",
+		"references": "Referenties",
+		"audio": "Audio",
+		"text": "Tekst",
+		"only_logged_in_user_can_upload_commons": "Alleen ingelogde gebruikers kunnen video's naar Commons exporteren",
+		"add_human_voice_over_in": "Voeg menselijke voice-over toe in",
+		"select_language": "Taal selecteren",
+		"use_your_own_voice": "Gebruik je eigen stem",
+		"use_machine_voice": "Gebruik machinestem",
+		"upload_file": "Bestand uploaden",
+		"record_audio_error": "Er is iets misgegaan, zorg ervoor dat je de nieuwste versie van je browser gebruikt.",
+		"record_audio_not_supported": "Je browser ondersteunt audio opnemen niet",
+		"record": "Opnemen",
+		"contributors": "Bijdragers",
+		"failed_to_load_contributors": "Het laden van bijdragers is mislukt",
+		"link_copied": "Link gekopieerd naar klembord",
+		"reopen_form": "Je kunt het formulier opnieuw openen door op het pictogram rechtsboven in de dia te klikken",
+		"export_queued_success": "Het artikel is in de wachtrij geplaatst om succesvol te worden geëxporteerd!",
+		"article_updated": "Artikel succesvol bijgewerkt!",
+		"article_update_error": "Fout bij het updaten van het artikel! Probeer het later opnieuw"
+	},
+	"ExportProgress": {
+		"export_error": "Er is iets misgegaan bij het exporteren van het artikel. Probeer het later opnieuw",
+		"back_to_article": "Terug naar artikel",
+		"export_queued": "Jouw video staat momenteel in de wachtrij om te worden geëxporteerd. Even geduld a.u.b.",
+		"export_converted": "Succesvol geëxporteerd! Uploaden naar Commons...",
+		"export_uploaded": "Succesvol geüpload!",
+		"stage_1": "Fase 1",
+		"stage_1_description": "Individuele dia's omzetten in video's",
+		"stage_2": "Fase 2",
+		"stage_2_description": "Tekstverwijzingen toevoegen aan video's",
+		"stage_3": "Fase 3",
+		"stage_3_description": "Alle videobestanden combineren tot één bestand",
+		"stage_4": "Fase 4",
+		"stage_4_description": "Afronden en uploaden van de laatste video"
+	},
+	"ExportHistory": {
+		"no_videos_found": "Er zijn momenteel geen video's geëxporteerd voor dit artikel",
+		"commons_url": "Commons-URL",
+		"youtube_url": "YouTube-URL",
+		"retry_upload": "Opnieuw proberen te uploaden",
+		"download": "Downloaden",
+		"click_here": "Klik hier",
+		"user": "Gebruiker",
+		"subtitles": "Ondertitels",
+		"authors": "Auteurs",
+		"authors_of_the_article": "Auteurs van het artikel",
+		"licence": "Licentie",
+		"version": "Versie",
+		"language": "Taal",
+		"loading_videos_error": "Fout bij het laden van de video's! Probeer het later opnieuw!"
+	},
+	"UploadFileInfoModal": {
+		"nothing_to_show": "Er is hier nog niets te zien",
+		"source": "Bron",
+		"source_option_own_work": "Eigen werk",
+		"source_option_others": "Ik heb dit mediabestand niet gemaakt",
+		"author": "Auteur(s)",
+		"title": "Titel",
+		"description": "Beschrijving",
+		"licence": "Licentie",
+		"categories": "Categorieën",
+		"save_template_label": "Bewaar dit formulier als sjabloon",
+		"date": "Datum",
+		"auto_download_description": "Door dit veld te selecteren, wordt de video gedownload zodra deze is geëxporteerd",
+		"user_name": "Gebruikersnaam",
+		"upload_error": "Bestandsupload mislukt! Probeer het later opnieuw.",
+		"file_already_exists": "Er bestaat al een bestand met deze naam. Probeer een andere titel",
+		"upload_to_commons": "Naar Commons uploaden"
+	},
+	"HumanVoice": {
+		"all_slides": "Alle dia's",
+		"slide": "Dia {{slideNumber}}",
+		"translate_placeholder": "Diatekst vertalen",
+		"processing_voice_error": "Er is iets misgegaan bij het verwerken van de audio. We hebben uw originele opname wel bewaard.",
+		"audio_uploaded": "Audio geüpload",
+		"text_update_error": "Er is iets misgegaan tijdens het bijwerken van de tekst, probeer het alsjeblieft opnieuw.",
+		"audio_update_error": "Er is iets misgegaan bij het uploaden van audio, probeer het alsjeblieft opnieuw"
+	},
+	"Common": {
+		"cancel": "Annuleren",
+		"yes": "Ja",
+		"add": "Toevoegen",
+		"loading": "Laden...",
+		"update": "Bijwerken",
+		"ok": "Ok",
+		"loading_article_error": "Fout bij het laden van het artikel! Probeer het later opnieuw!",
+		"loading_all_articles_error": "Fout bij het laden van alle artikelen! Probeer het later opnieuw!"
+	},
+	"Exporter": {
+		"references": "Referenties",
+		"voice_by": "Stem door",
+		"visual_content_by": "Visuele inhoud door"
+	}
+}
