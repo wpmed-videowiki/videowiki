@@ -1,0 +1,77 @@
+{
+	"@metadata": {
+		"authors": [
+			"Adimora chidinma"
+		]
+	},
+	"Home": {
+		"building-collaborative-wiki-videos": "Anyị na-arụkọ vidiyo dabere na wiki n'asụsụ obodo. Sonyere anyị.",
+		"script-writing": "Ihe odide",
+		"voice-over": "Olu n'elu",
+		"video-editing": "Nhazi vidiyo",
+		"full-stack-content-creator": "Onye Okike Ihe Nchịkọta zuru ezu",
+		"translator": "Ntụgharị",
+		"create-new-video": "Mepụta Vidio Ọhụrụ",
+		"enter-video-title": "Tinye aha vidiyo ahụ",
+		"go": "Gaa",
+		"custom": "Omenala"
+	},
+	"Header": {
+		"read_beta_disclaimer": "Gụọ nkwupụta nke Beta",
+		"search_placeholder": "Chọọ isiokwu ma ọ bụ tinye URL",
+		"search_no_results": "Ọnweghị nsonaazụ ahụrụ.",
+		"beta_disclaimer_1": "VideoWiki bụ ihe akaebe nke echiche maka ngwá ọrụ nke na-enye gị ohere ijikọ aka mepụta ma dezie vidiyo site na ịdọrọ ma tụfuo foto na vidiyo site na Wikimedia Commons gaa na ederede Wikipedia dị mkpa.",
+		"beta_disclaimer_2": "VideoWiki nọ ugbu a na ọkwa Beta ma n'agbanyeghị ọganihu anyị, anyị ejirila naanị mkpocha n'elu. Anyị na-arụsi ọrụ ike iji gbakwunye ọtụtụ atụmatụ na ọrụ ndị ọzọ. Onye ọ bụla, gụnyere onwe gị, nwere ike idezi isiokwu VideoWiki ọbụlagodi na ọ naghị abanye. Aha onye ọrụ gị (ma ọ bụrụ na ị jiri otu) ma ọ bụ adreesị IP ga-ejikọta ya na edezi gị.",
+		"language": "Asụsụ",
+		"articles": "edemede",
+		"all_articles": "Akụkọ niile",
+		"video_scripts": "Ihe odide vidio",
+		"articles_edited": "Edeziziri akụkọ - {{count}}",
+		"total_edits": "Mkpokọta ndezi - {{count}}",
+		"sign_out": "Pụọ",
+		"register_login_with_wikipedia": "Ndebanye aha / Login na Wikipedia",
+		"register_login_with_nccommons": "Debanye aha/nbanye na NC Commons",
+		"login_success": "Ọ dị egwu! Ugbu a ị nwere ike bulite faịlụ na VideoWiki kpọmkwem site na kọmputa gị.",
+		"a_good_chance_to_login": "Ezigbo ohere ịbanye",
+		"logo_description": "The Free Multi-Media Encyclopedia nke onye ọ bụla nwere ike dezie."
+	},
+	"Footer": {
+		"text_audio_license": "Ederede na ọdịyo dị n'okpuru <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'> Creative Commons Attribution-ShareAlike License 3.0 ma ọ bụ karịa.</0> Onyonyo gụnyere ndị nọ n'ime vidiyo dị n'okpuru ikikere mepere emepe yana ihe okike dị iche iche.",
+		"software_license": "Akụrụngwa VideoWiki dị n'okpuru GNU General Public License 3.0 ma dị na <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
+		"about_us": "Banyere Anyị",
+		"contact_us": "Kpọtụrụ Anyị",
+		"terms_of_use": "Iwu njirụ ọrụ",
+		"privacy_policy": "Iwu Nzuzo",
+		"blog": "Blog",
+		"report_bugs": "Kwuo ahụhụ",
+		"email": "Email"
+	},
+	"Editor": {
+		"editor_mode": "Ụdị nchịkọta akụkọ",
+		"player_mode": "Ụdị ọkpụkpọ",
+		"translate_and_export": "Tụgharịa asụsụ na mbupụ",
+		"export_video": "Bupu vidiyo",
+		"export_history": "Akụkọ Mbupụ",
+		"download_video": "Nbudata vidiyo",
+		"update_article": "Melite edemede",
+		"update_article_confirmation": "Ị chọrọ imelite akụkọ {{title}} ugbu a?",
+		"update_article_loading": "Jisie ike! Anyị na-emelite gị akụkọ",
+		"update": "Mmalite",
+		"voice_speed": "Ọsọ olu",
+		"last_updated": "Emelitere ikpeazụ",
+		"timing": "N'oge",
+		"references": "Ihe odide",
+		"visual": "Nhụrụ anya",
+		"audio": "Audio",
+		"text": "Mkpurụ edemede",
+		"only_logged_in_user_can_upload_commons": "Naanị ndị debanyere aha na ndị ọrụ nwere ike mbupụ vidiyo na Commons",
+		"add_human_voice_over_in": "Tinye olu mmadụ n'ime",
+		"select_language": "Nwèré asụsụ:",
+		"use_your_own_voice": "Jiri olu nke gị",
+		"use_machine_voice": "Jiri olu igwe",
+		"upload_file": "Bulite faịlụ",
+		"record_audio_error": "Ọ nwere ihe adịghị mma, biko hụ na ị na-eji ụdị ihe nchọgharị gị kachasị ọhụrụ",
+		"record_audio_not_supported": "Ihe nchọgharị gị anaghị akwado ịdekọ ọdịyo",
+		"record": "Ihe ndekọ"
+	}
+}
