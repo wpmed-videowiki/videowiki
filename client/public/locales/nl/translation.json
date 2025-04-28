@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"ABPMAB"
+			"ABPMAB",
+			"McDutchie"
 		]
 	},
 	"Home": {
@@ -60,7 +61,7 @@
 		"record": "Opnemen",
 		"contributors": "Bijdragers",
 		"failed_to_load_contributors": "Het laden van bijdragers is mislukt",
-		"link_copied": "Link gekopieerd naar klembord",
+		"link_copied": "Koppeling gekopieerd naar klembord",
 		"reopen_form": "Je kunt het formulier opnieuw openen door op het pictogram rechtsboven in de dia te klikken",
 		"export_queued_success": "Het artikel is in de wachtrij geplaatst om succesvol te worden geëxporteerd!",
 		"article_updated": "Artikel succesvol bijgewerkt!",
