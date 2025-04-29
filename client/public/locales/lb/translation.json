@@ -14,10 +14,15 @@
 		"sign_out": "Ofmellen"
 	},
 	"Footer": {
+		"about_us": "Iwwer eis",
+		"contact_us": "Kontaktéiert eis",
+		"privacy_policy": "Dateschutzrichtlinnen",
+		"blog": "Blog",
 		"email": "E-Mail"
 	},
 	"Editor": {
 		"export_video": "Video exportéieren",
+		"export_history": "Historique exportéieren",
 		"download_video": "Video eroflueden",
 		"update_article": "Artikel aktualiséieren",
 		"update_article_confirmation": "Wëllt Dir den Artikel {{title}} elo aktualiséieren?",
@@ -26,12 +31,14 @@
 		"audio": "Audio",
 		"text": "Text",
 		"select_language": "Sprooch eraussichen",
-		"upload_file": "Fichier eroplueden"
+		"upload_file": "Fichier eroplueden",
+		"record": "Ophuelen"
 	},
 	"ExportHistory": {
 		"commons_url": "Commons-URL",
 		"youtube_url": "YouTube-URL",
 		"download": "Eroflueden",
+		"click_here": "Klickt hei",
 		"user": "Benotzer",
 		"subtitles": "Ënnertitelen",
 		"authors": "Auteuren",
@@ -41,6 +48,7 @@
 		"language": "Sprooch"
 	},
 	"UploadFileInfoModal": {
+		"nothing_to_show": "Nach näischt hei fir ze weisen",
 		"author": "Auteur(en)",
 		"title": "Titel",
 		"description": "Beschreiwung",
