@@ -25,14 +25,14 @@ const ProgressSoundPlayer = (props: IProgressSoundPlayerProps) => {
 
   // todo: check this
   useEffect(() => {
-    if (props.soundCloudAudio) {
+    if (props.soundCloudAudio && props.streamUrl) {
       if (props.isPlaying) {
         props.soundCloudAudio.play();
       } else {
         props.soundCloudAudio.pause();
       }
     }
-  }, [props.isPlaying]);
+  }, [props.isPlaying, props.streamUrl]);
   useEffect(() => {
     setMounted(true);
     if (props.soundCloudAudio) {
