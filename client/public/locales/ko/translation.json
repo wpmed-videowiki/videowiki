@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"YeBoy371",
 			"Ykhwong"
 		]
 	},
@@ -40,7 +41,7 @@
 		"update": "업데이트",
 		"timing": "타이밍",
 		"visual": "시각",
-		"audio": "오디ㅗ",
+		"audio": "오디오",
 		"text": "텍스트",
 		"select_language": "언어 선택",
 		"use_machine_voice": "기계 음성 사용",
