@@ -2,34 +2,44 @@
 	"@metadata": {
 		"authors": [
 			"ABPMAB",
-			"McDutchie"
+			"McDutchie",
+			"Siebrand"
 		]
 	},
 	"Home": {
+		"building-collaborative-wiki-videos": "We maken collaboratieve wiki-gebaseerde video's in lokale talen. Doe mee.",
 		"script-writing": "Scenarioschrijven",
 		"voice-over": "Voice-over",
 		"video-editing": "Videomontage",
+		"full-stack-content-creator": "Full Stack Content Creator",
 		"translator": "Vertaler",
 		"create-new-video": "Maak een nieuwe video",
 		"enter-video-title": "Voer de titel van de video in",
-		"go": "Start"
+		"go": "Start",
+		"custom": "Aangepast"
 	},
 	"Header": {
 		"read_beta_disclaimer": "Lees de Beta-disclaimer",
 		"search_placeholder": "Zoek een onderwerp of plak een URL",
 		"search_no_results": "Geen resultaten gevonden.",
+		"beta_disclaimer_1": "VideoWiki is een proof of concept voor een hulpprogramma waarmee u gezamenlijk video's kunt maken en bewerken door afbeeldingen en video's van Wikimedia Commons naar de relevante Wikipedia-tekst te slepen en neer te zetten.",
+		"beta_disclaimer_2": "VideoWiki bevindt zich momenteel in de bètafase en ondanks onze vooruitgang staan we nog maar aan het begin. We werken actief aan het toevoegen van veel meer functies en extra functionaliteit. Iedereen, inclusief uzelf, kan een VideoWiki-pagina bewerken, zelfs zonder aan te melden. Uw gebruikersnaam (indien gebruikt) of IP-adres wordt aan uw bewerkingen gekoppeld.",
 		"language": "Taal",
 		"articles": "Artikelen",
 		"all_articles": "Alle artikelen",
+		"video_scripts": "Videoscripts",
 		"articles_edited": "Bewerkte artikelen - {{count}}",
 		"total_edits": "Totaal aantal bewerkingen - {{count}}",
 		"sign_out": "Afmelden",
 		"register_login_with_wikipedia": "Registreren/Inloggen met Wikipedia",
 		"register_login_with_nccommons": "Registreren/Inloggen met NC Commons",
 		"login_success": "Geweldig! Je kunt nu bestanden rechtstreeks vanaf je computer uploaden naar VideoWiki.",
+		"a_good_chance_to_login": "Een goede kans om aan te melden",
 		"logo_description": "De gratis multimedia-encyclopedie die iedereen kan bewerken."
 	},
 	"Footer": {
+		"text_audio_license": "Tekst en audio zijn beschikbaar onder de <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'>Creative Commons Naamsvermelding-GelijkDelen Licentie 3.0 of later.</0> Afbeeldingen, waaronder die in video's, vallen onder verschillende Open en Creative Commons-licenties.",
+		"software_license": "De VideoWiki-software is beschikbaar onder de GNU General Public License 3.0 en is te vinden op <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
 		"about_us": "Over ons",
 		"contact_us": "Contact opnemen",
 		"terms_of_use": "Gebruiksvoorwaarden",
@@ -39,15 +49,22 @@
 		"email": "E-mail"
 	},
 	"Editor": {
+		"editor_mode": "Bewerkingsmodus",
+		"player_mode": "Spelermodus",
 		"translate_and_export": "Vertalen en exporteren",
 		"export_video": "Video exporteren",
 		"export_history": "Geschiedenis exporteren",
 		"download_video": "Video downloaden",
 		"update_article": "Artikel bijwerken",
 		"update_article_confirmation": "Wilt u het artikel {{title}} nu bijwerken?",
+		"update_article_loading": "Houd je vast! We zijn de pagina voor u aan het updaten.",
 		"update": "Bijwerken",
+		"voice_speed": "Stemsnelheid",
 		"last_updated": "Laatst bijgewerkt",
+		"timing": "Tijdstip",
+		"timing_description": "Bepaal de timing van de media van de slide door de sleepbalk aan de rechterkant aan te passen aan de gewenste positie in de onderste audiospeler",
 		"references": "Referenties",
+		"visual": "Visueel",
 		"audio": "Audio",
 		"text": "Tekst",
 		"only_logged_in_user_can_upload_commons": "Alleen ingelogde gebruikers kunnen video's naar Commons exporteren",
@@ -62,12 +79,16 @@
 		"contributors": "Bijdragers",
 		"failed_to_load_contributors": "Het laden van bijdragers is mislukt",
 		"link_copied": "Koppeling gekopieerd naar klembord",
+		"max_slides_error": "Alleen aangepaste pagina's en pagina's met minder dan 50 slides kunnen worden geëxporteerd.",
 		"reopen_form": "Je kunt het formulier opnieuw openen door op het pictogram rechtsboven in de dia te klikken",
 		"export_queued_success": "Het artikel is in de wachtrij geplaatst om succesvol te worden geëxporteerd!",
+		"export_slides_text_warning": "Voeg tekst toe aan alle slides voordat u ze exporteert.",
+		"export_slides_media_warning": "Voeg media toe aan alle slides voordat u ze exporteert.",
 		"article_updated": "Artikel succesvol bijgewerkt!",
 		"article_update_error": "Fout bij het updaten van het artikel! Probeer het later opnieuw"
 	},
 	"ExportProgress": {
+		"exporting_videowiki_article": "Videowiki-pagina voor {{title}} exporteren naar video",
 		"export_error": "Er is iets misgegaan bij het exporteren van het artikel. Probeer het later opnieuw",
 		"back_to_article": "Terug naar artikel",
 		"export_queued": "Jouw video staat momenteel in de wachtrij om te worden geëxporteerd. Even geduld a.u.b.",
@@ -92,26 +113,43 @@
 		"user": "Gebruiker",
 		"subtitles": "Ondertitels",
 		"authors": "Auteurs",
+		"videowiki_foundation": "VideoWiki Foundation",
 		"authors_of_the_article": "Auteurs van het artikel",
 		"licence": "Licentie",
 		"version": "Versie",
 		"language": "Taal",
+		"loading_videos": "Uw paginavideo's worden geladen uit de som van alle menselijke kennis!",
 		"loading_videos_error": "Fout bij het laden van de video's! Probeer het later opnieuw!"
 	},
+	"InfoBox": {
+		"loading": "InfoBox laden...",
+		"loading_error": "Fout bij het laden van de video's! Probeer het later opnieuw!"
+	},
 	"UploadFileInfoModal": {
+		"header": "Uploadwizard van Wikimedia Commons",
 		"nothing_to_show": "Er is hier nog niets te zien",
+		"import_previous_form_details": "Importeer eerdere formulierdetails",
 		"source": "Bron",
+		"source_description": "Waar komt het digitale bestand vandaan? Dit kan een URL, een boek of publicatie zijn.",
 		"source_option_own_work": "Eigen werk",
 		"source_option_others": "Ik heb dit mediabestand niet gemaakt",
 		"author": "Auteur(s)",
+		"author_description": "De naam van de persoon die de foto heeft genomen, het schilderij of de tekening heeft gemaakt, enzovoort.",
 		"title": "Titel",
+		"title_description_1": "Een unieke beschrijvende titel voor het bestand. Deze titel dient als bestandsnaam.",
+		"title_description_2": "U kunt gewone taal gebruiken met spaties. Voeg de bestandsextensie niet toe.",
 		"description": "Beschrijving",
+		"description_description": "Beschrijf de media zo goed mogelijk.\n\nWaar is het opgenomen?\nWat laat het zien?\nWat is de context?\nBeschrijf het object of de personen?\nAls de media iets ongewoons laten zien, leg dan uit wat het ongewoon maakt",
 		"licence": "Licentie",
 		"categories": "Categorieën",
 		"save_template_label": "Bewaar dit formulier als sjabloon",
+		"save_template_description": "Door dit veld te selecteren, kunt u deze formulierwaarden rechtstreeks in andere formulieren importeren met behulp van de importknop hierboven",
 		"date": "Datum",
+		"auto_download_label": "De video automatisch downloaden nadat deze is geëxporteerd",
 		"auto_download_description": "Door dit veld te selecteren, wordt de video gedownload zodra deze is geëxporteerd",
+		"add_extra_users_label": "Voeg meer gebruikerscredits toe",
 		"user_name": "Gebruikersnaam",
+		"upload_success": "De bestandsupload is gelukt. Vergeet niet op het publicatiepictogram te klikken om uw wijzigingen op te slaan.",
 		"upload_error": "Bestandsupload mislukt! Probeer het later opnieuw.",
 		"file_already_exists": "Er bestaat al een bestand met deze naam. Probeer een andere titel",
 		"upload_to_commons": "Naar Commons uploaden"
@@ -123,7 +161,8 @@
 		"processing_voice_error": "Er is iets misgegaan bij het verwerken van de audio. We hebben uw originele opname wel bewaard.",
 		"audio_uploaded": "Audio geüpload",
 		"text_update_error": "Er is iets misgegaan tijdens het bijwerken van de tekst, probeer het alsjeblieft opnieuw.",
-		"audio_update_error": "Er is iets misgegaan bij het uploaden van audio, probeer het alsjeblieft opnieuw"
+		"audio_update_error": "Er is iets misgegaan bij het uploaden van audio, probeer het alsjeblieft opnieuw",
+		"click_on_publish_after_review": "Klik op het publicatiepictogram wanneer u klaar bent met het bekijken van de voorvertoning"
 	},
 	"Common": {
 		"cancel": "Annuleren",
@@ -132,11 +171,15 @@
 		"loading": "Laden...",
 		"update": "Bijwerken",
 		"ok": "Ok",
+		"loading_article": "Uw pagina wordt geladen uit de som van alle menselijke kennis!",
 		"loading_article_error": "Fout bij het laden van het artikel! Probeer het later opnieuw!",
+		"loading_all_articles": "Houd u vast! Alle pagina's worden geladen...",
 		"loading_all_articles_error": "Fout bij het laden van alle artikelen! Probeer het later opnieuw!"
 	},
 	"Exporter": {
+		"licence": "U mag deze video delen en gebruiken onder <strong>CC-BY-SA 4.0</strong>",
 		"references": "Referenties",
+		"text_credits": "Tekstcredits",
 		"voice_by": "Stem door",
 		"visual_content_by": "Visuele inhoud door"
 	}

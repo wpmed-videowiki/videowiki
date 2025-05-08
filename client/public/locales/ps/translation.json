@@ -1,0 +1,70 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ahmed-Najib-Biabani-Ibrahimkhel",
+			"شاه زمان پټان"
+		]
+	},
+	"Home": {
+		"translator": "ژباړن",
+		"go": "ورځه",
+		"custom": "دوديز"
+	},
+	"Footer": {
+		"about_us": "زموږ په اړه",
+		"blog": "بلاگ",
+		"email": "برېښليک"
+	},
+	"Editor": {
+		"download_video": "ويډيو ښکته کول",
+		"update": "اوسمهالول",
+		"visual": "ليد",
+		"audio": "غږ",
+		"text": "ليک",
+		"upload_file": "دوتنه پورته کول"
+	},
+	"ExportProgress": {
+		"back_to_article": "ليکنې ته شاتگ",
+		"export_uploaded": "په برياليتوب سره راپورته شو!",
+		"stage_1": "۱ پړاو",
+		"stage_2": "۲ پړاو",
+		"stage_3": "۳ پړاو",
+		"stage_4": "۴ پړاو"
+	},
+	"ExportHistory": {
+		"commons_url": "خونديځ وېبپته",
+		"youtube_url": "يوټيوب وېبپته",
+		"retry_upload": "د راپورته کولو بياځلي هڅه",
+		"download": "ښکته کول",
+		"click_here": "دلته وټوکئ",
+		"user": "کارن",
+		"subtitles": "څنگليکونه",
+		"authors": "ليکوالان",
+		"videowiki_foundation": "ويډيوويکي بنسټ",
+		"authors_of_the_article": "د ليکنې ليکوالان",
+		"licence": "منښتليک",
+		"version": "بلبڼه",
+		"language": "ژبه"
+	},
+	"InfoBox": {
+		"loading": "مالومات‌بکس بارېږي",
+		"loading_error": "د مالومات‌بکس رابرسېره کولو پرمهال تېروتنه رامنځته شوه! مهرباني وکړئ، وروسته بيا هڅه وکړئ!"
+	},
+	"UploadFileInfoModal": {
+		"source": "سرچينه",
+		"title": "سرليک",
+		"date": "نېټه",
+		"user_name": "د کارن نوم"
+	},
+	"Common": {
+		"cancel": "ناگارل",
+		"yes": "هو",
+		"add": "ورگډول",
+		"loading": "رابرسېرېږي...",
+		"update": "اوسمهالول",
+		"ok": "ښه"
+	},
+	"Exporter": {
+		"references": "سرچينې"
+	}
+}
