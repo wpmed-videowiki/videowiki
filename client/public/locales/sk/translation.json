@@ -1,0 +1,68 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kusavica"
+		]
+	},
+	"Home": {
+		"translator": "Prekladatelia",
+		"create-new-video": "Vytvoriť nové video",
+		"enter-video-title": "Zadajte názov videa"
+	},
+	"Header": {
+		"search_no_results": "Neboli nájdené žiadne výsledky.",
+		"language": "Jazyk",
+		"articles": "Články",
+		"all_articles": "Všetky články",
+		"sign_out": "Odhlásiť sa",
+		"logo_description": "Slobodná multimediálna encyklopédia, ktorú môže upraviť každý"
+	},
+	"Footer": {
+		"about_us": "O nás",
+		"contact_us": "Kontaktujte nás",
+		"terms_of_use": "Podmienky používania",
+		"privacy_policy": "Zásady ochrany súkromia",
+		"blog": "Blog",
+		"report_bugs": "Nahlásiť chyby",
+		"email": "E-mail"
+	},
+	"Editor": {
+		"download_video": "Stiahnuť video",
+		"update": "Aktualizovať",
+		"voice_speed": "Rýchlosť hlasu",
+		"text": "Text",
+		"select_language": "Vybrať jazyk",
+		"upload_file": "Nahrať súbor",
+		"record_audio_not_supported": "Váš prehliadač nepodporuje nahrávanie zvuku",
+		"record": "Nahrať",
+		"contributors": "Prispievatelia",
+		"link_copied": "Odkaz skopírovaný do schránky"
+	},
+	"ExportHistory": {
+		"download": "Stiahnuť",
+		"click_here": "Kliknite sem",
+		"user": "Používateľ",
+		"subtitles": "Titulky",
+		"authors_of_the_article": "Autori článku",
+		"licence": "Licencia",
+		"version": "Verzia",
+		"language": "Jazyk"
+	},
+	"UploadFileInfoModal": {
+		"source": "Zdroj",
+		"title": "Názov",
+		"description": "Popis",
+		"licence": "Licencia",
+		"categories": "Kategórie",
+		"date": "Dátum",
+		"user_name": "Meno používateľa"
+	},
+	"Common": {
+		"cancel": "Zrušiť",
+		"yes": "Áno",
+		"add": "Pridať",
+		"loading": "Načítava sa....",
+		"update": "Aktualizovať",
+		"ok": "Ok"
+	}
+}
