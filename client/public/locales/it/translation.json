@@ -7,13 +7,17 @@
 	},
 	"Home": {
 		"building-collaborative-wiki-videos": "Stiamo realizzando video collaborativi basati sulle wiki nelle lingue locali. Unisciti a noi.",
+		"translator": "Traduttore",
 		"create-new-video": "Crea un nuovo video",
 		"enter-video-title": "Inserisci il titolo del video",
-		"go": "Vai"
+		"go": "Vai",
+		"custom": "Personalizzato"
 	},
 	"Header": {
+		"read_beta_disclaimer": "Leggi l'informativa sulla versione beta",
 		"search_placeholder": "Cerca un argomento o incolla un URL",
 		"search_no_results": "Nessun risultato trovato.",
+		"beta_disclaimer_2": "VideoWiki è attualmente in fase Beta e, nonostante i progressi, abbiamo solo scalfito la superficie. Stiamo lavorando attivamente per aggiungere più funzionalità. Chiunque, incluso te, può modificare una voce di VideoWiki anche senza effettuare l'accesso. Il tuo nome utente (se ne usi uno) o il tuo indirizzo IP saranno associati alle tue modifiche.",
 		"language": "Lingua",
 		"articles": "Voci",
 		"all_articles": "Tutte le voci",
@@ -62,6 +66,7 @@
 		"record": "Registra",
 		"contributors": "Contributori",
 		"failed_to_load_contributors": "Impossibile caricare i contributori",
+		"link_copied": "Collegamento copiato negli appunti",
 		"max_slides_error": "È possibile esportare solo voci personalizzate e voci con meno di 50 diapositive.",
 		"reopen_form": "puoi riaprire il modulo cliccando sull'icona in alto a destra della diapositiva",
 		"export_queued_success": "Voce messa in coda per essere esportata, con successo!",
