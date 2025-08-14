@@ -6,22 +6,72 @@
 		]
 	},
 	"Home": {
+		"script-writing": "سکريپټ لیکنه",
+		"video-editing": "ويډيو سمول",
 		"translator": "ژباړن",
+		"create-new-video": "نوې ويډيو جوړول",
+		"enter-video-title": "د ويډيو سرليک دننه کړئ",
 		"go": "ورځه",
 		"custom": "دوديز"
 	},
+	"Header": {
+		"read_beta_disclaimer": "ازمېښتي بڼې بېرته‌واگ‌اخيستنې لوستل",
+		"search_placeholder": "يو سکالو وپلټئ يا يې وېبتړ ولېښئ",
+		"search_no_results": "هېڅ پايلې ونه موندل شوې.",
+		"language": "ژبه",
+		"articles": "ليکنې",
+		"all_articles": "ټولې ليکنې",
+		"video_scripts": "د ويډيو لاسي‌ليکنې",
+		"articles_edited": "{{count}} - ليکنې سمې‌شوې",
+		"total_edits": "ټول سمونونه - {{count}}",
+		"sign_out": "وتل",
+		"register_login_with_wikipedia": "ويکيپېډيا سره نوم‌ليکل/ننوتل",
+		"register_login_with_nccommons": "NC Commons سره نوم‌ليکل/ننوتل",
+		"login_success": "ډېرښه! تاسو اوس له خپل کمپيوټر نه نېغ په نېغ ويډيو‌ويکي ته دوتنې راپورته‌کولی شئ.",
+		"a_good_chance_to_login": "د ننوتلو يو ښه چانس",
+		"logo_description": "يو وړيا گڼ رسنیزه پوهنغونډ چې هر څوک يې سمولی شي."
+	},
 	"Footer": {
+		"text_audio_license": "ليک او غږيزه د <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'> ټولگړې پنځونې ځانگړي‌کونگ-ورته‌شريکېدنې منښتليک ۳.۰ يا له هغې وروسته منښتليک لاندې شتون لري. </0> انځورونه د وېډيوگانو په شمول د بېلابېلو پرانیستو او پنځگرو او ټولگړو منښتليکونو لاندې دي.",
 		"about_us": "زموږ په اړه",
+		"contact_us": "زموږ سره اړيکه ونيسئ",
+		"terms_of_use": "کارولو منښتونه",
+		"privacy_policy": "پټنتيا تگلار",
 		"blog": "بلاگ",
+		"report_bugs": "د تېروتنو خبر‌ورکول",
 		"email": "برېښليک"
 	},
 	"Editor": {
+		"editor_mode": "سمونگر ونگ‌ډول",
+		"player_mode": "لوبغاړي ونگ‌ډول",
+		"translate_and_export": "ژباړل او بهرلېږل",
+		"export_video": "ويډيو بهر لېږل",
+		"export_history": "پېښليک بهرلېږل",
 		"download_video": "ويډيو ښکته کول",
+		"update_article": "ليکنه هم‌مهالول",
+		"update_article_confirmation": "ايا تاسو غواړئ چې {{title}} ليکنه اوس هم‌مهاله کړئ؟",
+		"update_article_loading": "په تمه شئ! موږ ستاسو لپاره ليکنه هم‌مهاله کوو",
 		"update": "اوسمهالول",
+		"voice_speed": "غږ چټکتيا",
+		"last_updated": "وروستۍ هم‌مهالېدنه",
+		"timing": "وخت",
+		"references": "سرچينې",
 		"visual": "ليد",
 		"audio": "غږ",
 		"text": "ليک",
-		"upload_file": "دوتنه پورته کول"
+		"only_logged_in_user_can_upload_commons": "يوازې ننوتلي کارنان کولی شي خونديځ ته ويډيوگانې بهرولېږي",
+		"add_human_voice_over_in": "په دې کې انساني غږ ورگډ کړئ",
+		"select_language": "ژبه ټاکل",
+		"use_your_own_voice": "خپل غږ وکاروئ",
+		"use_machine_voice": "ماشين غږ وکاروئ",
+		"upload_file": "دوتنه پورته کول",
+		"record_audio_error": "يو څه ناسم پېښ شول، مهرباني وکړئ ځان ډاډه کړئ چې تاسو د ښوونگر وروستۍ بلبڼه کاروئ",
+		"record_audio_not_supported": "ستاسو ښوونگرد غږ ثبتولو ملاتړ نه کوي",
+		"record": "غږثبتول",
+		"contributors": "ونډه‌وال",
+		"failed_to_load_contributors": "د ونډه‌والو بارولو کې پاتې راغی",
+		"link_copied": "تړونی ټينگدړې ته ولمېسل شو",
+		"max_slides_error": "يوازې دوديزه او هغه ليکنې چې له ۵۰ سلايډونو څخه لږې وي بهر لېږل کېدای شي."
 	},
 	"ExportProgress": {
 		"back_to_article": "ليکنې ته شاتگ",
@@ -52,9 +102,19 @@
 	},
 	"UploadFileInfoModal": {
 		"source": "سرچينه",
+		"source_option_own_work": "خپل کار",
+		"source_option_others": "دا رسنیزه دوتنه ما نه ده جوړه کړې",
+		"author": "ليکوال(ان)",
 		"title": "سرليک",
+		"description": "څرگنداوی",
+		"licence": "منښتليک",
+		"categories": "وېشنيزې",
+		"save_template_label": "دا فورمه د يوې کينډۍ په توگه خوندي‌کول",
 		"date": "نېټه",
 		"user_name": "د کارن نوم"
+	},
+	"HumanVoice": {
+		"audio_uploaded": "غږيزه راپورته شوه"
 	},
 	"Common": {
 		"cancel": "ناگارل",
@@ -65,6 +125,8 @@
 		"ok": "ښه"
 	},
 	"Exporter": {
-		"references": "سرچينې"
+		"references": "سرچينې",
+		"voice_by": "په غږ ډ",
+		"visual_content_by": "ليدنيزه منځپانگه د"
 	}
 }

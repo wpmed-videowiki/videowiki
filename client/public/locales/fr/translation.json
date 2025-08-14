@@ -2,7 +2,8 @@
 	"@metadata": {
 		"authors": [
 			"Mahabarata",
-			"Terio legale"
+			"Terio legale",
+			"Urhixidur"
 		]
 	},
 	"Home": {
@@ -44,7 +45,7 @@
 		"terms_of_use": "Conditions d’utilisation",
 		"privacy_policy": "Politique de confidentialité",
 		"blog": "Blog",
-		"report_bugs": "Signaler des bugs",
+		"report_bugs": "Signaler des bogues",
 		"email": "Courriel"
 	},
 	"Editor": {
