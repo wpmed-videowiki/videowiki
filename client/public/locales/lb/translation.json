@@ -11,6 +11,7 @@
 		"search_no_results": "Keng Resultater fonnt.",
 		"language": "Sprooch",
 		"articles": "Artikelen",
+		"all_articles": "All Artikelen",
 		"sign_out": "Ofmellen"
 	},
 	"Footer": {
@@ -21,6 +22,7 @@
 		"email": "E-Mail"
 	},
 	"Editor": {
+		"translate_and_export": "Iwwersetzen an exportéieren",
 		"export_video": "Video exportéieren",
 		"export_history": "Historique exportéieren",
 		"download_video": "Video eroflueden",
@@ -63,7 +65,8 @@
 		"yes": "Jo",
 		"add": "Derbäisetzen",
 		"loading": "Lueden…",
-		"update": "Aktualiséieren"
+		"update": "Aktualiséieren",
+		"ok": "OK"
 	},
 	"Exporter": {
 		"references": "Referenzen"
