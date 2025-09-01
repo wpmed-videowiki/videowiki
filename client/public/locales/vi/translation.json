@@ -1,0 +1,103 @@
+{
+	"@metadata": {
+		"authors": [
+			"Bapham123"
+		]
+	},
+	"Home": {
+		"script-writing": "Viết kịch bản",
+		"video-editing": "Sửa đổi Video",
+		"translator": "Biên dịch viên",
+		"create-new-video": "Tạo một video mới",
+		"enter-video-title": "Nhập tiêu đề của video",
+		"go": "Xem",
+		"custom": "Tùy biến"
+	},
+	"Header": {
+		"search_no_results": "Không tìm thấy kết quả.",
+		"language": "Ngôn ngữ",
+		"articles": "Bài viết",
+		"all_articles": "Tất cả các bài",
+		"video_scripts": "Kịch bản video",
+		"sign_out": "Đăng xuất"
+	},
+	"Footer": {
+		"about_us": "Giới thiệu về chúng tôi",
+		"contact_us": "Liên lạc",
+		"terms_of_use": "Điều khoản sử dụng",
+		"privacy_policy": "Quy định về quyền riêng tư",
+		"blog": "Blog",
+		"report_bugs": "Báo cáo lỗi",
+		"email": "Thư điện tử"
+	},
+	"Editor": {
+		"export_video": "Xuất video",
+		"export_history": "Xuất lịch sử",
+		"download_video": "Tải xuống Video",
+		"update_article": "Cập nhật bài viết",
+		"update": "Cập nhật",
+		"voice_speed": "Tốc độ giọng nói",
+		"last_updated": "Lần Cập nhật Cuối",
+		"references": "Tham khảo",
+		"visual": "Trực quan",
+		"audio": "Âm thanh",
+		"text": "Văn bản",
+		"add_human_voice_over_in": "Thêm giọng của con người vào",
+		"select_language": "Chọn Ngôn ngữ",
+		"use_your_own_voice": "Sử dụng giọng của bạn",
+		"use_machine_voice": "Sử dụng giọng máy",
+		"upload_file": "Tải tập tin lên",
+		"record": "Ghi âm",
+		"contributors": "Những người đóng góp",
+		"link_copied": "Đã chép liên kết vào bảng tạm!"
+	},
+	"ExportProgress": {
+		"back_to_article": "Quay trở lại bài viết",
+		"export_uploaded": "Tải lên thành công"
+	},
+	"ExportHistory": {
+		"commons_url": "Liên kết Commons",
+		"youtube_url": "Liên kết YouTube",
+		"download": "Tải về",
+		"click_here": "Nhấp vào đây",
+		"user": "Thành viên",
+		"subtitles": "Phụ đề",
+		"authors": "Tác giả",
+		"videowiki_foundation": "Quỹ VideoWiki",
+		"authors_of_the_article": "Các tác giả của bài viết",
+		"licence": "Giấy phép",
+		"version": "Phiên bản",
+		"language": "Ngôn ngữ"
+	},
+	"InfoBox": {
+		"loading": "Đang tải hộp thông tin..."
+	},
+	"UploadFileInfoModal": {
+		"source": "Nguồn",
+		"source_option_own_work": "Tác phẩm được tạo bởi người tải lên",
+		"author": "Tác giả",
+		"title": "Tiêu đề",
+		"description": "Miêu tả",
+		"description_description": "Xin hãy mô tả phương tiện càng nhiều càng tốt.\n\nNó được chụp ở đâu?\nNó cho thấy điều gì?\nBối cảnh là gì?\nVui lòng mô tả đối tượng hoặc người trong phương tiện đó?\nNếu phương tiện cho thấy có điều gì đó bất thường, hãy giải thích lí do tại sao nó lại như vậy",
+		"licence": "Giấy phép",
+		"categories": "Thể loại",
+		"date": "Ngày tháng",
+		"user_name": "Tên người dùng",
+		"upload_to_commons": "Tải lên Commons"
+	},
+	"HumanVoice": {
+		"all_slides": "Tất cả các trang trình chiếu"
+	},
+	"Common": {
+		"cancel": "Hủy bỏ",
+		"yes": "Có",
+		"add": "Thêm",
+		"loading": "Đang tải…",
+		"update": "Cập nhật",
+		"ok": "Ok"
+	},
+	"Exporter": {
+		"references": "Tham khảo",
+		"text_credits": "Ghi công văn bản"
+	}
+}
