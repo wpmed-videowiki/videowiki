@@ -1,0 +1,105 @@
+{
+	"@metadata": {
+		"authors": [
+			"Largestone"
+		]
+	},
+	"Home": {
+		"translator": "翻訳者",
+		"create-new-video": "新しいビデオを作成",
+		"enter-video-title": "ビデオのタイトルを入力",
+		"go": "実行",
+		"custom": "カスタム"
+	},
+	"Header": {
+		"read_beta_disclaimer": "ベータ版の免責事項を読む",
+		"search_placeholder": "トピックを検索するかURLを貼り付ける",
+		"search_no_results": "見つかりませんでした。",
+		"language": "言語",
+		"articles": "記事",
+		"all_articles": "すべての記事",
+		"video_scripts": "ビデオスクリプト",
+		"articles_edited": "編集した記事 - {{count}}",
+		"total_edits": "合計編集回数 - {{count}}",
+		"sign_out": "サインアウト",
+		"register_login_with_wikipedia": "ウィキペディアに登録/ログイン",
+		"a_good_chance_to_login": "ログインする良い機会"
+	},
+	"Footer": {
+		"about_us": "VideoWikiについて",
+		"contact_us": "連絡先",
+		"terms_of_use": "利用規約",
+		"privacy_policy": "プライバシーポリシー",
+		"blog": "ブログ",
+		"report_bugs": "バグを報告",
+		"email": "メール"
+	},
+	"Editor": {
+		"editor_mode": "編集モード",
+		"translate_and_export": "翻訳して書き出し",
+		"export_video": "ビデオを書き出し",
+		"export_history": "履歴を書き出し",
+		"download_video": "ビデオをダウンロード",
+		"update_article": "記事を更新",
+		"update_article_confirmation": "記事{{title}}を更新しますか?",
+		"update": "更新",
+		"voice_speed": "音声の速度",
+		"last_updated": "最終更新",
+		"references": "脚注",
+		"audio": "音声",
+		"text": "テキスト",
+		"only_logged_in_user_can_upload_commons": "ログインした利用者のみがコモンズに書き出しできます",
+		"select_language": "言語を選択",
+		"use_your_own_voice": "自分の声を使う",
+		"upload_file": "ファイルをアップロード",
+		"record_audio_not_supported": "あなたのブラウザは録音をサポートしていません",
+		"record": "録音",
+		"contributors": "貢献者",
+		"failed_to_load_contributors": "貢献者の読み込みに失敗しました。",
+		"article_updated": "記事の更新に成功しました。"
+	},
+	"ExportProgress": {
+		"back_to_article": "記事に戻る",
+		"stage_1": "ステージ1",
+		"stage_2": "ステージ2",
+		"stage_2_description": "テキストの出典をビデオに追加する",
+		"stage_3": "ステージ3",
+		"stage_4": "ステージ4"
+	},
+	"ExportHistory": {
+		"commons_url": "コモンズのURL",
+		"youtube_url": "YouTubeのURL",
+		"retry_upload": "アップロードをリトライ",
+		"download": "ダウンロード",
+		"click_here": "ここをクリック",
+		"user": "利用者",
+		"authors": "作者",
+		"videowiki_foundation": "ビデオウィキ財団",
+		"authors_of_the_article": "記事の著者",
+		"licence": "ライセンス",
+		"version": "バージョン",
+		"language": "言語"
+	},
+	"InfoBox": {
+		"loading": "InfoBoxを読み込み中..."
+	},
+	"UploadFileInfoModal": {
+		"source_option_own_work": "投稿者自身による著作物",
+		"title": "タイトル",
+		"description": "説明",
+		"licence": "ライセンス",
+		"categories": "カテゴリ",
+		"date": "日付",
+		"auto_download_label": "書き出し後にビデオを自動でダウンロード",
+		"user_name": "利用者名",
+		"upload_to_commons": "コモンズにアップロード"
+	},
+	"Common": {
+		"cancel": "キャンセル",
+		"yes": "はい",
+		"add": "追加",
+		"loading": "読み込み中....",
+		"update": "更新",
+		"ok": "OK"
+	}
+}
