@@ -5,7 +5,9 @@
 		]
 	},
 	"Home": {
+		"building-collaborative-wiki-videos": "Chúng tôi đang xây dựng các video cộng tác trên wiki bằng các ngôn ngữ địa phương. Hãy tham gia cùng với chúng tôi.",
 		"script-writing": "Viết kịch bản",
+		"voice-over": "Lồng tiếng",
 		"video-editing": "Sửa đổi Video",
 		"translator": "Biên dịch viên",
 		"create-new-video": "Tạo một video mới",
@@ -19,9 +21,18 @@
 		"articles": "Bài viết",
 		"all_articles": "Tất cả các bài",
 		"video_scripts": "Kịch bản video",
-		"sign_out": "Đăng xuất"
+		"articles_edited": "Bài viết đã được sửa đổi - {{count}}",
+		"total_edits": "Tổng số lần sửa đổi - {{count}}",
+		"sign_out": "Đăng xuất",
+		"register_login_with_wikipedia": "Tạo tài khoản/Đăng nhập với Wikipedia",
+		"register_login_with_nccommons": "Tạo tài khoản/Đăng nhập với NC Commons",
+		"login_success": "Tuyệt vời! Giờ đây bạn có thể tải tập tin lên VideoWiki trực tiếp từ máy tính của mình.",
+		"a_good_chance_to_login": "Một cơ hội tốt để đăng nhập",
+		"logo_description": "Bách khoa toàn thư đa phương tiện mở mà bất kỳ ai cũng có thể sửa đổi."
 	},
 	"Footer": {
+		"text_audio_license": "Văn bản và âm thanh được cung cấp theo <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'>Creative Commons Ghi công-Chia sẻ tương tự 3.0 trở lên.</0> Hình ảnh bao gồm cả trong video thuộc nhiều giấy phép Mở và giấy phép Creative Commons khác nhau.",
+		"software_license": "Phần mềm VideoWiki được cung cấp theo Giấy phép Công cộng GNU 3.0 và có trên <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
 		"about_us": "Giới thiệu về chúng tôi",
 		"contact_us": "Liên lạc",
 		"terms_of_use": "Điều khoản sử dụng",
@@ -31,13 +42,19 @@
 		"email": "Thư điện tử"
 	},
 	"Editor": {
+		"editor_mode": "Chế độ biên tập",
+		"player_mode": "Chế độ phát",
+		"translate_and_export": "Dịch và Xuất",
 		"export_video": "Xuất video",
 		"export_history": "Xuất lịch sử",
 		"download_video": "Tải xuống Video",
 		"update_article": "Cập nhật bài viết",
+		"update_article_confirmation": "Liệu bạn có muốn cập nhật bài viết {{title}} ngay bây giờ không?",
+		"update_article_loading": "Hãy kiên nhẫn! Chúng tôi đang cập nhật bài viết cho bạn",
 		"update": "Cập nhật",
 		"voice_speed": "Tốc độ giọng nói",
 		"last_updated": "Lần Cập nhật Cuối",
+		"timing": "Thời gian",
 		"references": "Tham khảo",
 		"visual": "Trực quan",
 		"audio": "Âm thanh",
@@ -86,7 +103,11 @@
 		"upload_to_commons": "Tải lên Commons"
 	},
 	"HumanVoice": {
-		"all_slides": "Tất cả các trang trình chiếu"
+		"all_slides": "Tất cả các trang trình chiếu",
+		"audio_uploaded": "Đã tải lên âm thanh",
+		"text_update_error": "Có lỗi xảy ra khi cập nhật văn bản, xin hãy thử lại",
+		"audio_update_error": "Có lỗi xảy ra khi tải lên âm thanh, xin hãy thử lại",
+		"click_on_publish_after_review": "Nhấp vào biểu tượng xuất bản khi bạn hoàn tất việc xem trước"
 	},
 	"Common": {
 		"cancel": "Hủy bỏ",
