@@ -1,0 +1,72 @@
+{
+	"@metadata": {
+		"authors": [
+			"Peterleth"
+		]
+	},
+	"Header": {
+		"language": "Sprog",
+		"articles": "Artikler",
+		"all_articles": "Alle artikler",
+		"sign_out": "Log ud",
+		"register_login_with_wikipedia": "Registrer/Log ind med Wikipedia",
+		"register_login_with_nccommons": "Registrer/Log ind med NC Commons",
+		"login_success": "Fantastisk! Du kan nu uploade filer til VideoWiki direkte fra din computer.",
+		"a_good_chance_to_login": "En god chance for at logge ind",
+		"logo_description": "Det gratis multimedieleksikon, som alle kan redigere."
+	},
+	"Footer": {
+		"text_audio_license": "Tekst og lyd er tilgængelige under <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'> Creative Commons Navngivelse-DelPåSammeVilkår-licens 3.0 eller nyere.</0> Billeder, inklusive dem i videoer, er underlagt forskellige åbne og Creative Commons-licenser.",
+		"software_license": "VideoWiki-softwaren er tilgængelig under GNU General Public License 3.0 og er på <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
+		"about_us": "Om os",
+		"contact_us": "Kontakt os",
+		"terms_of_use": "Vilkår for anvendelse",
+		"privacy_policy": "Privatlivspolitik",
+		"blog": "Blog",
+		"report_bugs": "Rapportér fejl",
+		"email": "Email"
+	},
+	"Editor": {
+		"editor_mode": "Redigeringstilstand",
+		"player_mode": "Spillertilstand",
+		"translate_and_export": "Oversæt og eksportér",
+		"export_video": "Eksportér video",
+		"export_history": "Eksporthistorik",
+		"download_video": "Download video",
+		"update_article": "Opdater artikel",
+		"update_article_confirmation": "Vil du opdatere artiklen {{title}} nu?",
+		"update_article_loading": "Hold fast! Vi opdaterer artiklen for dig.",
+		"update": "Opdatér",
+		"voice_speed": "Stemmehastighed",
+		"last_updated": "Sidst opdateret",
+		"timing": "Timing"
+	},
+	"ExportHistory": {
+		"click_here": "Klik her",
+		"user": "Bruger",
+		"authors": "Forfattere",
+		"videowiki_foundation": "VideoWiki Foundation",
+		"authors_of_the_article": "Artiklens forfattere",
+		"licence": "Licens",
+		"version": "Version",
+		"language": "Sprog"
+	},
+	"Common": {
+		"cancel": "Annullér",
+		"yes": "Ja",
+		"add": "Tilføj",
+		"loading": "Indlæser...",
+		"update": "Opdater",
+		"ok": "OK",
+		"loading_article": "Indlæser din artikel fra summen af al menneskelig viden!",
+		"loading_article_error": "Fejl under indlæsning af artikel! Prøv igen senere!",
+		"loading_all_articles": "Hold godt fast! Indlæser alle artikler...",
+		"loading_all_articles_error": "Der opstod en fejl under indlæsning af alle artikler! Prøv igen senere!"
+	},
+	"Exporter": {
+		"licence": "Du er velkommen til at dele og bruge denne video under <strong>CC-BY-SA 4.0</strong>",
+		"references": "Referencer",
+		"voice_by": "Stemme af",
+		"visual_content_by": "Visuelt indhold af"
+	}
+}
