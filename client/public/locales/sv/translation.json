@@ -1,0 +1,81 @@
+{
+	"@metadata": {
+		"authors": [
+			"Stefan2255",
+			"Yupik"
+		]
+	},
+	"Home": {
+		"building-collaborative-wiki-videos": "Vi skapar wikibaserade videor på lokala språk för samarbete. Gå med oss.",
+		"script-writing": "Manusförfattande",
+		"voice-over": "Röstpålägg",
+		"video-editing": "Videoredigering",
+		"translator": "Översättare",
+		"create-new-video": "Skapa en ny video",
+		"enter-video-title": "Ange videons titel",
+		"go": "Gå",
+		"custom": "Anpassad"
+	},
+	"Header": {
+		"read_beta_disclaimer": "Läs betaversionens ansvarsfriskrivning",
+		"search_placeholder": "Sök efter ett ämne eller klistra in en URL",
+		"search_no_results": "Inga resultat hittades.",
+		"beta_disclaimer_1": "VideoWiki är ett koncepttest för ett verktyg som låter dig skapa och redigera videor tillsammans genom att dra och släppa bilder och videor från Wikimedia Commons till relevant Wikipedia-text.",
+		"beta_disclaimer_2": "VideoWiki är för närvarande i betafasen och trots våra framsteg har vi bara skrapat på ytan. Vi arbetar aktivt med att lägga till många fler funktioner och ytterligare funktionalitet. Vem som helst, inklusive du själv, kan redigera en VideoWiki-artikel även utan att logga in. Ditt användarnamn (om du använder ett) eller din IP-adress kommer att kopplas till dina redigeringar.",
+		"language": "Språk",
+		"articles": "Artiklar",
+		"all_articles": "Alla artiklar",
+		"video_scripts": "Videomanus",
+		"articles_edited": "Artiklar redigerade - {{count}}",
+		"total_edits": "Totalt antal redigeringar - {{count}}",
+		"sign_out": "Logga ut",
+		"register_login_with_wikipedia": "Registrera/Logga in med Wikipedia",
+		"register_login_with_nccommons": "Registrera/Logga in med NC Commons",
+		"login_success": "Grymt! Nu kan du ladda upp filer till VideoWiki direkt från din dator.",
+		"a_good_chance_to_login": "En bra chans att logga in",
+		"logo_description": "Det kostnadsfria multimedieuppslagsverket som vem som helst kan redigera."
+	},
+	"Footer": {
+		"text_audio_license": "Text och ljud finns tillgängliga under <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'>Creative Commons Erkännande-DelaLika-licensen 3.0 eller senare.</0> Bilder, inklusive de i videor, omfattas av olika öppna licenser och Creative Commons-licenser.",
+		"software_license": "VideoWiki-programvaran är tillgänglig under GNU General Public License 3.0 och finns på <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
+		"about_us": "Om oss",
+		"contact_us": "Kontakta oss",
+		"terms_of_use": "Användarvillkor",
+		"privacy_policy": "Integritetspolicy",
+		"blog": "Blogg",
+		"report_bugs": "Rapportera buggar",
+		"email": "E-post"
+	},
+	"Editor": {
+		"editor_mode": "Redigeringsläge",
+		"player_mode": "Spelarläge",
+		"translate_and_export": "Översätt och exportera",
+		"export_video": "Exportera video",
+		"export_history": "Exporthistorik",
+		"download_video": "Ladda ner video",
+		"update_article": "Uppdatera artikel",
+		"update_article_confirmation": "Vill du uppdatera artikeln {{title}} nu?",
+		"update_article_loading": "Håll ut! Vi uppdaterar artikeln åt dig",
+		"update": "Uppdatera",
+		"voice_speed": "Rösthastighet",
+		"last_updated": "Senast uppdaterad",
+		"timing": "Tidpunkt",
+		"timing_description": "Styr timingen för bildens media genom att justera draglisten till höger så att den matchar önskad position i den nedre ljudspelaren.",
+		"references": "Referenser",
+		"visual": "Visuell",
+		"audio": "Audio",
+		"text": "Text",
+		"only_logged_in_user_can_upload_commons": "Endast inloggade användare kan exportera videor till Commons",
+		"add_human_voice_over_in": "Lägg till mänsklig berättarröst på",
+		"select_language": "Välj språk",
+		"use_your_own_voice": "Använd din egen röst",
+		"use_machine_voice": "Använd maskinröst",
+		"upload_file": "Ladda upp fil",
+		"record_audio_error": "Något gick fel. Se till att du använder den senaste versionen av din webbläsare.",
+		"record_audio_not_supported": "Din webbläsare stöder inte ljudinspelning",
+		"record": "Spela in",
+		"contributors": "Bidragsgivare",
+		"failed_to_load_contributors": "Misslyckades med att läsa in bidragsgivarna",
+		"link_copied": "Länken kopierades till urklipp"
+	}
+}
