@@ -74,7 +74,7 @@
 		"use_machine_voice": "Utiliser la voix de la machine",
 		"upload_file": "Téléverser un fichier",
 		"record_audio_error": "Une erreur s'est produite, veuillez vous assurer que vous utilisez la dernière version de votre navigateur",
-		"record_audio_not_supported": "Votre navigateur ne supporte pas l'enregistrement vocal",
+		"record_audio_not_supported": "Votre navigateur ne prend pas en charge l’enregistrement vocal",
 		"record": "Enregistrer",
 		"contributors": "Contributeurs",
 		"failed_to_load_contributors": "Impossible de charger les contributeurs",
