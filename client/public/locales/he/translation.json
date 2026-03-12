@@ -10,6 +10,7 @@
 		"script-writing": "כתיבת תסריט",
 		"voice-over": "קריינות",
 		"video-editing": "עריכת וידאו",
+		"full-stack-content-creator": "יצירת תוכן עשיר",
 		"translator": "תרגום",
 		"create-new-video": "יצירת סרטון חדש",
 		"enter-video-title": "נא למלא כותרת לסרטון",
@@ -21,6 +22,7 @@
 		"search_placeholder": "לחפש נושא או להדביק כתובת",
 		"search_no_results": "לא נמצאו תוצאות.",
 		"beta_disclaimer_1": "VideoWiki הוא כלי להוכחת היתכנות שמאפשר ליצור ולערוך סרטונים באופן שיתופי על ידי גרירה של תמונות וסרטונים מוויקישיתוף לטקסט תואם בוויקיפדיה.",
+		"beta_disclaimer_2": "VideoWiki נמצא כרגע בשלב התנסות (בטא) ועל אף ההתקדמות שלנו המערכת במצב מאוד ראשוני. אנחנו עמלים במרץ על הוספת מגוון יכולות ושימושיות מורחבת. כולם, כולל אותך, יכולים לערוך ערך ב־VideoWiki גם בלי להיכנס למערכת. שם המשתמש שלך (אם יש לך כזה) או כתובת ה־IP שלך ישויכו לעריכות שלך.",
 		"language": "שפה",
 		"articles": "ערכים",
 		"all_articles": "כל הערכים",
@@ -35,6 +37,7 @@
 		"logo_description": "אנציקלופדיית המולטימדיה החופשית שכולם יכולים לערוך."
 	},
 	"Footer": {
+		"text_audio_license": "טקסט ושמע זמינים בכפוף ל<0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'>רישיון Creative Commons Attribution-ShareAlike 3.0 ואילך. </0> התמונות כולל אלו שבסרטונים כפופים למגוון רישיונות פתוחים ו־Creative Common.",
 		"software_license": "התוכנה VideoWiki זמינה בכפוף לרישיון הציבורי הכללי של גנו בגרסה 3.0 וניתן למצוא אותה באתר <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
 		"about_us": "עלינו",
 		"contact_us": "יצירת קשר איתנו",
