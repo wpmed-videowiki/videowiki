@@ -13,19 +13,22 @@ let authExchangeChannel
 
 amqp.connect(process.env.RABBITMQ_SERVER, (err, conn) => {
   if (err) {
-    return console.log('Error connecting to rabbit mq in auth ', err)
+    console.log('Error connecting to rabbit mq in auth ', err)
+    return process.exit(1);
   }
   console.log('connected to rabbitmq for authentication')
   conn.createChannel((err, ch) => {
     if (err) {
-      return console.log('Error creating channel in rabbitmq in auth ', err)
+      console.log('Error creating channel in rabbitmq in auth ', err)
+      return process.exit(1);
     }
     console.log('created a channel for ', RABBITMQ_AUTH_EXCHANGE)
     ch.assertExchange(RABBITMQ_AUTH_EXCHANGE, 'fanout', { durable: true })
     authExchangeChannel = ch
     ch.assertQueue(RABBITMQ_AUTH_QUEUE, { durable: true }, (err, q) => {
       if (err) {
-        return console.log('error asserting queue ', RABBITMQ_AUTH_QUEUE, err)
+        console.log('error asserting queue ', RABBITMQ_AUTH_QUEUE, err)
+        return process.exit(1);
       }
       ch.bindQueue(RABBITMQ_AUTH_QUEUE, RABBITMQ_AUTH_EXCHANGE, '')
     })
@@ -71,7 +74,7 @@ module.exports = passport => {
               },
               { new: true },
             ).then(
-              ( userInfo) => {
+              (userInfo) => {
                 authExchangeChannel.publish(
                   RABBITMQ_AUTH_EXCHANGE,
                   '',
@@ -85,9 +88,9 @@ module.exports = passport => {
                 })
               }
             )
-            .catch(err => {
+              .catch(err => {
                 if (err) return done(err)
-            })
+              })
           } else {
             // User dont exst, create one
             const newUserData = {
@@ -106,14 +109,14 @@ module.exports = passport => {
               )
               return done(null, newUser)
             })
-            .catch(err=> {
-              if (err) return done(err)
-            })
+              .catch(err => {
+                if (err) return done(err)
+              })
           }
         })
-        .catch(err => {
-          if (err) return done(err)
-        })
+          .catch(err => {
+            if (err) return done(err)
+          })
       })
     }
   )
