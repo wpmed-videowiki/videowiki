@@ -41,6 +41,7 @@ export const VIDEO_LANG_TRANSLATIONS = {
   eu: 'Bideoa:',
   zh: 'Video:',
   ne: 'Video:',
+  mg: 'Video:',
 };
 
 export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
@@ -65,6 +66,7 @@ export const CUSTOM_VIDEOWIKI_LANG_PREFIXES = {
   eu: 'Wikipedia:Videowiki/',
   zh: 'WikiProject:影片維基/',
   ne: 'विकिपिडिया:भिडियोविकी/',
+  mg: "Video"
   // zh: 'Draft:VideoWiki'
 };
 
@@ -142,7 +144,8 @@ export const SECTIONS_BLACKLIST = {
   eu: ['Erreferentziak'],
   ha: ['Manazarta'],
   zh: ['References', '参考资料'],
-  ne: ['References']
+  ne: ['References'],
+  mg: ['References']
 };
 
 export const CUSTOM_TEMPLATES = {
@@ -171,7 +174,8 @@ export const SLIDES_BLACKLIST = {
   eu: [],
   ha: [],
   zh: [],
-  ne: []
+  ne: [],
+  mg: []
 };
 
 export const FILE_MATCH_REGEX = {
@@ -195,6 +199,7 @@ export const FILE_MATCH_REGEX = {
   eu: /\[\[Fitxategi:(.*)\]\]|\[\[File:(.*)\]\]/gim,
   zh: /\[\[\s*File:(.*)\]\]/gim,
   ne: /\[\[\s*File:(.*)\]\]/gim,
+  mg: /\[\[\s*Sary:(.*)\]\]/gim,
 };
 
 export const FILE_PREFIXES = {
@@ -219,6 +224,7 @@ export const FILE_PREFIXES = {
   ha: 'File:',
   zh: 'File:',
   ne: 'File:',
+  mg: 'Sary:',
 };
 
 export const SUPPORTED_TTS_LANGS = [
@@ -243,7 +249,8 @@ export const SUPPORTED_TTS_LANGS = [
   'eu',
   'ha',
   'zh',
-  'ne'
+  'ne',
+  'mg'
 ];
 
 export const TTS_CONCURRENT_REQUESTS = 5;

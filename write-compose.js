@@ -23,10 +23,11 @@ const langs = [
   "ha",
   "zh",
   "ne",
+  "mg"
 ];
 const ports = [
   4000, 4001, 4002, 4003, 4004, 4005, 4006, 4007, 4008, 4009, 4010, 4011, 4012,
-  4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020, 4021
+  4013, 4014, 4015, 4016, 4017, 4018, 4019, 4020, 4021, 4022
 ];
 
 // Write nginx config
@@ -137,7 +138,6 @@ ${langs
       - redis-server
       ${index == 0 ? '' : `- web_${langs[index - 1]}`} 
     command: ["node", "server/index.js", "${ports[index]}", "${lang}"]
-
 `
     )
     .join("")}

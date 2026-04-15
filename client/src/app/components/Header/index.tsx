@@ -147,6 +147,11 @@ const WIKI_LANG_OPTIONS = [
     value: "ne",
     key: "ne",
   },
+  {
+    text: "MG ( Malagasy )",
+    value: "mg",
+    key: "mg",
+  },
 ];
 
 let _sessionPoller: any = null;

@@ -23,6 +23,7 @@ export const LANG_API_MAP = {
   ha: `${PROTOCOL}//localhost:4019`,
   zh: `${PROTOCOL}//localhost:4020`,
   ne: `${PROTOCOL}//localhost:4021`,
+  mg: `${PROTOCOL}//localhost:4022`,
 };
 
 export const AVAILABLE_LANGUAGES = [
@@ -47,7 +48,8 @@ export const AVAILABLE_LANGUAGES = [
   "eu",
   "ha",
   "zh",
-  "ne"
+  "ne",
+  "mg"
 ];
 
 export const SUPPORTED_TTS_LANGS = [
@@ -72,7 +74,8 @@ export const SUPPORTED_TTS_LANGS = [
   "eu",
   "ha",
   "zh",
-  "ne"
+  "ne",
+  "mg"
 ];
 
 export const websocketConfig = {
