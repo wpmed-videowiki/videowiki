@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Tensama0415",
 			"YeBoy371",
 			"Ykhwong"
 		]
@@ -40,6 +41,7 @@
 		"player_mode": "플레이어 모드",
 		"translate_and_export": "번역하고 내보내기",
 		"export_video": "비디오 내보내기",
+		"export_history": "역사 내보내기",
 		"download_video": "비디오 다운로드",
 		"update": "업데이트",
 		"voice_speed": "음성 속도",
