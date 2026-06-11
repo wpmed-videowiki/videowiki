@@ -1,0 +1,104 @@
+{
+	"@metadata": {
+		"authors": [
+			"JorgeElias2302",
+			"Josue",
+			"Kookoriko",
+			"Yupik"
+		]
+	},
+	"Home": {
+		"building-collaborative-wiki-videos": "Estamos creando vídeos basados en wiki colaborativos en idiomas locales. Únete a nosotros.",
+		"script-writing": "Escritura de guiones",
+		"voice-over": "Voz en off",
+		"video-editing": "Edición de video",
+		"translator": "Traductor",
+		"create-new-video": "Crear un nuevo video",
+		"enter-video-title": "Ingresar título del vídeo",
+		"go": "Ir",
+		"custom": "Personalizado"
+	},
+	"Header": {
+		"search_placeholder": "Buscar un tema o pegar un URL",
+		"search_no_results": "No se encontraron resultados.",
+		"language": "Idioma",
+		"articles": "Artículos",
+		"all_articles": "Todos los artículos",
+		"video_scripts": "Guion de videos",
+		"articles_edited": "Artículos editado - {{count}}",
+		"total_edits": "Ediciones totales - {{count}}",
+		"sign_out": "Cerrar sesión",
+		"register_login_with_wikipedia": "Registrar/iniciar sesión con Wikipedia",
+		"register_login_with_nccommons": "Registrar/iniciar sesión con NC Commons",
+		"login_success": "Asombroso! Ahora puedes subir archivos de VideoWiki directamente desde tu computadora.",
+		"a_good_chance_to_login": "Una buena oportunidad para iniciar sesión",
+		"logo_description": "La enciclopedia multimedia libre que cualquiera puede editar"
+	},
+	"Footer": {
+		"about_us": "Acerca de nosotros",
+		"contact_us": "Contáctanos",
+		"terms_of_use": "Términos de uso",
+		"privacy_policy": "Política de privacidad",
+		"blog": "Blog",
+		"report_bugs": "Informar de un error",
+		"email": "Correo electrónico"
+	},
+	"Editor": {
+		"editor_mode": "Modo de edición",
+		"player_mode": "Modo jugador",
+		"translate_and_export": "Traducir y exportar",
+		"export_video": "Exportar video",
+		"export_history": "Historial de exportaciones",
+		"download_video": "Descargar video",
+		"update_article": "Actualizar articulo",
+		"update_article_confirmation": "Quieres actualizar el artículo {{title}} ahora mismo?",
+		"update_article_loading": "Espere un momento! Estamos actualizando su artículo",
+		"update": "Actualizar",
+		"voice_speed": "Velocidad de voz",
+		"last_updated": "Última actualización",
+		"timing": "Tiempo preciso",
+		"references": "Referencia",
+		"visual": "Visual",
+		"audio": "Sonido",
+		"text": "Texto",
+		"only_logged_in_user_can_upload_commons": "Solo los usuarios que han iniciado sesión pueden exportar videos a Commons",
+		"add_human_voice_over_in": "Añadir una voz humana",
+		"select_language": "Seleccionar idioma",
+		"use_your_own_voice": "Utilice su propia voz",
+		"use_machine_voice": "Utiliza la voz de la máquina",
+		"upload_file": "Subir archivos",
+		"record_audio_error": "Algo salió mal. Por favor, asegúrate de que estás usando la versión más reciente de tu navegador.",
+		"record_audio_not_supported": "Su navegador no admite grabación de voz",
+		"record": "Grabar",
+		"contributors": "Contribuidores",
+		"failed_to_load_contributors": "No se pudieron cargar los colaboradores",
+		"link_copied": "Enlace copiado al portapapeles",
+		"max_slides_error": "Solo se pueden exportar artículos personalizados y artículos con menos de 50 diapositivas",
+		"reopen_form": "Puedes volver a abrir el formulario haciendo clic en la parte superior derecha de la diapositiva"
+	},
+	"ExportProgress": {
+		"export_error": "Algo salió mal al exportar el artículo. Por favor, intenta de nuevo más tarde."
+	},
+	"ExportHistory": {
+		"no_videos_found": "Actualmente, no hay videos exportados para este artículo",
+		"download": "Descargar",
+		"subtitles": "Subtítulos",
+		"authors_of_the_article": "Autores del artículo",
+		"licence": "Licencia",
+		"version": "Versión",
+		"language": "Idioma",
+		"loading_videos_error": "¡Ocurrió un error al cargar videos! ¡Por favor, intenta de nuevo más tarde!"
+	},
+	"HumanVoice": {
+		"text_update_error": "Algo salió mal al actualizar el texto. Por favor intenta de nuevo."
+	},
+	"Common": {
+		"cancel": "Cancelar",
+		"yes": "Sí",
+		"add": "Añadir",
+		"loading": "Cargando..."
+	},
+	"Exporter": {
+		"references": "Referencias"
+	}
+}
