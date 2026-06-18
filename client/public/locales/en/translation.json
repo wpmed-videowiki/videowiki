@@ -115,7 +115,7 @@
     "loading_videos_error": "Error while loading videos! Please try again later!"
   },
   "InfoBox": {
-    "loading": "Loading InfoBox...",
+    "loading": "Loading Infobox...",
     "loading_error": "Error while loading infobox! Please try again later!"
   },
   "UploadFileInfoModal": {
