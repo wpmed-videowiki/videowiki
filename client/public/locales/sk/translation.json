@@ -1,23 +1,44 @@
 {
 	"@metadata": {
 		"authors": [
-			"Kusavica"
+			"Kusavica",
+			"Wizzard"
 		]
 	},
 	"Home": {
+		"building-collaborative-wiki-videos": "Budujeme spoločné videá na báze wiki v miestnych jazykoch. Pridajte sa k nám.",
+		"script-writing": "Písanie scenára",
+		"voice-over": "Hlasový komentár",
+		"video-editing": "Strih videa",
+		"full-stack-content-creator": "Komplexný tvorca obsahu",
 		"translator": "Prekladatelia",
 		"create-new-video": "Vytvoriť nové video",
-		"enter-video-title": "Zadajte názov videa"
+		"enter-video-title": "Zadajte názov videa",
+		"go": "Prejsť",
+		"custom": "Vlastné"
 	},
 	"Header": {
+		"read_beta_disclaimer": "Prečítajte si upozornenie k beta verzii",
+		"search_placeholder": "Vyhľadajte tému alebo vložte URL",
 		"search_no_results": "Neboli nájdené žiadne výsledky.",
+		"beta_disclaimer_1": " VideoWiki je overením koncepcie nástroja, ktorý vám umožňuje spoločne vytvárať a upravovať videá presúvaním obrázkov a videí z Wikimedia Commons k príslušnému textu na Wikipédii.",
+		"beta_disclaimer_2": "VideoWiki je momentálne v štádiu beta a napriek nášmu pokroku sme zatiaľ len načreli na povrch. Aktívne pracujeme na pridávaní mnohých ďalších funkcií a doplnkových možností. Článok VideoWiki môže upravovať ktokoľvek, vrátane vás, aj bez prihlásenia. S vašimi úpravami sa spojí vaše používateľské meno (ak nejaké používate) alebo IP adresa.",
 		"language": "Jazyk",
 		"articles": "Články",
 		"all_articles": "Všetky články",
+		"video_scripts": "Scenáre videí",
+		"articles_edited": "Upravené články – {{count}}",
+		"total_edits": "Spolu úprav – {{count}}",
 		"sign_out": "Odhlásiť sa",
+		"register_login_with_wikipedia": "Zaregistrovať sa/Prihlásiť cez Wikipédiu",
+		"register_login_with_nccommons": "Zaregistrovať sa/Prihlásiť cez NC Commons",
+		"login_success": "Skvelé! Teraz môžete nahrávať súbory do VideoWiki priamo z počítača.",
+		"a_good_chance_to_login": "Vhodná príležitosť na prihlásenie",
 		"logo_description": "Slobodná multimediálna encyklopédia, ktorú môže upraviť každý"
 	},
 	"Footer": {
+		"text_audio_license": "Text a zvuk sú dostupné pod <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'> licenciou Creative Commons Attribution-ShareAlike 3.0 alebo novšou. </0> Obrázky vrátane tých vo videách podliehajú rôznym otvoreným licenciám a licenciám Creative Commons.",
+		"software_license": "Softvér VideoWiki je dostupný pod licenciou GNU General Public License 3.0 a nachádza sa na <0 href='https://github.com/videowikips/videowiki' target='blank'>https://github.com/videowikips/videowiki</0>",
 		"about_us": "O nás",
 		"contact_us": "Kontaktujte nás",
 		"terms_of_use": "Podmienky používania",
@@ -27,35 +48,120 @@
 		"email": "E-mail"
 	},
 	"Editor": {
+		"editor_mode": "Režim editora",
+		"player_mode": "Režim prehrávača",
+		"translate_and_export": "Preložiť a exportovať",
+		"export_video": "Exportovať video",
+		"export_history": "História exportov",
 		"download_video": "Stiahnuť video",
+		"update_article": "Aktualizovať článok",
+		"update_article_confirmation": "Chcete teraz aktualizovať článok {{title}}?",
+		"update_article_loading": "Vydržte! Aktualizujeme pre vás článok",
 		"update": "Aktualizovať",
 		"voice_speed": "Rýchlosť hlasu",
+		"last_updated": "Naposledy aktualizované",
+		"timing": "Časovanie",
+		"timing_description": "Časovanie médií na snímke ovládate posunutím ťahadla vpravo tak, aby zodpovedalo požadovanej pozícii v prehrávači zvuku dole",
+		"references": "Referencie",
+		"visual": "Obraz",
+		"audio": "Zvuk",
 		"text": "Text",
+		"only_logged_in_user_can_upload_commons": "Videá do Commons môžu exportovať len prihlásení používatelia",
+		"add_human_voice_over_in": "Pridať ľudský hlasový komentár v jazyku",
 		"select_language": "Vybrať jazyk",
+		"use_your_own_voice": "Použiť vlastný hlas",
+		"use_machine_voice": "Použiť strojový hlas",
 		"upload_file": "Nahrať súbor",
+		"record_audio_error": "Niečo sa pokazilo. Skontrolujte, prosím, či používate najnovšiu verziu prehliadača",
 		"record_audio_not_supported": "Váš prehliadač nepodporuje nahrávanie zvuku",
 		"record": "Nahrať",
 		"contributors": "Prispievatelia",
-		"link_copied": "Odkaz skopírovaný do schránky"
+		"failed_to_load_contributors": "Nepodarilo sa načítať prispievateľov",
+		"link_copied": "Odkaz skopírovaný do schránky",
+		"max_slides_error": "Exportovať možno len vlastné články a články s menej než 50 snímkami.",
+		"reopen_form": "formulár môžete znova otvoriť kliknutím na ikonu vpravo hore na snímke",
+		"export_queued_success": "Článok bol úspešne zaradený do frontu na export!",
+		"export_slides_text_warning": "Pred exportom, prosím, pridajte text na všetky snímky.",
+		"export_slides_media_warning": "Pred exportom, prosím, pridajte médiá na všetky snímky.",
+		"article_updated": "Článok bol úspešne aktualizovaný!",
+		"article_update_error": "Pri aktualizácii článku nastala chyba! Skúste to, prosím, neskôr"
+	},
+	"ExportProgress": {
+		"exporting_videowiki_article": "Exportuje sa článok VideoWiki pre {{title}} do videa",
+		"export_error": "Pri exporte článku sa niečo pokazilo. Skúste to, prosím, neskôr",
+		"back_to_article": "Späť na článok",
+		"export_queued": "Vaše video je momentálne zaradené vo fronte na export. Čakajte, prosím",
+		"export_converted": "Úspešne exportované! Nahráva sa do Commons...",
+		"export_uploaded": "Úspešne nahraté!",
+		"stage_1": "1. fáza",
+		"stage_1_description": "Konverzia jednotlivých snímok na videá",
+		"stage_2": "2. fáza",
+		"stage_2_description": "Pridávanie textových referencií do videí",
+		"stage_3": "3. fáza",
+		"stage_3_description": "Spájanie všetkých videosúborov do jedného súboru",
+		"stage_4": "4. fáza",
+		"stage_4_description": "Dokončovanie a nahrávanie finálneho videa"
 	},
 	"ExportHistory": {
+		"no_videos_found": "Pre tento článok momentálne nie sú exportované žiadne videá",
+		"commons_url": "URL na Commons",
+		"youtube_url": "URL na YouTube",
+		"retry_upload": "Skúsiť nahranie znova",
 		"download": "Stiahnuť",
 		"click_here": "Kliknite sem",
 		"user": "Používateľ",
 		"subtitles": "Titulky",
+		"authors": "Autori",
+		"videowiki_foundation": "VideoWiki Foundation",
 		"authors_of_the_article": "Autori článku",
 		"licence": "Licencia",
 		"version": "Verzia",
-		"language": "Jazyk"
+		"language": "Jazyk",
+		"loading_videos": "Načítavajú sa vaše videá k článku zo súhrnu všetkého ľudského poznania!",
+		"loading_videos_error": "Pri načítavaní videí nastala chyba! Skúste to, prosím, neskôr!"
+	},
+	"InfoBox": {
+		"loading": "Načítava sa infobox...",
+		"loading_error": "Pri načítavaní infoboxu nastala chyba! Skúste to, prosím, neskôr!"
 	},
 	"UploadFileInfoModal": {
+		"header": "Sprievodca nahrávaním Wikimedia Commons",
+		"nothing_to_show": "Tu sa zatiaľ nedá nič zobraziť",
+		"import_previous_form_details": "Importovať údaje z predchádzajúceho formulára",
 		"source": "Zdroj",
+		"source_description": "Odkiaľ tento digitálny súbor pochádza — môže to byť URL, kniha alebo publikácia.",
+		"source_option_own_work": "Vlastné dielo",
+		"source_option_others": "Tento mediálny súbor som nevytvoril(a) ja",
+		"author": "Autor(i)",
+		"author_description": "Meno osoby, ktorá fotografiu odfotila, namaľovala obraz, nakreslila kresbu a podobne.",
 		"title": "Názov",
+		"title_description_1": "Jedinečný výstižný názov súboru, ktorý bude slúžiť ako názov súboru.",
+		"title_description_2": " Môžete použiť bežný text s medzerami. Neuvádzajte príponu súboru",
 		"description": "Popis",
+		"description_description": "Opíšte médium čo najpodrobnejšie.\n\nKde bolo zhotovené?\nČo zobrazuje?\nAký je kontext?\nOpíšte, prosím, objekt alebo osoby?\nAk médium zobrazuje niečo nezvyčajné, vysvetlite, prosím, čím je nezvyčajné",
 		"licence": "Licencia",
 		"categories": "Kategórie",
+		"save_template_label": "Uložiť tento formulár ako šablónu",
+		"save_template_description": "Výberom tohto poľa budete môcť hodnoty tohto formulára naimportovať priamo do iných formulárov pomocou tlačidla importu vyššie",
 		"date": "Dátum",
-		"user_name": "Meno používateľa"
+		"auto_download_label": "Automaticky stiahnuť video po jeho exporte",
+		"auto_download_description": "Výberom tohto poľa sa video po exporte stiahne",
+		"add_extra_users_label": "Pridať ďalšie uvedenia autorov",
+		"user_name": "Meno používateľa",
+		"upload_success": "Súbor bol úspešne nahratý! Nezabudnite kliknúť na ikonu publikovania, aby sa vaše zmeny uložili",
+		"upload_error": "Nahranie súboru zlyhalo! Skúste to, prosím, neskôr",
+		"file_already_exists": "Súbor s týmto názvom už existuje. Skúste, prosím, iný názov",
+		"upload_to_commons": "Nahrať do Commons"
+	},
+	"HumanVoice": {
+		"all_slides": "Všetky snímky",
+		"slide": "Snímka {{slideNumber}}",
+		"translate_placeholder": "Preložiť text snímky",
+		"processing_voice_error": "Pri spracovaní zvuku sa niečo pokazilo, vašu pôvodnú nahrávku sme však zachovali.",
+		"audio_uploaded": "Zvuk nahratý",
+		"text_update_error": "Pri aktualizácii textu sa niečo pokazilo, skúste to, prosím, znova",
+		"audio_update_error": "Pri nahrávaní zvuku sa niečo pokazilo, skúste to, prosím, znova",
+		"click_on_publish_after_review": "Po dokončení náhľadu kliknite na ikonu publikovania"
 	},
 	"Common": {
 		"cancel": "Zrušiť",
@@ -63,6 +169,17 @@
 		"add": "Pridať",
 		"loading": "Načítava sa....",
 		"update": "Aktualizovať",
-		"ok": "Ok"
+		"ok": "Ok",
+		"loading_article": "Načítava sa váš článok zo súhrnu všetkého ľudského poznania!",
+		"loading_article_error": "Pri načítavaní článku nastala chyba! Skúste to, prosím, neskôr!",
+		"loading_all_articles": "Vydržte! Načítavajú sa všetky články...",
+		"loading_all_articles_error": "Pri načítavaní všetkých článkov nastala chyba! Skúste to, prosím, neskôr!"
+	},
+	"Exporter": {
+		"licence": "Toto video môžete voľne zdieľať a upravovať pod licenciou <strong>CC-BY-SA 4.0</strong>",
+		"references": "Referencie",
+		"text_credits": "Uvedenie autorov textu",
+		"voice_by": "Hlas od",
+		"visual_content_by": "Vizuálny obsah od"
 	}
 }
