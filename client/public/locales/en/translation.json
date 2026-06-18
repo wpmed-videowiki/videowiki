@@ -140,7 +140,7 @@
     "date": "Date",
     "auto_download_label": "Auto download the video after it's exported",
     "auto_download_description": "By selecting this field, the video will downloaded once it's exported",
-    "add_extra_users_label": "Add more user's credits",
+    "add_extra_users_label": "Add credits to more users",
     "user_name": "User's name",
     "upload_success": "File Upload Successful! Don't forget to click on the publish icon to save your changes",
     "upload_error": "File Upload Failed! Please try again later",
