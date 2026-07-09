@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Peterleth"
+			"Peterleth",
+			"Steenth"
 		]
 	},
 	"Header": {
@@ -13,7 +14,7 @@
 		"register_login_with_nccommons": "Registrer/Log ind med NC Commons",
 		"login_success": "Fantastisk! Du kan nu uploade filer til VideoWiki direkte fra din computer.",
 		"a_good_chance_to_login": "En god chance for at logge ind",
-		"logo_description": "Det gratis multimedieleksikon, som alle kan redigere."
+		"logo_description": "Det frie multimedieleksikon, som alle kan redigere."
 	},
 	"Footer": {
 		"text_audio_license": "Tekst og lyd er tilgængelige under <0 href='https://creativecommons.org/licenses/by-sa/3.0/' target='blank'> Creative Commons Navngivelse-DelPåSammeVilkår-licens 3.0 eller nyere.</0> Billeder, inklusive dem i videoer, er underlagt forskellige åbne og Creative Commons-licenser.",
