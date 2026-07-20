@@ -34,7 +34,8 @@
 		"text": "Text",
 		"select_language": "Sprooch eraussichen",
 		"upload_file": "Fichier eroplueden",
-		"record": "Ophuelen"
+		"record": "Ophuelen",
+		"link_copied": "Link an den Tëschespäicher kopéiert"
 	},
 	"ExportHistory": {
 		"commons_url": "Commons-URL",

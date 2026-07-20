@@ -51,7 +51,7 @@
 		"update_article": "ليکنه هم‌مهالول",
 		"update_article_confirmation": "ايا تاسو غواړئ چې {{title}} ليکنه اوس هم‌مهاله کړئ؟",
 		"update_article_loading": "په تمه شئ! موږ ستاسو لپاره ليکنه هم‌مهاله کوو",
-		"update": "اوسمهالول",
+		"update": "هم‌مهالول",
 		"voice_speed": "غږ چټکتيا",
 		"last_updated": "وروستۍ هم‌مهالېدنه",
 		"timing": "وخت",
@@ -121,7 +121,7 @@
 		"yes": "هو",
 		"add": "ورگډول",
 		"loading": "رابرسېرېږي...",
-		"update": "اوسمهالول",
+		"update": "هم‌مهالول",
 		"ok": "ښه"
 	},
 	"Exporter": {
