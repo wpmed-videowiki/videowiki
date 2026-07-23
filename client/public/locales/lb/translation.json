@@ -35,6 +35,8 @@
 		"select_language": "Sprooch eraussichen",
 		"upload_file": "Fichier eroplueden",
 		"record": "Ophuelen",
+		"contributors": "Contributeuren",
+		"failed_to_load_contributors": "D'Contributeure konnten net geluede ginn",
 		"link_copied": "Link an den Tëschespäicher kopéiert"
 	},
 	"ExportHistory": {
