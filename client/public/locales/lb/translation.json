@@ -12,6 +12,8 @@
 		"language": "Sprooch",
 		"articles": "Artikelen",
 		"all_articles": "All Artikelen",
+		"articles_edited": "Artikele geännert – {{count}}",
+		"total_edits": "Gesamtzuel vun Ännerungen – {{count}}",
 		"sign_out": "Ofmellen"
 	},
 	"Footer": {
@@ -20,6 +22,7 @@
 		"terms_of_use": "Benotzungsbedingungen",
 		"privacy_policy": "Dateschutzrichtlinnen",
 		"blog": "Blog",
+		"report_bugs": "Feeler mellen",
 		"email": "E-Mail"
 	},
 	"Editor": {
@@ -38,7 +41,15 @@
 		"record": "Ophuelen",
 		"contributors": "Contributeuren",
 		"failed_to_load_contributors": "D'Contributeure konnten net geluede ginn",
-		"link_copied": "Link an den Tëschespäicher kopéiert"
+		"link_copied": "Link an den Tëschespäicher kopéiert",
+		"article_update_error": "Feeler beim Aktualiséiere vum Artikel! Probéiert wgl. méi spéit nach eng Kéier"
+	},
+	"ExportProgress": {
+		"back_to_article": "Zeréck op den Artikel",
+		"stage_1": "Etapp 1",
+		"stage_2": "Etapp 2",
+		"stage_3": "Etapp 3",
+		"stage_4": "Etapp 4"
 	},
 	"ExportHistory": {
 		"commons_url": "Commons-URL",
@@ -51,10 +62,12 @@
 		"authors_of_the_article": "Auteure vum Artikel",
 		"licence": "Lizenz",
 		"version": "Versioun",
-		"language": "Sprooch"
+		"language": "Sprooch",
+		"loading_videos_error": "Feeler beim Luede vun de Videoen! Probéiert wgl. méi spéit nach eng Kéier!"
 	},
 	"UploadFileInfoModal": {
 		"nothing_to_show": "Nach näischt hei fir ze weisen",
+		"source_option_own_work": "Eegent Wierk",
 		"author": "Auteur(en)",
 		"title": "Titel",
 		"description": "Beschreiwung",
@@ -62,6 +75,7 @@
 		"categories": "Kategorien",
 		"date": "Datum",
 		"user_name": "Benotzernumm",
+		"file_already_exists": "Et gëtt schonn e Fichier mat dësem Numm. Probéiert wgl. en aneren Titel",
 		"upload_to_commons": "Op Commons eroplueden"
 	},
 	"Common": {
@@ -70,9 +84,11 @@
 		"add": "Derbäisetzen",
 		"loading": "Lueden…",
 		"update": "Aktualiséieren",
-		"ok": "OK"
+		"ok": "OK",
+		"loading_article_error": "Feeler beim Luede vum Artikel! Probéiert wgl. méi spéit nach eng Kéier!"
 	},
 	"Exporter": {
-		"references": "Referenzen"
+		"references": "Referenzen",
+		"voice_by": "Stëmm vum"
 	}
 }
