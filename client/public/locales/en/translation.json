@@ -151,7 +151,7 @@
     "all_slides": "All Slides",
     "slide": "Slide {{slideNumber}}",
     "translate_placeholder": "Translate slide text",
-    "processing_voice_error": "Something went wrong while processing the audio, we kept you original recording though.",
+    "processing_voice_error": "Something went wrong while processing the audio. We nevertheless kept your original recording.",
     "audio_uploaded": "Audio Uploaded",
     "text_update_error": "Something went wrong while updating the text, please try again",
     "audio_update_error": "Something went wrong while uploading audio, please try again",
