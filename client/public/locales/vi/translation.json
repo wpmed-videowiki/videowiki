@@ -1,7 +1,8 @@
 {
 	"@metadata": {
 		"authors": [
-			"Bapham123"
+			"Bapham123",
+			"Waitforbabyglobe"
 		]
 	},
 	"Home": {
@@ -9,6 +10,7 @@
 		"script-writing": "Viết kịch bản",
 		"voice-over": "Lồng tiếng",
 		"video-editing": "Sửa đổi Video",
+		"full-stack-content-creator": "Người sáng tạo nội dung toàn diện",
 		"translator": "Biên dịch viên",
 		"create-new-video": "Tạo một video mới",
 		"enter-video-title": "Nhập tiêu đề của video",
@@ -16,7 +18,11 @@
 		"custom": "Tùy biến"
 	},
 	"Header": {
+		"read_beta_disclaimer": "Vui lòng đọc Tuyên bố Miễn trừ trách nhiệm Phiên bản Beta.",
+		"search_placeholder": "Tìm kiếm một đề tài hoặc dán một URL",
 		"search_no_results": "Không tìm thấy kết quả.",
+		"beta_disclaimer_1": "VideoWiki là một bản thử nghiệm của công cụ cho phép bạn cùng nhau tạo và sửa đổi video bằng cách kéo và thả hình ảnh và video từ Wikimedia Commons vào văn bản Wikipedia có liên quan.",
+		"beta_disclaimer_2": "VideoWiki hiện đang ở giai đoạn Beta và mặc dù đã có tiến bộ, chúng tôi chỉ mới bắt đầu. Chúng tôi đang tích cực làm việc để thêm nhiều tính năng và chức năng bổ sung. Bất cứ ai, kể cả bạn, có thể sửa đổi một bài viết VideoWiki ngay cả khi không đăng nhập. Tên người dùng của bạn (nếu bạn sử dụng một) hoặc địa chỉ IP sẽ được liên kết với các sửa đổi của bạn.",
 		"language": "Ngôn ngữ",
 		"articles": "Bài viết",
 		"all_articles": "Tất cả các bài",
@@ -55,20 +61,33 @@
 		"voice_speed": "Tốc độ giọng nói",
 		"last_updated": "Lần Cập nhật Cuối",
 		"timing": "Thời gian",
+		"timing_description": "Điều chỉnh thời gian phát của slide bằng cách kéo thanh trượt bên phải sao cho khớp với vị trí yêu cầu trong trình phát âm thanh phía dưới.",
 		"references": "Tham khảo",
 		"visual": "Trực quan",
 		"audio": "Âm thanh",
 		"text": "Văn bản",
+		"only_logged_in_user_can_upload_commons": "Chỉ người dùng đã đăng nhập mới có thể xuất video lên Commons.",
 		"add_human_voice_over_in": "Thêm giọng của con người vào",
 		"select_language": "Chọn Ngôn ngữ",
 		"use_your_own_voice": "Sử dụng giọng của bạn",
 		"use_machine_voice": "Sử dụng giọng máy",
 		"upload_file": "Tải tập tin lên",
+		"record_audio_error": "Có gì đó sai, vui lòng đảm bảo bạn đang sử dụng phiên bản mới nhất của trình duyệt của bạn",
+		"record_audio_not_supported": "Trình duyệt của bạn không hỗ trợ ghi âm.",
 		"record": "Ghi âm",
 		"contributors": "Những người đóng góp",
-		"link_copied": "Đã chép liên kết vào bảng tạm!"
+		"failed_to_load_contributors": "Không thể tải thông tin người đóng góp",
+		"link_copied": "Đã chép liên kết vào bảng tạm!",
+		"max_slides_error": "Chỉ những bài viết tùy chỉnh và bài viết có ít hơn 50 slide mới có thể xuất khẩu.",
+		"reopen_form": "bạn có thể mở lại biểu mẫu bằng cách nhấp vào biểu tượng ở phía trên bên phải của tấm ảnh",
+		"export_queued_success": "Bài viết đã được đưa vào hàng đợi để xuất khẩu thành công!",
+		"export_slides_text_warning": "Vui lòng thêm văn bản vào tất cả các slide trước khi xuất.",
+		"export_slides_media_warning": "Vui lòng thêm phương tiện vào tất cả các slide trước khi xuất.",
+		"article_updated": "Bài viết được cập nhật thành công!",
+		"article_update_error": "Đã xảy ra lỗi khi cập nhật bài viết! Vui lòng thử lại sau"
 	},
 	"ExportProgress": {
+		"exporting_videowiki_article": "Xuất bài viết Videowiki cho {{title}} sang Video",
 		"back_to_article": "Quay trở lại bài viết",
 		"export_uploaded": "Tải lên thành công"
 	},
